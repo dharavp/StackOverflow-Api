@@ -72,6 +72,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_user_detail, null);
 
+            
             holder = new ViewHolder();
             holder.imageUser = (ImageView)convertView.findViewById(R.id.image_user);
             holder.textName = (TextView) convertView.findViewById(R.id.text_name);
