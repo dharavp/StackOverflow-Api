@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/text_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/progress_title"
+        android:textSize="10sp"
+        android:visibility="gone"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/linearLayout"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/text_about_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColorLink="@color/colorUrlText"
+            android:text="TextView"
+            android:textColor="@color/colorAboutUser"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorHorizontalView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_answer_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/count_text_size"
+                android:textColor="@color/colorCount"
+                android:layout_gravity="center_horizontal"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/text_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="anwers"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorCountText" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_question_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/count_text_size"
+                android:textColor="@color/colorCount"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/text_questions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="questions"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorCountText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_counts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/count_text_size"
+                android:textColor="@color/colorCount"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/text_counts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="total views"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorCountText" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorHorizontalView" />
+
+    <TextView
+        android:id="@+id/text_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/bullets"
+        android:drawablePadding="8dp"
+        android:textColor="@color/colorAboutUser" />
+
+    <TextView
+        android:id="@+id/text_website_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/bullets"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:textColorLink="@color/colorUrlText"
+        android:autoLink="web"
+        android:drawablePadding="8dp"
+        android:linksClickable="true"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">FirstApiDemo</string>
+    <string name="title_name">user</string>
+    <string name="progress_title">loading...</string>
+    <string name="error_toast">try again........</string>
+
+    <string name="backdialog_text">Are you sure you want to do exit..?</string>
+    <string name="backdialog_positive_btn">Yes</string>
+    <string name="backdialog_negative_btn">No</string>
+
+    <string name="text_order">Order</string>
+    <string name="text_sort">Sort</string>
+    <string name="text_from_date">From Date</string>
+    <string name="text_to_date">To Date</string>
+
+    <string name="text_to_date_error">To date must be greater than from date.</string>
+
+    <string name="orderPrompt">Choose an order</string>
+    <string name="sortPrompt">Sort by</string>
+
+    <string-array name="spinnerOrder">
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
+
+    <string-array name="spinnerSort">
+        <item>reputation</item>
+        <item>creation</item>
+        <item>modified</item>
+        <item>name</item>
+    </string-array>
+    <string name="title_activity_user_tab">UserTabActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
