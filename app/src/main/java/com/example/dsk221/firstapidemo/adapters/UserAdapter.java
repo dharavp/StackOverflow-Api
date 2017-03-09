@@ -72,7 +72,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_user_detail, null);
 
-            
             holder = new ViewHolder();
             holder.imageUser = (ImageView)convertView.findViewById(R.id.image_user);
             holder.textName = (TextView) convertView.findViewById(R.id.text_name);
@@ -168,8 +167,3 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         return repString;
     }
 }
-
-
-//        compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
-//        compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
-//        compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'

@@ -1,6 +1,5 @@
 package com.example.dsk221.firstapidemo.fragments;
 
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,16 +15,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.dsk221.firstapidemo.MainActivity;
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.UserTabActivity;
-import com.example.dsk221.firstapidemo.models.BuzzItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
-import com.example.dsk221.firstapidemo.models.UserListResponse;
+import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.utility.Constants;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +37,7 @@ public class UserProfileFragment extends Fragment{
             textViewCounts,textLocation,textWebsiteUrl;
     private TextView textLoading;
     private ProgressBar progressBar;
-    private UserListResponse userListResponse;
+    private ListResponse<UserItem> listResponse;
     private int userid;
     private String userDetailUrl,userdetail;
     LinearLayout linearLayout;
@@ -166,10 +163,10 @@ public class UserProfileFragment extends Fragment{
 //                }
                 //    Log.d(TAG, "onPostExecute: "+userItem.getDisplayName());
                 Gson gson = new Gson();
-                userListResponse = gson.fromJson(s, UserListResponse.class);
-                userDetail=userListResponse.getItems();
+                TypeToken<ListResponse<UserItem>> collectionType = new TypeToken<ListResponse<UserItem>>(){};
+                listResponse = gson.fromJson(s, collectionType.getType());
+                userDetail= listResponse.getItems();
                 UserItem aboutUser = userDetail.get(0);
-
 
                 hideProgressBar();
                 linearLayout.setVisibility(View.VISIBLE);

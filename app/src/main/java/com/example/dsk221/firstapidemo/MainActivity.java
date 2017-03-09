@@ -25,15 +25,16 @@ import android.widget.Toast;
 
 import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.dialogs.FilterDialog;
-import com.example.dsk221.firstapidemo.models.BuzzItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
-import com.example.dsk221.firstapidemo.models.UserListResponse;
+import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.utility.Constants;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -48,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
     private int mPageCount = 1;
     public boolean isLoading = false;
     public boolean isSearch = false;
-    UserListResponse userlistResponse;
-
+    ListResponse<UserItem> userlistResponse;
     private String filterOrder = "desc";
     private String filterSort = "reputation";
     private String filterTodate = null;
@@ -262,9 +262,9 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
 //                }
                 //    Log.d(TAG, "onPostExecute: "+userItem.getDisplayName());
                 Gson gson = new Gson();
-                userlistResponse = gson.fromJson(s, UserListResponse.class);
+                TypeToken<ListResponse<UserItem>> collectionType = new TypeToken<ListResponse<UserItem>>(){};
+                userlistResponse = gson.fromJson(s, collectionType.getType());
                 //     userArrayList.add(userItem);
-
                 mUserAdapter.addItems(userlistResponse.getItems());
                 hideProgressBar();
             } else {

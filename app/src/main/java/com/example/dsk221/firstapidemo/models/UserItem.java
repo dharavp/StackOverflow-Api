@@ -44,6 +44,7 @@ public class UserItem implements Parcelable {
     @SerializedName("about_me")
     private String aboutMe;
 
+
     public int getViewCount() {
         return viewCount;
     }

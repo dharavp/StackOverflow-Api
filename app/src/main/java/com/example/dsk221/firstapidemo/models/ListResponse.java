@@ -6,14 +6,15 @@ import java.util.ArrayList;
  * Created by dsk-221 on 28/2/17.
  */
 
-public class UserListResponse {
-   private ArrayList<UserItem> items;
+public class ListResponse<T> {
 
-    public void setItems(ArrayList<UserItem> items) {
+   private ArrayList<T> items;
+
+    public void setItems(ArrayList<T> items) {
         this.items = items;
     }
 
-    public ArrayList<UserItem> getItems() {
+    public ArrayList<T> getItems() {
         return items;
     }
 }
