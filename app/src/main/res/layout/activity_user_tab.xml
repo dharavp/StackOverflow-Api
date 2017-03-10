@@ -21,8 +21,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingLeft="@dimen/linear_layout_padding"
+            android:paddingRight="@dimen/linear_layout_padding">
 
             <include
                 android:id="@+id/includeLayout"

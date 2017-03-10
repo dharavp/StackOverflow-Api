@@ -149,7 +149,7 @@ public class UserActivityFragment extends Fragment {
                 response = stringBuffer.toString();
 
             } catch (Exception ex) {
-                Log.e("App", "yourDataTask", ex);
+               // Log.e("App", "yourDataTask", ex);
 
             } finally {
                 if (bufferedReader != null) {

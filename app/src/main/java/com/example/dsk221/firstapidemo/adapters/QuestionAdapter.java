@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionAdapter extends BaseAdapter {
-    Context context;
+    private Context context;
     private String mpostType;
     public List<QuestionItem> questionItems;
     private String postBody;

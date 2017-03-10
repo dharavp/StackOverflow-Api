@@ -27,9 +27,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
     private List<UserItem> tempUserItems;
     private ValueFilter valueFilter;
 
-    public UserAdapter() {
-    }
-
     public UserAdapter(Context context) {
         this.context = context;
         this.userItems = new ArrayList<>();
@@ -41,7 +38,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         tempUserItems.addAll(items);
         notifyDataSetChanged();
     }
-
     public void removeItems(){
         userItems.clear();
         tempUserItems.clear();

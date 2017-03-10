@@ -14,4 +14,7 @@ public class Constants {
     public static final String PARAMS_FROMDATE = "fromdate";
     public static final String PARAMS_FILTER="filter";
 
+    public static final String DATE_FORMATE="yyyy-mm-dd";
+
+
 }

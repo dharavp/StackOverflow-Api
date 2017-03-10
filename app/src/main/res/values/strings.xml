@@ -13,11 +13,14 @@
     <string name="menu_openinbrowser_title">Open in browser</string>
     <string name="menu_copytoclipboard">Copy to clipboard</string>
     <string name="menu_sharewith_title">Share With</string>
-    
+
+    <string name="share_dialog_title">"share text to"</string>
     <string name="text_order">Order</string>
     <string name="text_sort">Sort</string>
     <string name="text_from_date">From Date</string>
     <string name="text_to_date">To Date</string>
+
+    <string name="tab_activity_title">User Detail</string>
 
     <string name="text_to_date_error">To date must be greater than from date.</string>
 

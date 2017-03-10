@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.example.dsk221.firstapidemo.R;
+import com.example.dsk221.firstapidemo.utility.Constants;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -83,7 +84,7 @@ public class FilterDialog extends DialogFragment {
         selectedFromDate = fromdate;
         selectedToDate = todate;
 
-        DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMATE);
         if (selectedFromDate == null) {
             calFromDate = Calendar.getInstance();
         } else {
@@ -204,7 +205,8 @@ public class FilterDialog extends DialogFragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             calFromDate.set(year, monthOfYear, dayOfMonth);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMATE,
+                    Locale.getDefault());
             selectedFromDate = dateFormat.format(calFromDate.getTime());
             btnFromDate.setText(selectedFromDate);
         }
@@ -215,7 +217,8 @@ public class FilterDialog extends DialogFragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             calToDate.set(year, monthOfYear, dayOfMonth);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMATE,
+                    Locale.getDefault());
             selectedToDate = dateFormat.format(calToDate.getTime());
             btnToDate.setText(selectedToDate);
 //            calToDate.set(year, monthOfYear, dayOfMonth);

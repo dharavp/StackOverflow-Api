@@ -20,20 +20,19 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.fragments.UserActivityFragment;
 import com.example.dsk221.firstapidemo.fragments.UserProfileFragment;
 import com.example.dsk221.firstapidemo.models.BuzzItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserTabActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
+    public static final String EXTRA_LINK="link";
     private static final String TAG = "bronze detail";
     private String link;
     private ClipboardManager clipboard;
@@ -80,7 +79,7 @@ public class UserTabActivity extends AppCompatActivity {
         tabLayout.setTabTextColors(ContextCompat.getColor(UserTabActivity.this, R.color.colorCountText),
                 ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
 
-        getSupportActionBar().setTitle("User Detail");
+        getSupportActionBar().setTitle(getResources().getString(R.string.tab_activity_title));
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
 
@@ -126,7 +125,7 @@ public class UserTabActivity extends AppCompatActivity {
 
             case R.id.copy_to_clipboard:
                 clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                clip = ClipData.newPlainText("link", link);
+                clip = ClipData.newPlainText(EXTRA_LINK, link);
                 clipboard.setPrimaryClip(clip);
                 ClipData abc = clipboard.getPrimaryClip();
                 ClipData.Item item1 = abc.getItemAt(0);
@@ -141,12 +140,10 @@ public class UserTabActivity extends AppCompatActivity {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, link);
                 sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent,"share text to"));
+                startActivity(Intent.createChooser(sendIntent,
+                        getResources().getString(R.string.share_dialog_title)));
                 break;
-
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

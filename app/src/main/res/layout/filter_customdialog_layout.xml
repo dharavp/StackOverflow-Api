@@ -7,21 +7,21 @@
     android:orientation="vertical">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="@dimen/customdialog_linearlayout_hight"
     android:orientation="horizontal"
     android:weightSum="2"
     android:layout_marginBottom="@dimen/activity_horizontal_margin">
     <TextView
         android:text="@string/text_order"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/customdialog_linearlayout_hight"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:maxLines="1"
         android:id="@+id/text_order" />
     <Spinner
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/customdialog_linearlayout_hight"
         android:id="@+id/spinner_order"
         android:prompt="@string/orderPrompt"
         android:paddingLeft="10dp"
@@ -30,13 +30,13 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/customdialog_linearlayout_hight"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:weightSum="2">
         <TextView
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/customdialog_linearlayout_hight"
             android:id="@+id/text_sort"
             android:text="@string/text_sort"
             android:gravity="center_vertical"
@@ -44,7 +44,7 @@
             android:layout_weight="1"/>
         <Spinner
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/customdialog_linearlayout_hight"
             android:id="@+id/spinner_sort"
             android:entries="@array/spinnerSort"
             android:prompt="@string/sortPrompt"
@@ -53,13 +53,13 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/customdialog_linearlayout_hight"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
         android:weightSum="2">
         <TextView
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/customdialog_linearlayout_hight"
             android:id="@+id/text_from_date"
             android:layout_weight="1"
             android:maxLines="1"
@@ -68,7 +68,7 @@
             android:textSize="@dimen/badge_text_size"/>
         <Button
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/customdialog_linearlayout_hight"
             android:id="@+id/btn_from_date"
             android:layout_weight="1"
             android:gravity="left"
@@ -76,13 +76,13 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/customdialog_linearlayout_hight"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
         android:weightSum="2">
         <TextView
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/customdialog_linearlayout_hight"
             android:id="@+id/text_to_date"
             android:layout_weight="1"
             android:maxLines="1"
@@ -91,7 +91,7 @@
             android:text="@string/text_to_date"/>
         <Button
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/customdialog_linearlayout_hight"
             android:paddingLeft="10dp"
             android:layout_weight="1"
             android:gravity="left"
