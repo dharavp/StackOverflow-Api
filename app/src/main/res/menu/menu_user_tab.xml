@@ -4,14 +4,14 @@
     tools:context="com.example.dsk221.firstapidemo.UserTabActivity">
     <item
         android:id="@+id/open_in_browser"
-        android:title="@string/menu_openinbrowser_title"
+        android:title="@string/menu_open_in_browser_title"
         app:showAsAction="never" />
     <item
         android:id="@+id/copy_to_clipboard"
-        android:title="@string/menu_copytoclipboard"
+        android:title="@string/menu_copy_to_clipboard"
         app:showAsAction="never"/>
     <item
         android:id="@+id/share"
-        android:title="@string/menu_sharewith_title"
+        android:title="@string/menu_share_with_title"
         app:showAsAction="never"/>
 </menu>

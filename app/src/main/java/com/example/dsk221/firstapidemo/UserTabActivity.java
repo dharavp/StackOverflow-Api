@@ -20,32 +20,31 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.dsk221.firstapidemo.adapters.UserAdapter;
+
 import com.example.dsk221.firstapidemo.fragments.UserActivityFragment;
 import com.example.dsk221.firstapidemo.fragments.UserProfileFragment;
 import com.example.dsk221.firstapidemo.models.BuzzItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
+import com.example.dsk221.firstapidemo.utility.Utils;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserTabActivity extends AppCompatActivity {
 
-    public static final String EXTRA_POSITION = "position";
+    public static final String EXTRA_USER = "user";
     public static final String EXTRA_LINK="link";
     private static final String TAG = "bronze detail";
     private String link;
-    private ClipboardManager clipboard;
-    private ClipData clip;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView textName, textReputation, textSilver, textBronze, textGold;
     private ImageView imageUser;
-    UserItem user;
+    private UserItem user;
 
     public static Intent getStartIntent(Context context, UserItem user) {
         Intent i = new Intent(context, UserTabActivity.class);
-        i.putExtra(EXTRA_POSITION, user);
+        i.putExtra(EXTRA_USER, user);
         return i;
     }
 
@@ -55,7 +54,7 @@ public class UserTabActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_tab);
 
         Intent i = getIntent();
-        user = i.getParcelableExtra(EXTRA_POSITION);
+        user = i.getParcelableExtra(EXTRA_USER);
 
         textName = (TextView) findViewById(R.id.text_name);
         textReputation = (TextView) findViewById(R.id.text_reputation);
@@ -90,7 +89,7 @@ public class UserTabActivity extends AppCompatActivity {
         textReputation.setTextColor(ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
 
         textName.setText(user.getDisplayName());
-        textReputation.setText(UserAdapter.getRepString(user.getReputation()));
+        textReputation.setText(Utils.getRepString(user.getReputation()));
         textBronze.setText(String.valueOf(buzzDetail.getBronze()));
         textSilver.setText(String.valueOf(buzzDetail.getSilver()));
         textGold.setText(String.valueOf(buzzDetail.getGold()));
@@ -124,15 +123,14 @@ public class UserTabActivity extends AppCompatActivity {
                 break;
 
             case R.id.copy_to_clipboard:
-                clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                clip = ClipData.newPlainText(EXTRA_LINK, link);
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText(EXTRA_LINK, link);
                 clipboard.setPrimaryClip(clip);
                 ClipData abc = clipboard.getPrimaryClip();
                 ClipData.Item item1 = abc.getItemAt(0);
                 String text = item1.getText().toString();
 
-                Toast.makeText(getApplicationContext(),text,
-                        Toast.LENGTH_SHORT).show();
+                Utils.showToast(getApplicationContext(),text);
                 break;
 
             case R.id.share:
@@ -149,8 +147,10 @@ public class UserTabActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new UserProfileFragment(), "Profile");
-        adapter.addFragment(new UserActivityFragment(), "Activity");
+        adapter.addFragment(UserProfileFragment.newInstance(user.getUserId()),
+                getResources().getString(R.string.tab_title_activity));
+        adapter.addFragment(UserActivityFragment.newInstance(user.getUserId()),
+                getResources().getString(R.string.tab_title_profile));
         viewPager.setAdapter(adapter);
     }
 
@@ -183,7 +183,5 @@ public class UserTabActivity extends AppCompatActivity {
         }
     }
 
-    public int getUserId() {
-        return (user.getUserId());
-    }
+
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.BuzzItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
+import com.example.dsk221.firstapidemo.utility.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class UserAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    public List<UserItem> userItems;
+    private List<UserItem> userItems;
     private List<UserItem> tempUserItems;
     private ValueFilter valueFilter;
 
@@ -89,7 +90,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                 .placeholder(R.drawable.image_background)
                 .into(holder.imageUser);
         holder.textName.setText(userDetail.getDisplayName());
-        holder.textReputation.setText(getRepString(userDetail.getReputation()));
+        holder.textReputation.setText(Utils.getRepString(userDetail.getReputation()));
         holder.textBronze.setText(String.valueOf(buzzDetail.getBronze()));
         holder.textSilver.setText(String.valueOf(buzzDetail.getSilver()));
         holder.textGold.setText(String.valueOf(buzzDetail.getGold()));
@@ -142,24 +143,9 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         }
     }
 
-
     private class ViewHolder {
         ImageView imageUser;
         TextView textName, textReputation, textBronze, textSilver, textGold;
     }
 
-    public static String getRepString(int rep) {
-        String repString;
-        String r = String.valueOf(rep);
-
-        if (rep < 1000) {
-            repString = r;
-        } else if (rep < 10000) {
-            repString = r.charAt(0) + ',' + r.substring(1);
-        } else {
-            repString = (Math.round((rep / 1000) * 10) / 10) + "k";
-        }
-
-        return repString;
-    }
 }

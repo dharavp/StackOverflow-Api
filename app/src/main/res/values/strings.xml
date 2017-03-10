@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">FirstApiDemo</string>
     <string name="title_name">user</string>
-    <string name="progress_title">loading...</string>
+    <string name="progress_title">loading…</string>
     <string name="error_toast">try again........</string>
 
-    <string name="backdialog_text">Are you sure you want to do exit..?</string>
-    <string name="backdialog_positive_btn">Yes</string>
-    <string name="backdialog_negative_btn">No</string>
+    <string name="back_dialog_text">Are you sure you want to do exit..?</string>
+    <string name="back_dialog_positive_btn">Yes</string>
+    <string name="back_dialog_negative_btn">No</string>
     
     <string name="menu_search_title">Search</string>
-    <string name="menu_filter_title">Fileter</string>
-    <string name="menu_openinbrowser_title">Open in browser</string>
-    <string name="menu_copytoclipboard">Copy to clipboard</string>
-    <string name="menu_sharewith_title">Share With</string>
+    <string name="menu_filter_title">Filter</string>
+    <string name="menu_open_in_browser_title">Open in browser</string>
+    <string name="menu_copy_to_clipboard">Copy to clipboard</string>
+    <string name="menu_share_with_title">Share With</string>
 
     <string name="share_dialog_title">"share text to"</string>
     <string name="text_order">Order</string>
@@ -22,7 +22,14 @@
 
     <string name="tab_activity_title">User Detail</string>
 
+    <string name="post_type_answer_text">Answer</string>
+    <string name="post_type_question_text">Question</string>
+
+    <string name="dialog_tag">dialog</string>
     <string name="text_to_date_error">To date must be greater than from date.</string>
+
+    <string name="tab_title_activity">Activity</string>
+    <string name="tab_title_profile">Profile</string>
 
     <string name="orderPrompt">Choose an order</string>
     <string name="sortPrompt">Sort by</string>

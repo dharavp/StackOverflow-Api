@@ -28,13 +28,13 @@ import com.example.dsk221.firstapidemo.dialogs.FilterDialog;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -45,13 +45,11 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
     private ProgressBar progressBar;
     private View footerView;
     private UserAdapter mUserAdapter;
-    private String userListUrl;
     private int mPageCount = 1;
     public boolean isLoading = false;
     public boolean isSearch = false;
-    ListResponse<UserItem> userlistResponse;
-    private String filterOrder = "desc";
-    private String filterSort = "reputation";
+    private String filterOrder =Constants.VALUE_DESC;
+    private String filterSort = Constants.VALUE_REPUTATION;
     private String filterTodate = null;
     private String filterFromdate = null;
 
@@ -146,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
 
     @Override
     public void sendData(String orderData, String sortData, String todateData, String fromdateData) {
+
         Toast.makeText(MainActivity.this,
                 orderData + "" + sortData + "" + todateData + "" + "" + fromdateData,
                 Toast.LENGTH_SHORT).show();
@@ -186,9 +185,9 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
                 }
                 builder.appendQueryParameter(Constants.PARAMS_ORDER, filterOrder);
                 builder.appendQueryParameter(Constants.PARAMS_SORT, filterSort);
-                builder.appendQueryParameter(Constants.PARAMS_SITE, "stackoverflow");
+                builder.appendQueryParameter(Constants.PARAMS_SITE,Constants.VALUE_STACKOVERFLOW);
 
-                userListUrl = builder.build().toString();
+                String userListUrl = builder.build().toString();
 
                 URL url = new URL(userListUrl);
                 urlConn = url.openConnection();
@@ -223,53 +222,14 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
             super.onPostExecute(s);
             isLoading = false;
             if (s != null) {
-//                ObjectMapper mapper =new ObjectMapper();
-//                try {
-//                    UserItem userItem=mapper.readValue(s,UserItem.class);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
-//                try {
-//                    JSONObject responseObj = new JSONObject(s);
-//                    JSONArray items = responseObj.getJSONArray("items");
-//
-//
-//                    for (int i = 0; i < items.length(); i++) {
-////                               UserItem userItem = new UserItem();
-////                               BuzzItem buzzItem = new BuzzItem();
-//
-//
-//                        JSONObject userJsonObj = items.getJSONObject(i);
-//
-////                               userItem.setDisplayName(c.getString("display_name"));
-////                               userItem.setReputation(c.getInt("reputation"));
-////                               userItem.setProfileImage(c.getString("profile_image"));
-////
-////                               JSONObject badge_count = c.getJSONObject("badge_counts");
-////                               buzzItem.setSilver(badge_count.getInt("silver"));
-////                               buzzItem.setGold(badge_count.getInt("gold"));
-////                               buzzItem.setBronze(badge_count.getInt("bronze"));
-////
-////                               userItem.setBadgeCounts(buzzItem);
-//                        Gson gson = new Gson();
-//                        UserItem userItem = gson.fromJson(userJsonObj.toString(), UserItem.class);
-//                        userArrayList.add(userItem);
-//
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-                //    Log.d(TAG, "onPostExecute: "+userItem.getDisplayName());
                 Gson gson = new Gson();
                 TypeToken<ListResponse<UserItem>> collectionType = new TypeToken<ListResponse<UserItem>>(){};
-                userlistResponse = gson.fromJson(s, collectionType.getType());
-                //     userArrayList.add(userItem);
-                mUserAdapter.addItems(userlistResponse.getItems());
+                ListResponse<UserItem> userListResponse = gson.fromJson(s, collectionType.getType());
+                mUserAdapter.addItems(userListResponse.getItems());
                 hideProgressBar();
             } else {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_toast),
-                        Toast.LENGTH_SHORT).show();
+                Utils.showToast(MainActivity.this,R.string.error_toast);
                 hideProgressBar();
             }
         }
@@ -296,10 +256,10 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
 
     public void showDialog() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-        builder1.setMessage(R.string.backdialog_text);
+        builder1.setMessage(R.string.back_dialog_text);
         builder1.setCancelable(true);
         builder1.setPositiveButton(
-                R.string.backdialog_positive_btn,
+                R.string.back_dialog_positive_btn,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -307,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
                     }
                 });
         builder1.setNegativeButton(
-                R.string.backdialog_negative_btn,
+                R.string.back_dialog_negative_btn,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -321,8 +281,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
 
         FilterDialog filterDialog = FilterDialog.newInstance(filterOrder, filterSort,
                 filterTodate, filterFromdate);
-        filterDialog.show((MainActivity.this).getSupportFragmentManager(), "Dialog");
-
-
+        filterDialog.show((MainActivity.this).getSupportFragmentManager(),
+                getResources().getString(R.string.dialog_tag));
     }
 }

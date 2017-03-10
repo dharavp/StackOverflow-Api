@@ -17,13 +17,13 @@ import android.widget.Spinner;
 
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.Utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class FilterDialog extends DialogFragment {
     private static final String TAG = "";
@@ -35,10 +35,10 @@ public class FilterDialog extends DialogFragment {
     private String selectedFromDate = "";
     private String[] orderArray, sortArray;
 
-    public static final String ARG_ORDER="order";
-    public static final String ARG_SORT="sort";
-    public static final String ARG_TODATE="todate";
-    public  static final String ARG_FROMDATE="fromdate";
+    public static final String ARG_ORDER = "order";
+    public static final String ARG_SORT = "sort";
+    public static final String ARG_TODATE = "todate";
+    public static final String ARG_FROMDATE = "fromdate";
 
     private OnResult callbackOnResult;
 
@@ -62,7 +62,11 @@ public class FilterDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        callbackOnResult = (OnResult) context;
+        try {
+            callbackOnResult = (OnResult) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
@@ -70,44 +74,19 @@ public class FilterDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.filter_customdialog_layout, container,
+        final View rootView = inflater.inflate(R.layout.dialog_filter, container,
                 false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         Bundle bundle = getArguments();
-        String order = bundle.getString(ARG_ORDER);
-        String sort = bundle.getString(ARG_SORT);
-        String todate = bundle.getString(ARG_TODATE);
-        String fromdate = bundle.getString(ARG_FROMDATE);
 
-        selectedOrderData = order;
-        selectedSortData = sort;
-        selectedFromDate = fromdate;
-        selectedToDate = todate;
+        selectedOrderData = bundle.getString(ARG_ORDER);
+        selectedSortData = bundle.getString(ARG_SORT);
+        selectedFromDate = bundle.getString(ARG_FROMDATE);
+        selectedToDate = bundle.getString(ARG_TODATE);
 
-        DateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMATE);
-        if (selectedFromDate == null) {
-            calFromDate = Calendar.getInstance();
-        } else {
-            try {
-                Date date = formatter.parse(fromdate);
-                calToDate = Calendar.getInstance();
-                calToDate.setTime(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        calFromDate = convertToCalender(selectedFromDate);
+        calToDate = convertToCalender(selectedToDate);
 
-        if (selectedToDate == null) {
-            calToDate = Calendar.getInstance();
-        } else {
-            try {
-                Date date1 = formatter.parse(fromdate);
-                calFromDate = Calendar.getInstance();
-                calFromDate.setTime(date1);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
         btnFromDate = (Button) rootView.findViewById(R.id.btn_from_date);
         btnToDate = (Button) rootView.findViewById(R.id.btn_to_date);
         btnPositive = (Button) rootView.findViewById(R.id.btn_positive);
@@ -119,10 +98,12 @@ public class FilterDialog extends DialogFragment {
         orderArray = getResources().getStringArray(R.array.spinnerOrder);
         sortArray = getResources().getStringArray(R.array.spinnerSort);
 
-        btnFromDate.setText(fromdate);
-        btnToDate.setText(todate);
-        spinnerOrder.setSelection(((ArrayAdapter<String>) spinnerOrder.getAdapter()).getPosition(order));
-        spinnerSort.setSelection(((ArrayAdapter<String>) spinnerSort.getAdapter()).getPosition(sort));
+        btnFromDate.setText(selectedFromDate);
+        btnToDate.setText(selectedToDate);
+        spinnerOrder.setSelection(((ArrayAdapter<String>) spinnerOrder.getAdapter())
+                .getPosition(selectedOrderData));
+        spinnerSort.setSelection(((ArrayAdapter<String>) spinnerSort.getAdapter())
+                .getPosition(selectedSortData));
 
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -161,14 +142,14 @@ public class FilterDialog extends DialogFragment {
         btnPositive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                long toDateMiliSec = selectedToDate == null ? 0 : ((calToDate.getTime().getTime())/1000);
-//                long fromDateMiliSec = selectedFromDate == null ? 0 :  ((calToDate.getTime().getTime())/1000);
-//
-                callbackOnResult.sendData(
-                        selectedOrderData,
-                        selectedSortData,
-                        selectedToDate,
-                        selectedFromDate);
+
+                if (callbackOnResult != null) {
+                    callbackOnResult.sendData(
+                            selectedOrderData,
+                            selectedSortData,
+                            selectedToDate,
+                            selectedFromDate);
+                }
 
                 getDialog().cancel();
             }
@@ -186,6 +167,24 @@ public class FilterDialog extends DialogFragment {
         return rootView;
     }
 
+    private Calendar convertToCalender(String date) {
+        Calendar mCalender = Calendar.getInstance();
+        if (date == null) {
+            return mCalender;
+        } else {
+            try {
+                DateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+                Date returnDate = formatter.parse(date);
+                mCalender = Calendar.getInstance();
+                mCalender.setTime(returnDate);
+                return mCalender;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return mCalender;
+            }
+        }
+    }
+
     private void showDatePicker(DatePickerDialog.OnDateSetListener listener,
                                 Calendar calendar,
                                 Calendar minDateCalender) {
@@ -200,54 +199,27 @@ public class FilterDialog extends DialogFragment {
         dialog.show();
     }
 
-    public DatePickerDialog.OnDateSetListener fromdateListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            calFromDate.set(year, monthOfYear, dayOfMonth);
-            SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMATE,
-                    Locale.getDefault());
-            selectedFromDate = dateFormat.format(calFromDate.getTime());
-            btnFromDate.setText(selectedFromDate);
-        }
-    };
+    public DatePickerDialog.OnDateSetListener fromdateListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    calFromDate.set(year, monthOfYear, dayOfMonth);
+                    selectedFromDate = Utils.returnFormattedDate(calFromDate.getTimeInMillis());
+                    btnFromDate.setText(selectedFromDate);
+                }
+            };
 
-    DatePickerDialog.OnDateSetListener todateListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            calToDate.set(year, monthOfYear, dayOfMonth);
-            SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMATE,
-                    Locale.getDefault());
-            selectedToDate = dateFormat.format(calToDate.getTime());
-            btnToDate.setText(selectedToDate);
-//            calToDate.set(year, monthOfYear, dayOfMonth);
-//            if (calToDate.getTimeInMillis() > calFromDate.getTimeInMillis()) {
-//                String selectedDate = String.valueOf(year)
-//                        + "-" + String.valueOf(monthOfYear + 1)
-//                        + "-" + String.valueOf(dayOfMonth);
-//                btnToDate.setText(selectedDate);
-//            } else {
-//                Toast.makeText(getActivity(),R.string.text_to_date_error, Toast.LENGTH_SHORT).show();
-//            }
-        }
-    };
-//    public long milliseconds(String date)
-//    {
-//        //String date_ = date;
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        try
-//        {
-//            Date mDate = sdf.parse(date);
-//            long timeInMilliseconds = mDate.getTime();
-//            return timeInMilliseconds;
-//        }
-//        catch (ParseException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//        return 0;
-//    }
+    DatePickerDialog.OnDateSetListener todateListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    calToDate.set(year, monthOfYear, dayOfMonth);
+                    selectedToDate=Utils.returnFormattedDate(calToDate.getTimeInMillis());
+                    btnToDate.setText(selectedToDate);
+
+                }
+            };
+
 }
