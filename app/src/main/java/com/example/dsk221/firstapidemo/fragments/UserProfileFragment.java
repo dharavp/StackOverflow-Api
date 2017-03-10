@@ -2,11 +2,8 @@ package com.example.dsk221.firstapidemo.fragments;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +18,9 @@ import com.example.dsk221.firstapidemo.UserTabActivity;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -170,14 +167,10 @@ public class UserProfileFragment extends Fragment{
 
                 hideProgressBar();
                 linearLayout.setVisibility(View.VISIBLE);
-                Spanned spanned;
+
                 userdetail=aboutUser.getAboutMe();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    spanned = Html.fromHtml(userdetail, Html.FROM_HTML_MODE_LEGACY);
-                } else {
-                    spanned = Html.fromHtml(userdetail,null, null);
-                }
-                textAboutUser.setText(spanned);
+
+                textAboutUser.setText(Utils.convertHtmlInTxt(userdetail));
                 textAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
                 textAnswerCounts.setText((aboutUser.getAnswerCount())+"");
                 textQuestionCounts.setText((aboutUser.getQuestionCount())+"");

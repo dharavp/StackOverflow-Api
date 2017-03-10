@@ -2,6 +2,9 @@ package com.example.dsk221.firstapidemo.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.QuestionItem;
+import com.example.dsk221.firstapidemo.utility.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +23,7 @@ public class QuestionAdapter extends BaseAdapter {
     Context context;
     private String mpostType;
     public List<QuestionItem> questionItems;
+    private String postBody;
 
     public QuestionAdapter(Context context) {
         this.context = context;
@@ -69,12 +74,16 @@ public class QuestionAdapter extends BaseAdapter {
 
         if(mpostType.equalsIgnoreCase("answer")){
             holder.textPostType.setText("Answer");
+            holder.imagePostType.setImageResource(R.drawable.ic_answer);
         }
         else {
             holder.textPostType.setText("Question");
+            holder.imagePostType.setImageResource(R.drawable.ic_question);
         }
 
-        holder.textPostDetail.setText(questionItem.getBody());
+        postBody=questionItem.getBody();
+
+        holder.textPostDetail.setText(Utils.convertHtmlInTxt(postBody));
 
         return convertView;
     }
