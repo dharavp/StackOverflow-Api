@@ -1,6 +1,7 @@
 package com.example.dsk221.firstapidemo.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,12 +43,13 @@ public class UserActivityFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView textLoading;
     private QuestionAdapter mQuestionAdapter;
-    private String questionListUrl;
+    private String questionListUrl,openLink;
     private View footerView;
     private int userId;
     private int mQuestionPageCount = 1;
     public boolean isLoading = false;
     ListResponse<QuestionItem> questionResponse;
+    public List<QuestionItem> questionItem;
 
     public UserActivityFragment() {
     }
@@ -76,6 +81,17 @@ public class UserActivityFragment extends Fragment {
 
         new GetQuestionDetailFromJson().execute();
 
+        listQuestion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                questionItem=questionResponse.getItems();
+                openLink=questionItem.get(position).getLink();
+                Intent intent = new Intent(Intent.ACTION_VIEW)
+                        .setData(Uri.parse(openLink));
+                startActivity(intent);
+
+            }
+        });
         listQuestion.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
