@@ -1,7 +1,10 @@
 package com.example.dsk221.firstapidemo;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,9 +14,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.fragments.UserActivityFragment;
@@ -29,7 +35,9 @@ public class UserTabActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
     private static final String TAG = "bronze detail";
-    private Toolbar toolbar;
+    private String link;
+    private ClipboardManager clipboard;
+    private ClipData clip;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView textName, textReputation, textSilver, textBronze, textGold;
@@ -76,6 +84,7 @@ public class UserTabActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
 
+        link=user.getLink();
         BuzzItem buzzDetail = user.getBadgeCounts();
 
         textName.setTextColor(ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
@@ -93,13 +102,49 @@ public class UserTabActivity extends AppCompatActivity {
                 .into(imageUser);
 
     }
-
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_user_tab, menu);
+        return true;
+    }
+
+        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             case android.R.id.home:
                 UserTabActivity.this.finish();
-                return true;
+                break;
+
+            case R.id.open_in_browser:
+                Intent intent = new Intent(Intent.ACTION_VIEW)
+                        .setData(Uri.parse(link));
+                startActivity(intent);
+                break;
+
+            case R.id.copy_to_clipboard:
+                clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clip = ClipData.newPlainText("link", link);
+                clipboard.setPrimaryClip(clip);
+                ClipData abc = clipboard.getPrimaryClip();
+                ClipData.Item item1 = abc.getItemAt(0);
+                String text = item1.getText().toString();
+
+                Toast.makeText(getApplicationContext(),text,
+                        Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent,"share text to"));
+                break;
+
+
         }
 
         return super.onOptionsItemSelected(item);

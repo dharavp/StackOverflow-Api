@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.dsk221.firstapidemo.UserTabActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/open_in_browser"
+        android:title="@string/menu_openinbrowser_title"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/copy_to_clipboard"
+        android:title="@string/menu_copytoclipboard"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/share"
+        android:title="@string/menu_sharewith_title"
+        app:showAsAction="never"/>
 </menu>

@@ -24,6 +24,8 @@ public class UserItem implements Parcelable {
     @SerializedName("user_id")
     private int userId;
 
+    private String link;
+
     @SerializedName("badge_counts")
     private BuzzItem badgeCounts;
 
@@ -44,6 +46,13 @@ public class UserItem implements Parcelable {
     @SerializedName("about_me")
     private String aboutMe;
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public int getViewCount() {
         return viewCount;
@@ -143,6 +152,7 @@ public class UserItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.displayName);
         dest.writeString(this.profileImage);
+        dest.writeString(this.link);
         dest.writeInt(this.reputation);
         dest.writeInt(this.userId);
         dest.writeParcelable(this.badgeCounts, flags);
@@ -152,6 +162,7 @@ public class UserItem implements Parcelable {
     protected UserItem(Parcel in) {
         this.displayName = in.readString();
         this.profileImage = in.readString();
+        this.link=in.readString();
         this.reputation = in.readInt();
         this.userId=in.readInt();
         this.badgeCounts = in.readParcelable(BuzzItem.class.getClassLoader());

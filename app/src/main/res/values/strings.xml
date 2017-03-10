@@ -7,7 +7,13 @@
     <string name="backdialog_text">Are you sure you want to do exit..?</string>
     <string name="backdialog_positive_btn">Yes</string>
     <string name="backdialog_negative_btn">No</string>
-
+    
+    <string name="menu_search_title">Search</string>
+    <string name="menu_filter_title">Fileter</string>
+    <string name="menu_openinbrowser_title">Open in browser</string>
+    <string name="menu_copytoclipboard">Copy to clipboard</string>
+    <string name="menu_sharewith_title">Share With</string>
+    
     <string name="text_order">Order</string>
     <string name="text_sort">Sort</string>
     <string name="text_from_date">From Date</string>

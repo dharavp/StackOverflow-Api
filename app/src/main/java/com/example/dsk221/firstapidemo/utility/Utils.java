@@ -1,5 +1,6 @@
 package com.example.dsk221.firstapidemo.utility;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.text.Html;
@@ -21,4 +22,6 @@ public class Utils {
         }
         return spanned;
     }
+
+
 }
