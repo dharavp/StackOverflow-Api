@@ -13,7 +13,10 @@ import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.OwnerItem;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.utility.Utils;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -73,9 +76,11 @@ public class QuestionDetailAdapter extends BaseAdapter {
         QuestionDetailItem questionDetailItem = getItem(position);
         OwnerItem ownerItem=questionDetailItem.getOwnerItem();
         holder.textQuestionTitle.setText(Utils.convertHtmlInTxt(questionDetailItem.getTitle()));
-        holder.textLastActivityDate.setText(String.valueOf(questionDetailItem.getLastActivityDate()));
+
         holder.textUserName.setText(ownerItem.getDisplayName());
-        holder.textTotalAnswer.setText(String.valueOf(questionDetailItem.getAnswerCount()));
+        long lastActiveDate=(long)questionDetailItem.getLastActivityDate();
+        holder.textLastActivityDate.setText(getDate(lastActiveDate,"dd/MM/yyyy hh:mm:ss.SSS"));
+        holder.textTotalAnswer.setText(questionDetailItem.getAnswerCount());
         String score=Utils.getScoreString(questionDetailItem.getScore());
         holder.textScore.setText(score);
         return convertView;
@@ -84,5 +89,15 @@ public class QuestionDetailAdapter extends BaseAdapter {
         ImageView imageScore,imageAnswer;
         TextView textScore, textTotalAnswer, textQuestionTitle, textTag,
                 textLastActivityDate,textUserName;
+    }
+    public static String getDate(long milliSeconds, String dateFormat)
+    {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 }
