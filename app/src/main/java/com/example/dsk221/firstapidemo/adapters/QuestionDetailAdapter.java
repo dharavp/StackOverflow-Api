@@ -2,20 +2,17 @@ package com.example.dsk221.firstapidemo.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.dsk221.firstapidemo.R;
-import com.example.dsk221.firstapidemo.models.BuzzItem;
+import com.example.dsk221.firstapidemo.models.OwnerItem;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
-import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.utility.Utils;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +28,10 @@ public class QuestionDetailAdapter extends BaseAdapter {
     public QuestionDetailAdapter(Context context) {
         this.context = context;
         this.questionDetailItems = new ArrayList<>();
+    }
+    public void addItems(List<QuestionDetailItem> items) {
+        questionDetailItems.addAll(items);
+        notifyDataSetChanged();
     }
     @Override
     public int getCount() {
@@ -54,7 +55,7 @@ public class QuestionDetailAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater)
                 context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_user_detail, null);
+            convertView = mInflater.inflate(R.layout.item_question_detail, null);
 
             holder = new ViewHolder();
             holder.imageScore = (ImageView)convertView.findViewById(R.id.image_score);
@@ -63,18 +64,20 @@ public class QuestionDetailAdapter extends BaseAdapter {
             holder.textLastActivityDate=(TextView)convertView.findViewById(R.id.text_last_activity_date);
             holder.textTotalAnswer=(TextView)convertView.findViewById(R.id.text_total_answer);
             holder.textUserName=(TextView)convertView.findViewById(R.id.text_user_name);
+            holder.textScore=(TextView)convertView.findViewById(R.id.text_score);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.textQuestionTitle.setText("gdjgh jfsdfgdf fkggsf");
-        holder.textLastActivityDate.setText("dh fsfsjf ");
-        holder.textUserName.setText("fdfdf dkf");
-        holder.textTotalAnswer.setText(100+"");
-        holder.textScore.setText(1+"");
-
+        QuestionDetailItem questionDetailItem = getItem(position);
+        OwnerItem ownerItem=questionDetailItem.getOwnerItem();
+        holder.textQuestionTitle.setText(Utils.convertHtmlInTxt(questionDetailItem.getTitle()));
+        holder.textLastActivityDate.setText(String.valueOf(questionDetailItem.getLastActivityDate()));
+        holder.textUserName.setText(ownerItem.getDisplayName());
+        holder.textTotalAnswer.setText(String.valueOf(questionDetailItem.getAnswerCount()));
+        String score=Utils.getScoreString(questionDetailItem.getScore());
+        holder.textScore.setText(score);
         return convertView;
     }
     private class ViewHolder {
@@ -82,5 +85,4 @@ public class QuestionDetailAdapter extends BaseAdapter {
         TextView textScore, textTotalAnswer, textQuestionTitle, textTag,
                 textLastActivityDate,textUserName;
     }
-
 }

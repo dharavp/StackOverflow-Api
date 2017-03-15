@@ -30,11 +30,23 @@ public class Utils {
         if (rep < 1000) {
             repString = r;
         } else if (rep < 10000) {
-            repString = r.charAt(0) + ',' + r.substring(1);
+            repString = r.charAt(0) + "," + r.substring(1);
         } else {
-            repString = (Math.round((rep / 1000) * 10) / 10) + "k";
+            repString = (Math.round((rep / 1000f) * 10) / 10f) + "k";
         }
 
+        return repString;
+    }
+    public static String getScoreString(int rep) {
+        String repString;
+        String r = String.valueOf(rep);
+
+        if (rep < 1000) {
+            repString = r;
+        }
+        else {
+            repString = (Math.round((rep/1000f) * 10) / 10f) + "k";
+        }
         return repString;
     }
 

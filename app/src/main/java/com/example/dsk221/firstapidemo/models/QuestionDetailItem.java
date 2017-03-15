@@ -21,6 +21,7 @@ public class QuestionDetailItem {
     @SerializedName("last_activity_date")
     private int lastActivityDate;
 
+    @SerializedName("owner")
     private OwnerItem ownerItem;
 
     public boolean isAnswered() {
