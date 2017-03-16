@@ -25,6 +25,9 @@ public class Constants {
     public static final String VALUE_USER_PROFILE_FILTER="!Ln3laa1vT(0iqDP9Y6uLh_";
 
 
+    public static final String BYDEFULT_VALUE_SPINNER_ORDER="choose an order";
+    public static final String BYDEFULT_VALUE_SPINNER_SORT="sort by";
+
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String POST_TYPE_ANSWER = "answer";
     public static final String POST_TYPE_QUESTION = "question";

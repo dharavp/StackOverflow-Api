@@ -2,6 +2,7 @@ package com.example.dsk221.firstapidemo.dialogs;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -46,7 +47,6 @@ public class FilterDialog extends DialogFragment {
         void sendData(String orderData, String sortData, String todateData, String fromdateData);
     }
 
-
     public static FilterDialog newInstance(String order, String sort, String todate,
                                            String fromdate) {
         FilterDialog filterDialogFragment = new FilterDialog();
@@ -59,14 +59,18 @@ public class FilterDialog extends DialogFragment {
         return filterDialogFragment;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            callbackOnResult = (OnResult) context;
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        try {
+//            callbackOnResult = (OnResult) getParentFragment();
+//        } catch (ClassCastException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public void setCallbackOnResult(OnResult callbackOnResult) {
+        this.callbackOnResult = callbackOnResult;
     }
 
     @Nullable
@@ -97,6 +101,18 @@ public class FilterDialog extends DialogFragment {
 
         orderArray = getResources().getStringArray(R.array.spinnerOrder);
         sortArray = getResources().getStringArray(R.array.spinnerSort);
+
+
+        ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(
+                getActivity(), R.array.spinnerOrder, android.R.layout.simple_spinner_item);
+        adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerOrder.setAdapter(adapterSpinnerOrder);
+
+
+        ArrayAdapter<CharSequence> adapterSpinnerSort = ArrayAdapter.createFromResource(
+                getActivity(), R.array.spinnerSort, android.R.layout.simple_spinner_item);
+        adapterSpinnerSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSort.setAdapter(adapterSpinnerSort);
 
         btnFromDate.setText(selectedFromDate);
         btnToDate.setText(selectedToDate);
@@ -150,7 +166,6 @@ public class FilterDialog extends DialogFragment {
                             selectedToDate,
                             selectedFromDate);
                 }
-
                 getDialog().cancel();
             }
         });
@@ -220,5 +235,4 @@ public class FilterDialog extends DialogFragment {
                     btnToDate.setText(selectedToDate);
                 }
             };
-
 }

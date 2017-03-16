@@ -23,10 +23,9 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/filter_dialog_height"
         android:id="@+id/spinner_order"
-        android:prompt="@string/orderPrompt"
         android:paddingLeft="10dp"
-        android:layout_weight="1"
-        android:entries="@array/spinnerOrder" />
+        android:spinnerMode="dropdown"
+        android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,8 +45,6 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/filter_dialog_height"
             android:id="@+id/spinner_sort"
-            android:entries="@array/spinnerSort"
-            android:prompt="@string/sortPrompt"
             android:paddingLeft="10dp"
             android:layout_weight="1"/>
     </LinearLayout>

@@ -1,31 +1,24 @@
 package com.example.dsk221.firstapidemo.fragments;
 
-import android.graphics.Movie;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.util.SortedList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.example.dsk221.firstapidemo.MainActivity;
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.adapters.QuestionDetailAdapter;
-import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
-
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,6 +32,9 @@ public class QuestionDrawerFragment extends Fragment implements Type {
     ProgressBar progressBar;
     ListView listQuestionDetail;
     QuestionDetailAdapter questionDetailAdapter;
+    private View footerView;
+    private int mQuestionPageCount = 1;
+    private boolean isQuestionLoading = false;
     private static final String TAG = "Question Detail";
 
     @Override
@@ -54,11 +50,37 @@ public class QuestionDrawerFragment extends Fragment implements Type {
         progressBar=(ProgressBar)view.findViewById(R.id.progressbar);
         listQuestionDetail=(ListView)view.findViewById(R.id.list_question_detail);
 
+        footerView = ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.footer_layout, null, false);
+        footerView.setVisibility(View.GONE);
+        listQuestionDetail.addFooterView(footerView);
+
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
         listQuestionDetail.setAdapter(questionDetailAdapter);
 
-        progressBar.setVisibility(View.VISIBLE);
-        textLoading.setVisibility(View.VISIBLE);
+        getJsonQuestionListResponse();
+        listQuestionDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount,
+                                 int totalItemCount) {
+                if (firstVisibleItem + visibleItemCount == totalItemCount
+                        && (totalItemCount - 1) != 0
+                        && !isQuestionLoading) {
+                    mQuestionPageCount = mQuestionPageCount + 1;
+                    getJsonQuestionListResponse();
+                }
+            }
+        });
+        return view;
+    }
+    private void getJsonQuestionListResponse(){
+        isQuestionLoading=true;
+        showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -68,8 +90,8 @@ public class QuestionDrawerFragment extends Fragment implements Type {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
                                    Response<ListResponse<QuestionDetailItem>> response) {
-                progressBar.setVisibility(View.GONE);
-                textLoading.setVisibility(View.GONE);
+                hideProgressBar();
+                isQuestionLoading=false;
                 questionDetailAdapter.addItems(response.body().getItems());
             }
             @Override
@@ -78,6 +100,23 @@ public class QuestionDrawerFragment extends Fragment implements Type {
                 Log.e(TAG, t.toString());
             }
         });
-        return view;
     }
+    private void hideProgressBar() {
+        if (mQuestionPageCount == 1) {
+            textLoading.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+        } else {
+            footerView.setVisibility(View.GONE);
+        }
+    }
+
+    private void showProgressBar() {
+        if (mQuestionPageCount == 1) {
+            textLoading.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            footerView.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

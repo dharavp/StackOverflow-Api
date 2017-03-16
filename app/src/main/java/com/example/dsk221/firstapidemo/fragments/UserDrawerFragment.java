@@ -49,10 +49,10 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     private View footerView;
     private UserAdapter mUserAdapter;
     private int mPageCount = 1;
-    public boolean isLoading = false;
-    public boolean isSearch = false;
-    private String filterOrder = Constants.VALUE_DESC;
-    private String filterSort = Constants.VALUE_REPUTATION;
+    private boolean isLoading = false;
+    private boolean isSearch = false;
+    private String filterOrder = Constants.BYDEFULT_VALUE_SPINNER_ORDER;
+    private String filterSort = Constants.BYDEFULT_VALUE_SPINNER_SORT;
     private String filterTodate = null;
     private String filterFromdate = null;
 
@@ -279,8 +279,8 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
 
         FilterDialog filterDialog = FilterDialog.newInstance(filterOrder, filterSort,
                 filterTodate, filterFromdate);
+        filterDialog.setCallbackOnResult(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));
     }
-
 }

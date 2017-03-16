@@ -182,6 +182,4 @@ public class UserTabActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-
-
 }
