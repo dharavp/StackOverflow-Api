@@ -30,4 +30,7 @@ public class Constants {
     public static final String POST_TYPE_QUESTION = "question";
 
 
+    public static final String DATE_FORMAT_LAST_ACTIVITY ="dd MMM 'at' hh:mm";
+
+
 }

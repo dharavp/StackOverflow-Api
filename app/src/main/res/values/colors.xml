@@ -5,18 +5,29 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBronze">#F8C501</color>
     <color name="colorSilver">#C5C5C5</color>
-    <color name="colorSilverCount">#848B90</color>
     <color name="colorSolidGold">#D09962</color>
+    <color name="colorSilverCount">#848B90</color>
+    <color name="colorLinearLayoutIsAnswered">#E5F9ED</color>
+    <color name="colorLinearLayoutNotAnswered">#F2F4F7</color>
     <color name="colorUserText">#199fff</color>
     <color name="colorUrlText">#0176CD</color>
     <color name="colorStrokeGold">#444444</color>
-    <color name="colorTabBackground">#EDEEF0</color>
+
     <color name="colorTabTitle">#0C0D0F</color>
     <color name="colorCount">#0B0D0F</color>
+
     <color name="colorSelectedTab">#E88230</color>
     <color name="colorNotSelectedTab">#D3D7DA</color>
     <color name="coloNotSelectedTabText">#838D96</color>
+    <color name="colorTabBackground">#EDEEF0</color>
     <color name="colorAboutUser">#0F0F0F</color>
+
     <color name="colorCountText">#69727C</color>
     <color name="colorHorizontalView">#EEEEF0</color>
+    <color name="colorScore">#767F8E</color>
+    <color name="colorNotAnswerTotal">#767F8E</color>
+    <color name="colorIsAnswerTotal">#498E69</color>
+    <color name="colorLatAcitivityDate">#9EA5AC</color>
+    <color name="colorQuestionTitle">#0176CB</color>
+    <color name="colorQuestionUserName">#0176D4</color>
 </resources>

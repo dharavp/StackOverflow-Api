@@ -2,6 +2,8 @@ package com.example.dsk221.firstapidemo.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by dsk-221 on 14/3/17.
  */
@@ -14,6 +16,8 @@ public class QuestionDetailItem {
     private String title;
 
     private int score;
+
+    private ArrayList<String> tags;
 
     @SerializedName("answer_count")
     private int answerCount;
@@ -70,5 +74,12 @@ public class QuestionDetailItem {
 
     public void setOwnerItem(OwnerItem ownerItem) {
         this.ownerItem = ownerItem;
+    }
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
     }
 }

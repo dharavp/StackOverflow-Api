@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
     @GET("questions")
-    Call<ListResponse<QuestionDetailItem>>getQuestionDetail(@Query("order") String order,
+    Call<ListResponse<QuestionDetailItem>>getQuestionDetail(@Query("page") int page,@Query("order") String order,
                                                             @Query("sort") String sort,
                                                             @Query("site") String site);
 

@@ -62,8 +62,8 @@ public class QuestionDrawerFragment extends Fragment implements Type {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail("desc",
-                "votes","stackoverflow");
+        Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(1,Constants.VALUE_DESC,
+                Constants.VALUE_ACTIVITY,Constants.VALUE_STACKOVERFLOW);
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
@@ -71,9 +71,7 @@ public class QuestionDrawerFragment extends Fragment implements Type {
                 progressBar.setVisibility(View.GONE);
                 textLoading.setVisibility(View.GONE);
                 questionDetailAdapter.addItems(response.body().getItems());
-                // Log.d(TAG, "title name: " + questionDetailItems.get(1).getTitle());
             }
-
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>>call, Throwable t) {
                 // Log error here since request failed

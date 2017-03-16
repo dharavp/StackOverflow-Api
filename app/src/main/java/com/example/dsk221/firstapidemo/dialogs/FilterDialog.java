@@ -218,7 +218,6 @@ public class FilterDialog extends DialogFragment {
                     calToDate.set(year, monthOfYear, dayOfMonth);
                     selectedToDate=Utils.returnFormattedDate(calToDate.getTimeInMillis());
                     btnToDate.setText(selectedToDate);
-
                 }
             };
 

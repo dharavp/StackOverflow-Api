@@ -2,6 +2,8 @@ package com.example.dsk221.firstapidemo.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 
 public class QuestionItem {
     private String title;
@@ -53,4 +55,6 @@ public class QuestionItem {
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
+
+
 }

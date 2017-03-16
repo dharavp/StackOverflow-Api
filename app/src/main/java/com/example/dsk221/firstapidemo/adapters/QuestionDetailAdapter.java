@@ -2,22 +2,25 @@ package com.example.dsk221.firstapidemo.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Html;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.OwnerItem;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
+import com.example.dsk221.firstapidemo.utility.Constants;
 import com.example.dsk221.firstapidemo.utility.Utils;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
 
 /**
  * Created by dsk-221 on 14/3/17.
@@ -68,6 +71,8 @@ public class QuestionDetailAdapter extends BaseAdapter {
             holder.textTotalAnswer=(TextView)convertView.findViewById(R.id.text_total_answer);
             holder.textUserName=(TextView)convertView.findViewById(R.id.text_user_name);
             holder.textScore=(TextView)convertView.findViewById(R.id.text_score);
+            holder.linearLayoutScore=(LinearLayout)convertView.findViewById(R.id.linearlayout_score);
+            holder.textTag=(TextView)convertView.findViewById(R.id.text_tag);
 
             convertView.setTag(holder);
         } else {
@@ -75,12 +80,31 @@ public class QuestionDetailAdapter extends BaseAdapter {
         }
         QuestionDetailItem questionDetailItem = getItem(position);
         OwnerItem ownerItem=questionDetailItem.getOwnerItem();
-        holder.textQuestionTitle.setText(Utils.convertHtmlInTxt(questionDetailItem.getTitle()));
 
+        ArrayList<String> listTag=questionDetailItem.getTags();
+        holder.textTag.setText(Utils.arrayToString(listTag));
+
+        int conditionColor;
+        if(questionDetailItem.isAnswered()){
+            conditionColor=Color.parseColor("#E5F9ED");
+            holder.imageAnswer.setImageResource(R.drawable.ic_ans_green);
+            holder.textTotalAnswer.setTextColor(Color.parseColor("#498E69"));
+        }
+        else{
+            conditionColor=Color.parseColor("#F2F4F7");
+            holder.imageAnswer.setImageResource(R.drawable.ic_ans_grey);
+            holder.textTotalAnswer.setTextColor(Color.parseColor("#767F8E"));
+        }
+        holder.linearLayoutScore.setBackgroundColor(conditionColor);
+        holder.textQuestionTitle.setText(Utils.convertHtmlInTxt(questionDetailItem.getTitle()));
         holder.textUserName.setText(ownerItem.getDisplayName());
-        long lastActiveDate=(long)questionDetailItem.getLastActivityDate();
-        holder.textLastActivityDate.setText(getDate(lastActiveDate,"dd/MM/yyyy hh:mm:ss.SSS"));
-        holder.textTotalAnswer.setText(questionDetailItem.getAnswerCount());
+
+        long lastActiveDate=(long)(questionDetailItem.getLastActivityDate());
+        String lastActivity=Utils.getDate(lastActiveDate, Constants.DATE_FORMAT_LAST_ACTIVITY);
+        holder.textLastActivityDate.setText(lastActivity);
+
+        holder.textTotalAnswer.setText(String.valueOf(questionDetailItem.getAnswerCount()));
+
         String score=Utils.getScoreString(questionDetailItem.getScore());
         holder.textScore.setText(score);
         return convertView;
@@ -89,15 +113,8 @@ public class QuestionDetailAdapter extends BaseAdapter {
         ImageView imageScore,imageAnswer;
         TextView textScore, textTotalAnswer, textQuestionTitle, textTag,
                 textLastActivityDate,textUserName;
+        LinearLayout linearLayoutScore;
     }
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
 
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
-    }
+
 }
