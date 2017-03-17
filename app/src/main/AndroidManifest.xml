@@ -14,7 +14,7 @@
             android:name=".UserTabActivity"
             android:label="@string/title_activity_user_tab"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".NavigationDrawerActivity"
+        <activity android:name=".UserQuestionDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,9 +3,9 @@
     <item
         android:id="@+id/nav_user"
         android:icon="@mipmap/ic_user"
-        android:title="Users" />
+        android:title="@string/nav_user_detail_title" />
     <item
         android:id="@+id/nav_question"
         android:icon="@drawable/ic_question"
-        android:title="Questions" />
+        android:title="@string/nav_question_detail_title" />
 </menu>

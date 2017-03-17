@@ -15,16 +15,16 @@ import android.view.MenuItem;
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
 
-public class NavigationDrawerActivity extends AppCompatActivity
+public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation_drawer);
+        setContentView(R.layout.activity_user_question_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle(R.string.nav_home_title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
@@ -56,11 +56,11 @@ public class NavigationDrawerActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_user:
                 fragment = new UserDrawerFragment();
-                getSupportActionBar().setTitle("User Detail");
+                getSupportActionBar().setTitle(R.string.nav_user_detail_title);
                 break;
             case R.id.nav_question:
                 fragment = new QuestionDrawerFragment();
-                getSupportActionBar().setTitle("Question Detail");
+                getSupportActionBar().setTitle(R.string.nav_question_detail_title);
                 break;
         }
         if (fragment != null) {
@@ -73,7 +73,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         return true;
     }
     public void showDialog() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(NavigationDrawerActivity.this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(UserQuestionDrawerActivity.this);
         builder1.setMessage(R.string.back_dialog_text);
         builder1.setCancelable(true);
         builder1.setPositiveButton(
@@ -81,7 +81,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        NavigationDrawerActivity.this.finish();
+                        UserQuestionDrawerActivity.this.finish();
                     }
                 });
         builder1.setNegativeButton(
