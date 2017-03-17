@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimerTask;
 
 public class FilterDialog extends DialogFragment {
     private static final String TAG = "";
@@ -108,7 +109,6 @@ public class FilterDialog extends DialogFragment {
         adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrder.setAdapter(adapterSpinnerOrder);
 
-
         ArrayAdapter<CharSequence> adapterSpinnerSort = ArrayAdapter.createFromResource(
                 getActivity(), R.array.spinnerSort, android.R.layout.simple_spinner_item);
         adapterSpinnerSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -116,10 +116,22 @@ public class FilterDialog extends DialogFragment {
 
         btnFromDate.setText(selectedFromDate);
         btnToDate.setText(selectedToDate);
-        spinnerOrder.setSelection(((ArrayAdapter<String>) spinnerOrder.getAdapter())
-                .getPosition(selectedOrderData));
-        spinnerSort.setSelection(((ArrayAdapter<String>) spinnerSort.getAdapter())
-                .getPosition(selectedSortData));
+        spinnerOrder.post(new TimerTask() {
+            @Override
+            public void run() {
+                spinnerOrder.setSelection(((ArrayAdapter<String>) spinnerOrder.getAdapter())
+                        .getPosition(selectedOrderData));
+            }
+        });
+        spinnerSort.post(new TimerTask() {
+            @Override
+            public void run() {
+                spinnerSort.setSelection(((ArrayAdapter<String>) spinnerSort.getAdapter())
+                        .getPosition(selectedSortData));
+            }
+        });
+
+
 
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

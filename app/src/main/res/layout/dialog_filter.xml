@@ -26,6 +26,7 @@
         android:paddingLeft="10dp"
         android:spinnerMode="dropdown"
         android:layout_weight="1"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
