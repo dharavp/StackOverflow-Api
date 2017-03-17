@@ -39,6 +39,9 @@ public class QuestionDetailAdapter extends BaseAdapter {
         questionDetailItems.addAll(items);
         notifyDataSetChanged();
     }
+    public void removeItems(){
+        questionDetailItems.clear();
+    }
     @Override
     public int getCount() {
         return questionDetailItems.size();

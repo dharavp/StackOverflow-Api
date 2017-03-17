@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.adapters.QuestionDetailAdapter;
+import com.example.dsk221.firstapidemo.dialogs.FilterDialog;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
@@ -32,7 +33,7 @@ import retrofit2.Response;
  * Created by dsk-221 on 14/3/17.
  */
 
-public class QuestionDrawerFragment extends Fragment implements Type {
+public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnResult {
     TextView textLoading;
     ProgressBar progressBar;
     ListView listQuestionDetail;
@@ -41,10 +42,15 @@ public class QuestionDrawerFragment extends Fragment implements Type {
     private int mQuestionPageCount = 1;
     private boolean isQuestionLoading = false;
     private static final String TAG = "Question Detail";
+    private String filterQuestionOrder = Constants.VALUE_DESC;
+    private String filterQuestionSort = Constants.VALUE_VOTES;
+    private String filterQuestionTodate = null;
+    private String filterQuestionFromdate = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -104,14 +110,39 @@ public class QuestionDrawerFragment extends Fragment implements Type {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.filter) {
+            showFilterDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void sendData(String orderData, String sortData, String todateData, String fromdateData) {
+        mQuestionPageCount = 1;
+        questionDetailAdapter.removeItems();
+
+        filterQuestionOrder=orderData;
+        filterQuestionSort=sortData;
+        filterQuestionFromdate=fromdateData;
+        filterQuestionTodate=todateData;
+
+        getJsonQuestionListResponse();
+    }
+
     private void getJsonQuestionListResponse(){
         isQuestionLoading=true;
         showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
+            Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(mQuestionPageCount,
+                    filterQuestionFromdate,filterQuestionTodate,filterQuestionOrder,
+                    filterQuestionSort,Constants.VALUE_STACKOVERFLOW);
 
-        Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(1,Constants.VALUE_DESC,
-                Constants.VALUE_ACTIVITY,Constants.VALUE_STACKOVERFLOW);
+
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
@@ -143,6 +174,15 @@ public class QuestionDrawerFragment extends Fragment implements Type {
         } else {
             footerView.setVisibility(View.VISIBLE);
         }
+    }
+    public void showFilterDialog() {
+
+        FilterDialog filterDialog = FilterDialog.newInstance("questionDrawer",filterQuestionOrder,
+                filterQuestionSort,
+                filterQuestionTodate, filterQuestionFromdate);
+        filterDialog.setCallbackOnResult(this);
+        filterDialog.show(getActivity().getSupportFragmentManager(),
+                getResources().getString(R.string.dialog_tag));
     }
 
 }

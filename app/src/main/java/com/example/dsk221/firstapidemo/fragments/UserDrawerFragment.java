@@ -278,7 +278,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
 
     public void showCustomDialog() {
 
-        FilterDialog filterDialog = FilterDialog.newInstance(filterOrder, filterSort,
+        FilterDialog filterDialog = FilterDialog.newInstance("userDrawer",filterOrder, filterSort,
                 filterTodate, filterFromdate);
         filterDialog.setCallbackOnResult(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),

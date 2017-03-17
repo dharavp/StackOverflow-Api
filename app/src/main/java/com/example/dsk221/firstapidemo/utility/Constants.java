@@ -21,6 +21,7 @@ public class Constants {
     public static final String VALUE_ACTIVITY = "activity";
     public static final String VALUE_STACKOVERFLOW = "stackoverflow";
     public static final String VALUE_REPUTATION = "reputation";
+    public static final String VALUE_VOTES ="votes";
     public static final String VALUE_USER_ACTIVITY_FILTER = "!21SR53iynw4wxr5*GaPD4";
     public static final String VALUE_USER_PROFILE_FILTER="!Ln3laa1vT(0iqDP9Y6uLh_";
 

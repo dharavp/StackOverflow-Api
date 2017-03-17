@@ -34,20 +34,27 @@
     <string name="orderPrompt">Choose an order</string>
     <string name="sortPrompt">Sort by</string>
 
-    <string-array name="spinnerOrder">
-        <item>choose an order</item>
+    <string-array name="spinnerUserOrder">
         <item>asc</item>
         <item>desc</item>
     </string-array>
 
-    <string-array name="spinnerSort">
-        <item>Sort by</item>
+
+    <string-array name="spinnerUserSort">
         <item>reputation</item>
         <item>creation</item>
         <item>modified</item>
         <item>name</item>
     </string-array>
 
+    <string-array name="spinnerQuestionSort">
+        <item>votes</item>
+        <item>activity</item>
+        <item>creation</item>
+        <item>hot</item>
+        <item>week</item>
+        <item>month</item>
+    </string-array>
     <string-array name="navigation_drawer_items_array">
         <item>Users</item>
         <item>Questions</item>
@@ -57,6 +64,5 @@
     <string name="navigation_drawer_close">close</string>
     <string name="title_activity_user_tab">UserTabActivity</string>
     <string name="title_activity_navigation_drawer">Main2Activity</string>
-
 
 </resources>
