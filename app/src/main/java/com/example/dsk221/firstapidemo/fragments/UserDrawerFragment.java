@@ -3,10 +3,7 @@ package com.example.dsk221.firstapidemo.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -30,16 +27,13 @@ import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.dialogs.FilterDialog;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.UserItem;
+import com.example.dsk221.firstapidemo.retrofit.ApiClient;
+import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
-import com.example.dsk221.firstapidemo.utility.Utils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserDrawerFragment extends Fragment implements FilterDialog.OnResult {
     private static final String TAG = "MainActivity";
@@ -78,8 +72,8 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
 
         mUserAdapter = new UserAdapter(getActivity());
         userListView.setAdapter(mUserAdapter);
-        new GetDataFromJson().execute();
-
+       // new GetDataFromJson().execute();
+        getUserDetail();
         userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,7 +98,8 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                         && !isLoading
                         && !isSearch) {
                     mPageCount = mPageCount + 1;
-                    new GetDataFromJson().execute();
+                    getUserDetail();
+                   // new GetDataFromJson().execute();
                 }
             }
         });
@@ -157,81 +152,106 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         filterFromdate = fromdateData;
         filterTodate = todateData;
 
-        new GetDataFromJson().execute();
+       // new GetDataFromJson().execute();
+        getUserDetail();
     }
-    private class GetDataFromJson extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            isLoading = true;
-            showProgressBar();
-        }
+//    private class GetDataFromJson extends AsyncTask<Void, Void, String> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            isLoading = true;
+//            showProgressBar();
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... params) {
+//            String response = null;
+//            URLConnection urlConn = null;
+//            BufferedReader bufferedReader = null;
+//            try {
+//                Uri.Builder builder = Uri.parse(Constants.URL_USER_LIST).buildUpon();
+//                builder.appendQueryParameter(Constants.PARAMS_PAGE, String.valueOf(mPageCount));
+//                if (filterFromdate != null) {
+//                    builder.appendQueryParameter(Constants.PARAMS_FROMDATE, filterFromdate);
+//                }
+//                if (filterTodate != null) {
+//                    builder.appendQueryParameter(Constants.PARAMS_TODATE,
+//                            filterTodate);
+//                }
+//                builder.appendQueryParameter(Constants.PARAMS_ORDER, filterOrder);
+//                builder.appendQueryParameter(Constants.PARAMS_SORT, filterSort);
+//                builder.appendQueryParameter(Constants.PARAMS_SITE,Constants.VALUE_STACKOVERFLOW);
+//
+//                String userListUrl = builder.build().toString();
+//
+//                URL url = new URL(userListUrl);
+//                urlConn = url.openConnection();
+//                bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+//
+//                StringBuffer stringBuffer = new StringBuffer();
+//                String line;
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    stringBuffer.append(line);
+//                }
+//                response = stringBuffer.toString();
+//                Log.d(TAG, stringBuffer.toString());
+//
+//            } catch (Exception ex) {
+//                Log.e("App", "yourDataTask", ex);
+//
+//            } finally {
+//                if (bufferedReader != null) {
+//                    try {
+//                        bufferedReader.close();
+//                    } catch (IOException e) {
+//
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//            return response;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            isLoading = false;
+//            if (s != null) {
+//
+//                Gson gson = new Gson();
+//                TypeToken<ListResponse<UserItem>> collectionType = new TypeToken<ListResponse<UserItem>>(){};
+//                ListResponse<UserItem> userListResponse = gson.fromJson(s, collectionType.getType());
+//                mUserAdapter.addItems(userListResponse.getItems());
+//                hideProgressBar();
+//            } else {
+//                Utils.showToast(getActivity(),R.string.error_toast);
+//                hideProgressBar();
+//            }
+//        }
+//    }
+    private void getUserDetail(){
+        isLoading=true;
+        showProgressBar();
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<ListResponse<UserItem>> call = apiService.getUserDetail(mPageCount,
+                filterFromdate,filterTodate,filterOrder,
+                filterSort,Constants.VALUE_STACKOVERFLOW);
 
-        @Override
-        protected String doInBackground(Void... params) {
-            String response = null;
-            URLConnection urlConn = null;
-            BufferedReader bufferedReader = null;
-            try {
-                Uri.Builder builder = Uri.parse(Constants.URL_USER_LIST).buildUpon();
-                builder.appendQueryParameter(Constants.PARAMS_PAGE, String.valueOf(mPageCount));
-                if (filterFromdate != null) {
-                    builder.appendQueryParameter(Constants.PARAMS_FROMDATE, filterFromdate);
-                }
-                if (filterTodate != null) {
-                    builder.appendQueryParameter(Constants.PARAMS_TODATE,
-                            filterTodate);
-                }
-                builder.appendQueryParameter(Constants.PARAMS_ORDER, filterOrder);
-                builder.appendQueryParameter(Constants.PARAMS_SORT, filterSort);
-                builder.appendQueryParameter(Constants.PARAMS_SITE,Constants.VALUE_STACKOVERFLOW);
-
-                String userListUrl = builder.build().toString();
-
-                URL url = new URL(userListUrl);
-                urlConn = url.openConnection();
-                bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-
-                StringBuffer stringBuffer = new StringBuffer();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuffer.append(line);
-                }
-                response = stringBuffer.toString();
-                Log.d(TAG, stringBuffer.toString());
-
-            } catch (Exception ex) {
-                Log.e("App", "yourDataTask", ex);
-
-            } finally {
-                if (bufferedReader != null) {
-                    try {
-                        bufferedReader.close();
-                    } catch (IOException e) {
-
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            isLoading = false;
-            if (s != null) {
-
-                Gson gson = new Gson();
-                TypeToken<ListResponse<UserItem>> collectionType = new TypeToken<ListResponse<UserItem>>(){};
-                ListResponse<UserItem> userListResponse = gson.fromJson(s, collectionType.getType());
-                mUserAdapter.addItems(userListResponse.getItems());
+        call.enqueue(new Callback<ListResponse<UserItem>>() {
+            @Override
+            public void onResponse(Call<ListResponse<UserItem>> call,
+                                   Response<ListResponse<UserItem>> response) {
                 hideProgressBar();
-            } else {
-                Utils.showToast(getActivity(),R.string.error_toast);
-                hideProgressBar();
+                isLoading=false;
+                mUserAdapter.addItems(response.body().getItems());
             }
-        }
+            @Override
+            public void onFailure(Call<ListResponse<UserItem>>call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     private void hideProgressBar() {
