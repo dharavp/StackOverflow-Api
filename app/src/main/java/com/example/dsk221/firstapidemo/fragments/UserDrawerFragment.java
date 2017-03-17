@@ -137,8 +137,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.filter) {
-            Utils.showFilterDialog("UserDrawer",filterOrder, filterSort,
-                    filterTodate, filterFromdate);
+            showCustomDialog();
         }
         return super.onOptionsItemSelected(item);
     }
