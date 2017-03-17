@@ -5,8 +5,10 @@
     <string name="error_toast">try again........</string>
 
     <string name="back_dialog_text">Are you sure you want to do exit..?</string>
-    <string name="back_dialog_positive_btn">Yes</string>
-    <string name="back_dialog_negative_btn">No</string>
+    <string name="back_dialog_positive_btn">YES</string>
+    <string name="back_dialog_negative_btn">NO</string>
+
+    <string name="filter_dialog_reset_button">RESET</string>
 
     <string name="menu_search_title">Search</string>
     <string name="menu_filter_title">Filter</string>
@@ -35,8 +37,8 @@
     <string name="sortPrompt">Sort by</string>
 
     <string-array name="spinnerUserOrder">
-        <item>asc</item>
         <item>desc</item>
+        <item>asc</item>
     </string-array>
 
 

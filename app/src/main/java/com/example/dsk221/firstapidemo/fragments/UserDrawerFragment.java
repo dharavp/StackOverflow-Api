@@ -272,28 +272,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         }
     }
 
-    public void showDialog() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-        builder1.setMessage(R.string.back_dialog_text);
-        builder1.setCancelable(true);
-        builder1.setPositiveButton(
-                R.string.back_dialog_positive_btn,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        getActivity().finish();
-                    }
-                });
-        builder1.setNegativeButton(
-                R.string.back_dialog_negative_btn,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
+
 
     public void showCustomDialog() {
 

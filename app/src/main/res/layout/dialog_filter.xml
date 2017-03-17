@@ -2,116 +2,142 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="14dp"
+    android:background="@color/colorWhite"
     android:minWidth="320dp"
-    android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/filter_dialog_height"
-    android:orientation="horizontal"
-    android:weightSum="2"
-    android:layout_marginBottom="@dimen/activity_horizontal_margin">
-    <TextView
-        android:text="@string/text_order"
-        android:layout_width="0dp"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/filter_dialog_height"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:id="@+id/text_order" />
-    <Spinner
-        android:layout_width="0dp"
-        android:layout_height="@dimen/filter_dialog_height"
-        android:id="@+id/spinner_order"
-        android:paddingLeft="10dp"
-        android:spinnerMode="dropdown"
-        android:layout_weight="1"/>
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/text_order"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/filter_dialog_height"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/text_order" />
+
+        <Spinner
+            android:id="@+id/spinner_order"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/filter_dialog_height"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:spinnerMode="dropdown" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/filter_dialog_height"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
+            android:id="@+id/text_sort"
             android:layout_width="0dp"
             android:layout_height="@dimen/filter_dialog_height"
-            android:id="@+id/text_sort"
-            android:text="@string/text_sort"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:layout_weight="1"/>
+            android:text="@string/text_sort" />
+
         <Spinner
+            android:id="@+id/spinner_sort"
             android:layout_width="0dp"
             android:layout_height="@dimen/filter_dialog_height"
-            android:id="@+id/spinner_sort"
-            android:paddingLeft="10dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:paddingLeft="10dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/filter_dialog_height"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
+            android:id="@+id/text_from_date"
             android:layout_width="0dp"
             android:layout_height="@dimen/filter_dialog_height"
-            android:id="@+id/text_from_date"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:text="@string/text_from_date"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/badge_text_size"/>
+            android:textSize="@dimen/badge_text_size" />
+
         <Button
+            android:id="@+id/btn_from_date"
             android:layout_width="0dp"
             android:layout_height="@dimen/filter_dialog_height"
-            android:id="@+id/btn_from_date"
             android:layout_weight="1"
             android:gravity="left"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/filter_dialog_height"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/filter_dialog_height"
             android:id="@+id/text_to_date"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:textSize="@dimen/badge_text_size"
-            android:gravity="center_vertical"
-            android:text="@string/text_to_date"/>
-        <Button
             android:layout_width="0dp"
             android:layout_height="@dimen/filter_dialog_height"
-            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/text_to_date"
+            android:textSize="@dimen/badge_text_size" />
+
+        <Button
+            android:id="@+id/btn_to_date"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/filter_dialog_height"
             android:layout_weight="1"
             android:gravity="left"
-            android:id="@+id/btn_to_date"/>
+            android:paddingLeft="10dp" />
     </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back_dialog_positive_btn"
-                android:id="@+id/btn_positive"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back_dialog_negative_btn"
-                android:layout_gravity="end"
-                android:id="@+id/btn_negative"/>
-    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:background="?selectableItemBackground"
+            android:text="@string/filter_dialog_reset_button"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/btn_positive"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:background="?selectableItemBackground"
+            android:text="@string/back_dialog_positive_btn"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/btn_negative"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_toLeftOf="@+id/btn_positive"
+            android:background="?selectableItemBackground"
+            android:text="@string/back_dialog_negative_btn"
+            android:textColor="@color/colorAccent" />
+    </RelativeLayout>
 </LinearLayout>

@@ -26,20 +26,20 @@ import java.util.Date;
 
 public class FilterDialog extends DialogFragment {
     private static final String TAG = "";
-    private Button btnFromDate, btnToDate, btnPositive, btnNegative;
+    private Button btnFromDate, btnToDate, btnPositive, btnNegative, btnReset;
     private Calendar calToDate, calFromDate;
     private Spinner spinnerOrder, spinnerSort;
     private String selectedOrderData, selectedSortData;
     private String selectedToDate = "";
     private String selectedFromDate = "";
-    public String selectedDrawerName="";
-    private String[] orderUserArray, sortUserArray, orderQuestinoArray, sortQuestionArray;
+    public String selectedDrawerName = "";
+    private String[] orderUserArray, sortUserArray;
 
     public static final String ARG_ORDER = "order";
     public static final String ARG_SORT = "sort";
     public static final String ARG_TODATE = "todate";
     public static final String ARG_FROMDATE = "fromdate";
-    public static final String ARG_DRAWERNAME="drawername";
+    public static final String ARG_DRAWERNAME = "drawername";
 
     private OnResult callbackOnResult;
 
@@ -47,11 +47,11 @@ public class FilterDialog extends DialogFragment {
         void sendData(String orderData, String sortData, String todateData, String fromdateData);
     }
 
-    public static FilterDialog newInstance(String drawerName,String order, String sort, String todate,
+    public static FilterDialog newInstance(String drawerName, String order, String sort, String todate,
                                            String fromdate) {
         FilterDialog filterDialogFragment = new FilterDialog();
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_DRAWERNAME,drawerName);
+        bundle.putString(ARG_DRAWERNAME, drawerName);
         bundle.putString(ARG_ORDER, order);
         bundle.putString(ARG_SORT, sort);
         bundle.putString(ARG_TODATE, todate);
@@ -88,7 +88,7 @@ public class FilterDialog extends DialogFragment {
         selectedSortData = bundle.getString(ARG_SORT);
         selectedFromDate = bundle.getString(ARG_FROMDATE);
         selectedToDate = bundle.getString(ARG_TODATE);
-        selectedDrawerName=bundle.getString(ARG_DRAWERNAME);
+        selectedDrawerName = bundle.getString(ARG_DRAWERNAME);
 
         calFromDate = convertToCalender(selectedFromDate);
         calToDate = convertToCalender(selectedToDate);
@@ -97,37 +97,27 @@ public class FilterDialog extends DialogFragment {
         btnToDate = (Button) rootView.findViewById(R.id.btn_to_date);
         btnPositive = (Button) rootView.findViewById(R.id.btn_positive);
         btnNegative = (Button) rootView.findViewById(R.id.btn_negative);
+        btnReset = (Button) rootView.findViewById(R.id.btn_reset);
 
         spinnerOrder = (Spinner) rootView.findViewById(R.id.spinner_order);
         spinnerSort = (Spinner) rootView.findViewById(R.id.spinner_sort);
-
 
         ArrayAdapter<CharSequence> adapterSpinnerOrder = ArrayAdapter.createFromResource(
                 getActivity(), R.array.spinnerUserOrder, android.R.layout.simple_spinner_item);
         adapterSpinnerOrder.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrder.setAdapter(adapterSpinnerOrder);
 
-        if(selectedDrawerName.equalsIgnoreCase("userDrawer")){
-
-            orderUserArray = getResources().getStringArray(R.array.spinnerUserOrder);
+        orderUserArray = getResources().getStringArray(R.array.spinnerUserOrder);
+        if (selectedDrawerName.equalsIgnoreCase("userDrawer")) {
             sortUserArray = getResources().getStringArray(R.array.spinnerUserSort);
-
-            ArrayAdapter<CharSequence> adapterSpinnerSort = ArrayAdapter.createFromResource(
-                    getActivity(), R.array.spinnerUserSort, android.R.layout.simple_spinner_item);
-            adapterSpinnerSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerSort.setAdapter(adapterSpinnerSort);
-        }
-        else{
-
-            orderUserArray = getResources().getStringArray(R.array.spinnerUserOrder);
+        } else {
             sortUserArray = getResources().getStringArray(R.array.spinnerQuestionSort);
-
-            ArrayAdapter<CharSequence> adapterSpinnerSort = ArrayAdapter.createFromResource(
-                    getActivity(), R.array.spinnerQuestionSort, android.R.layout.simple_spinner_item);
-            adapterSpinnerSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerSort.setAdapter(adapterSpinnerSort);
-
         }
+        ArrayAdapter<CharSequence> adapterSpinnerSort = new ArrayAdapter<CharSequence>(getActivity(),
+                android.R.layout.simple_spinner_item, sortUserArray);
+        adapterSpinnerSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSort.setAdapter(adapterSpinnerSort);
+
 
         btnFromDate.setText(selectedFromDate);
         btnToDate.setText(selectedToDate);
@@ -192,6 +182,23 @@ public class FilterDialog extends DialogFragment {
             }
         });
 
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedToDate = "";
+                selectedFromDate = "";
+                selectedOrderData = orderUserArray[0];
+                selectedSortData = sortUserArray[0];
+
+                callbackOnResult.sendData(
+                        selectedOrderData,
+                        selectedSortData,
+                        selectedToDate,
+                        selectedFromDate);
+                getDialog().cancel();
+
+            }
+        });
 
         calFromDate = Calendar.getInstance();
         return rootView;
@@ -246,7 +253,7 @@ public class FilterDialog extends DialogFragment {
                 public void onDateSet(DatePicker view, int year, int monthOfYear,
                                       int dayOfMonth) {
                     calToDate.set(year, monthOfYear, dayOfMonth);
-                    selectedToDate=Utils.returnFormattedDate(calToDate.getTimeInMillis());
+                    selectedToDate = Utils.returnFormattedDate(calToDate.getTimeInMillis());
                     btnToDate.setText(selectedToDate);
                 }
             };
