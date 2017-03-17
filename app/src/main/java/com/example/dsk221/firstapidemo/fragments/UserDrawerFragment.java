@@ -51,8 +51,8 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     private int mPageCount = 1;
     private boolean isLoading = false;
     private boolean isSearch = false;
-    private String filterOrder = Constants.BYDEFULT_VALUE_SPINNER_ORDER;
-    private String filterSort = Constants.BYDEFULT_VALUE_SPINNER_SORT;
+    private String filterOrder = Constants.VALUE_DESC;
+    private String filterSort = Constants.VALUE_REPUTATION;
     private String filterTodate = null;
     private String filterFromdate = null;
 
@@ -277,7 +277,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
 
     public void showCustomDialog() {
 
-        FilterDialog filterDialog = FilterDialog.newInstance(filterOrder, filterSort,
+        FilterDialog filterDialog = FilterDialog.newInstance("userDrawer",filterOrder, filterSort,
                 filterTodate, filterFromdate);
         filterDialog.setCallbackOnResult(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),

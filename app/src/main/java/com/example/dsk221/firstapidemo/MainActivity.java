@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.filter) {
-            showCustomDialog();
+            //showCustomDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -276,12 +276,12 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.OnRe
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
-
-    public void showCustomDialog() {
-
-        FilterDialog filterDialog = FilterDialog.newInstance(filterOrder, filterSort,
-                filterTodate, filterFromdate);
-        filterDialog.show((MainActivity.this).getSupportFragmentManager(),
-                getResources().getString(R.string.dialog_tag));
-    }
+//
+//    public void showCustomDialog() {
+//
+//        FilterDialog filterDialog = FilterDialog.newInstance(filterOrder, filterSort,
+//                filterTodate, filterFromdate);
+//        filterDialog.show((MainActivity.this).getSupportFragmentManager(),
+//                getResources().getString(R.string.dialog_tag));
+//    }
 }
