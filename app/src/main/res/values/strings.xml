@@ -33,12 +33,15 @@
     <string name="tab_title_activity">Activity</string>
     <string name="tab_title_profile">Profile</string>
 
-    <string name="nav_user_detail_title">User Detail</string>
+    <string name="nav_user_detail_title">Users</string>
     <string name="nav_question_detail_title">Questions</string>
     <string name="nav_home_title">Home</string>
+    <string name="nav_tag_title">Tags</string>
 
     <string name="orderPrompt">Choose an order</string>
     <string name="sortPrompt">Sort by</string>
+
+
 
     <string-array name="spinnerUserOrder">
         <item>desc</item>
@@ -64,8 +67,13 @@
     <string-array name="navigation_drawer_items_array">
         <item>Users</item>
         <item>Questions</item>
+        <item>Tags</item>
     </string-array>
 
+    <string-array name="tag_spinner_array">
+        <item>Popular</item>
+        <item>Name</item>
+    </string-array>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
     <string name="title_activity_user_tab">UserTabActivity</string>

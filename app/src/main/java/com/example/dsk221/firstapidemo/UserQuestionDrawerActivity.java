@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
+import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
 
 public class UserQuestionDrawerActivity extends AppCompatActivity
@@ -61,6 +62,10 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             case R.id.nav_question:
                 fragment = new QuestionDrawerFragment();
                 getSupportActionBar().setTitle(R.string.nav_question_detail_title);
+                break;
+            case R.id.nav_tag:
+                fragment = new TagDrawerFragment();
+                getSupportActionBar().setTitle(R.string.nav_tag_title);
                 break;
         }
         if (fragment != null) {
