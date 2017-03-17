@@ -11,12 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_name">
-
-        </activity>
-        <activity
             android:name=".UserTabActivity"
             android:label="@string/title_activity_user_tab"
             android:theme="@style/AppTheme.NoActionBar" />
