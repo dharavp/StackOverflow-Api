@@ -34,9 +34,9 @@ import retrofit2.Response;
  */
 
 public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnResult {
-    TextView textLoading;
-    ProgressBar progressBar;
-    ListView listQuestionDetail;
+    private TextView textLoading;
+    private ProgressBar progressBar;
+    private ListView listQuestionDetail;
     QuestionDetailAdapter questionDetailAdapter;
     private View footerView;
     private int mQuestionPageCount = 1;

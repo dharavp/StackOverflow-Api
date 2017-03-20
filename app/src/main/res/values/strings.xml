@@ -74,9 +74,11 @@
         <item>Popular</item>
         <item>Name</item>
     </string-array>
+
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
     <string name="title_activity_user_tab">UserTabActivity</string>
     <string name="title_activity_navigation_drawer">Main2Activity</string>
+    <string name="search_tag_edit_text_hint">Search Tags</string>
 
 </resources>

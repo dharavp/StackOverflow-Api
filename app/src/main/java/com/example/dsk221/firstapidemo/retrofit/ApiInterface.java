@@ -2,6 +2,7 @@ package com.example.dsk221.firstapidemo.retrofit;
 
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
+import com.example.dsk221.firstapidemo.models.TagItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.google.gson.annotations.SerializedName;
 
@@ -30,4 +31,9 @@ public interface ApiInterface {
                                                @Query("sort") String sort,
                                                @Query("site") String site);
 
+    @GET("tags")
+    Call<ListResponse<TagItem>> getTagDetail(@Query("page") int page,
+                                             @Query("order") String order,
+                                             @Query("sort") String sort,
+                                             @Query("site") String site);
 }
