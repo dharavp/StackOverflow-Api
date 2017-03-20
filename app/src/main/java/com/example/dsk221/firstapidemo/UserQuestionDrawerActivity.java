@@ -1,5 +1,7 @@
 package com.example.dsk221.firstapidemo;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,30 +14,64 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
 
+import static com.example.dsk221.firstapidemo.R.id.toolbar;
+
 public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
+    DrawerLayout drawer;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_question_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.nav_home_title);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar,
+//                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+        drawer.addDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessay or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+        //toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+    ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+            R.string.app_name, R.string.app_name) {
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+            // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+            super.onDrawerClosed(drawerView);
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+            super.onDrawerOpened(drawerView);
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    };
+
 
     @Override
     public void onBackPressed() {
@@ -45,7 +81,6 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
 
         }
         showDialog();
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

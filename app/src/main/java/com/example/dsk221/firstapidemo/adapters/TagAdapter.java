@@ -32,6 +32,9 @@ public class TagAdapter extends BaseAdapter {
         tagItems.addAll(item);
         notifyDataSetChanged();
     }
+    public void removeItems() {
+        tagItems.clear();
+    }
 
     @Override
     public int getCount() {

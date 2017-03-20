@@ -73,6 +73,7 @@
     <string-array name="tag_spinner_array">
         <item>Popular</item>
         <item>Name</item>
+        <item>Activity</item>
     </string-array>
 
     <string name="navigation_drawer_open">open</string>

@@ -1,12 +1,10 @@
 package com.example.dsk221.firstapidemo.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -180,7 +178,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
 //                }
 //                builder.appendQueryParameter(Constants.PARAMS_ORDER, filterOrder);
 //                builder.appendQueryParameter(Constants.PARAMS_SORT, filterSort);
-//                builder.appendQueryParameter(Constants.PARAMS_SITE,Constants.VALUE_STACKOVERFLOW);
+//                builder.appendQueryParameter(Constants.PARAMS_SITE,Constants.VALUE_STACKOVER_FLOW);
 //
 //                String userListUrl = builder.build().toString();
 //
@@ -236,7 +234,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<UserItem>> call = apiService.getUserDetail(mPageCount,
                 filterFromdate,filterTodate,filterOrder,
-                filterSort,Constants.VALUE_STACKOVERFLOW);
+                filterSort,Constants.VALUE_STACKOVER_FLOW);
 
         call.enqueue(new Callback<ListResponse<UserItem>>() {
             @Override

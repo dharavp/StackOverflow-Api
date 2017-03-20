@@ -14,10 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dsk221.firstapidemo.R;
-import com.example.dsk221.firstapidemo.UserTabActivity;
 import com.example.dsk221.firstapidemo.adapters.QuestionAdapter;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.QuestionItem;
@@ -133,7 +131,7 @@ public class UserActivityFragment extends Fragment {
                 builder.appendQueryParameter(Constants.PARAMS_PAGE, String.valueOf(mQuestionPageCount));
                 builder.appendQueryParameter(Constants.PARAMS_ORDER, Constants.VALUE_DESC);
                 builder.appendQueryParameter(Constants.PARAMS_SORT, Constants.VALUE_ACTIVITY);
-                builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVERFLOW);
+                builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVER_FLOW);
                 builder.appendQueryParameter(Constants.PARAMS_FILTER,
                         Constants.VALUE_USER_ACTIVITY_FILTER);
 

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.ListResponse;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfileFragment extends Fragment {
@@ -93,7 +91,7 @@ public class UserProfileFragment extends Fragment {
                 builder.appendPath(String.valueOf(userId));
                 builder.appendQueryParameter(Constants.PARAMS_ORDER, Constants.VALUE_DESC);
                 builder.appendQueryParameter(Constants.PARAMS_SORT, Constants.VALUE_REPUTATION);
-                builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVERFLOW);
+                builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVER_FLOW);
                 builder.appendQueryParameter(Constants.PARAMS_FILTER,
                         Constants.VALUE_USER_PROFILE_FILTER);
 

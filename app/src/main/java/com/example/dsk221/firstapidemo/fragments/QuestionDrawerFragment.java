@@ -24,7 +24,7 @@ import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
-import java.lang.reflect.Type;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -140,7 +140,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                 ApiClient.getClient().create(ApiInterface.class);
             Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(mQuestionPageCount,
                     filterQuestionFromdate,filterQuestionTodate,filterQuestionOrder,
-                    filterQuestionSort,Constants.VALUE_STACKOVERFLOW);
+                    filterQuestionSort,Constants.VALUE_STACKOVER_FLOW);
 
 
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {

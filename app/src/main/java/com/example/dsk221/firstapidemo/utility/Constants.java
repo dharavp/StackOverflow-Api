@@ -3,7 +3,6 @@ package com.example.dsk221.firstapidemo.utility;
 
 
 public class Constants {
-    public static final int tempPage = 1;
     public static final String BASE_URL = "https://api.stackexchange.com/2.2";
     public static final String URL_USER_LIST = BASE_URL + "/users";
 
@@ -18,8 +17,9 @@ public class Constants {
     public static final String PARAMS_FILTER = "filter";
 
     public static final String VALUE_DESC = "desc";
+    public static final String VALUE_ASC = "asc";
     public static final String VALUE_ACTIVITY = "activity";
-    public static final String VALUE_STACKOVERFLOW = "stackoverflow";
+    public static final String VALUE_STACKOVER_FLOW = "stackoverflow";
     public static final String VALUE_REPUTATION = "reputation";
     public static final String VALUE_VOTES ="votes";
     public static final String VALUE_USER_ACTIVITY_FILTER = "!21SR53iynw4wxr5*GaPD4";
