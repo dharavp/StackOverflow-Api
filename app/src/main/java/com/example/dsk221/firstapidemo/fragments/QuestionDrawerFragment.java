@@ -149,10 +149,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
 
     private void getJsonQuestionListResponse(){
         isQuestionLoading=true;
-        if(hasMore){
-
-            showProgressBar();
-        }
+        showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
             Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(mQuestionPageCount,

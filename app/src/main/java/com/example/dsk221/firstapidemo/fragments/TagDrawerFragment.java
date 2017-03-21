@@ -187,7 +187,6 @@ public class TagDrawerFragment extends Fragment {
                     tagAdapter.addItems(response.body().getItems());
                 }
             }
-
             @Override
             public void onFailure(Call<ListResponse<TagItem>> call, Throwable t) {
                 // Log error here since request failed
@@ -195,7 +194,6 @@ public class TagDrawerFragment extends Fragment {
             }
         });
     }
-
     private void hideProgressBar() {
         if (mTagPageCount == 1) {
             textLoading.setVisibility(View.GONE);
