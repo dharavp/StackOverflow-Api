@@ -125,7 +125,6 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -134,7 +133,6 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void sendData(String orderData, String sortData, String todateData, String fromdateData) {
 
@@ -251,7 +249,6 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             }
         });
     }
-
     private void hideProgressBar() {
         if (mPageCount == 1) {
             textLoading.setVisibility(View.GONE);
@@ -260,7 +257,6 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             footerView.setVisibility(View.GONE);
         }
     }
-
     private void showProgressBar() {
         if (mPageCount == 1) {
             textLoading.setVisibility(View.VISIBLE);
@@ -269,9 +265,6 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             footerView.setVisibility(View.VISIBLE);
         }
     }
-
-
-
     public void showCustomDialog() {
 
         FilterDialog filterDialog = FilterDialog.newInstance("userDrawer",filterOrder, filterSort,
