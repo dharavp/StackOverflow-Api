@@ -17,6 +17,8 @@ public class QuestionDetailItem {
 
     private int score;
 
+    private String link;
+
     private ArrayList<String> tags;
 
     @SerializedName("answer_count")
@@ -66,6 +68,14 @@ public class QuestionDetailItem {
 
     public void setLastActivityDate(int lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public OwnerItem getOwnerItem() {

@@ -1,6 +1,8 @@
 package com.example.dsk221.firstapidemo.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +49,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     private String filterQuestionSort = Constants.VALUE_VOTES;
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
+    private boolean hasMore=true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,10 +85,22 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                                  int totalItemCount) {
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
-                        && !isQuestionLoading) {
+                        && !isQuestionLoading
+                        && hasMore) {
                     mQuestionPageCount = mQuestionPageCount + 1;
                     getJsonQuestionListResponse();
                 }
+            }
+        });
+
+        listQuestionDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                QuestionDetailItem questionDetail=questionDetailAdapter.getItem(position);
+                String openLink = questionDetail.getLink();
+                Intent intent = new Intent(Intent.ACTION_VIEW)
+                        .setData(Uri.parse(openLink));
+                startActivity(intent);
             }
         });
         return view;
@@ -110,7 +126,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -119,7 +134,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void sendData(String orderData, String sortData, String todateData, String fromdateData) {
         mQuestionPageCount = 1;
@@ -135,7 +149,10 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
 
     private void getJsonQuestionListResponse(){
         isQuestionLoading=true;
-        showProgressBar();
+        if(hasMore){
+
+            showProgressBar();
+        }
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
             Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(mQuestionPageCount,
@@ -147,9 +164,14 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
                                    Response<ListResponse<QuestionDetailItem>> response) {
-                hideProgressBar();
+
                 isQuestionLoading=false;
-                questionDetailAdapter.addItems(response.body().getItems());
+
+                if(response.body()!=null){
+                    hasMore=response.body().isHasMore();
+                    questionDetailAdapter.addItems(response.body().getItems());
+                }
+                hideProgressBar();
             }
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>>call, Throwable t) {
@@ -166,7 +188,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             footerView.setVisibility(View.GONE);
         }
     }
-
     private void showProgressBar() {
         if (mQuestionPageCount == 1) {
             textLoading.setVisibility(View.VISIBLE);
@@ -176,7 +197,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         }
     }
     public void showFilterDialog() {
-
         FilterDialog filterDialog = FilterDialog.newInstance("questionDrawer",filterQuestionOrder,
                 filterQuestionSort,
                 filterQuestionTodate, filterQuestionFromdate);
@@ -184,5 +204,4 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));
     }
-
 }

@@ -43,8 +43,6 @@ public class UserActivityFragment extends Fragment {
 
     public UserActivityFragment() {
     }
-
-
     public static UserActivityFragment newInstance(int userId) {
         UserActivityFragment userActivityFragment=new UserActivityFragment();
         Bundle bundle = new Bundle();
@@ -183,7 +181,6 @@ public class UserActivityFragment extends Fragment {
             }
         }
     }
-
     private void hideProgressBar() {
         if (mQuestionPageCount == 1) {
             textLoading.setVisibility(View.GONE);

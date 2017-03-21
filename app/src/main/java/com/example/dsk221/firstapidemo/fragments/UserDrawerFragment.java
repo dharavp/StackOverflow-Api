@@ -238,8 +238,10 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             public void onResponse(Call<ListResponse<UserItem>> call,
                                    Response<ListResponse<UserItem>> response) {
                 hideProgressBar();
-                isLoading=false;
-                mUserAdapter.addItems(response.body().getItems());
+                isLoading = false;
+                if (response != null) {
+                    mUserAdapter.addItems(response.body().getItems());
+                }
             }
             @Override
             public void onFailure(Call<ListResponse<UserItem>>call, Throwable t) {

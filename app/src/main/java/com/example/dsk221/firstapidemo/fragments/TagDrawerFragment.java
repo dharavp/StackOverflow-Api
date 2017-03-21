@@ -183,7 +183,9 @@ public class TagDrawerFragment extends Fragment {
                                    Response<ListResponse<TagItem>> response) {
                 hideProgressBar();
                 isTagLoading = false;
-                tagAdapter.addItems(response.body().getItems());
+                if (response != null) {
+                    tagAdapter.addItems(response.body().getItems());
+                }
             }
 
             @Override

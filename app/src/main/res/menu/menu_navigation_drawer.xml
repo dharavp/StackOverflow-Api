@@ -6,7 +6,7 @@
         android:title="@string/nav_user_detail_title" />
     <item
         android:id="@+id/nav_question"
-        android:icon="@drawable/ic_question_grey"
+        android:icon="@drawable/ic_que_drawer"
         android:title="@string/nav_question_detail_title" />
     <item
         android:id="@+id/nav_tag"
