@@ -39,6 +39,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"
                 android:layout_alignParentRight="true"
+                android:visibility="gone"
                 android:background="@drawable/ic_cancel_black" />
 
         </RelativeLayout>

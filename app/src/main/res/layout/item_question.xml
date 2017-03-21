@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/image_post_type"
         android:layout_width="25dp"
-        android:src="@drawable/ic_ans_grey"
+        android:src="@drawable/ic_answer_grey"
         android:layout_height="25dp"/>
 
     <LinearLayout

@@ -148,9 +148,9 @@ public class UserTabActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(UserProfileFragment.newInstance(user.getUserId()),
-                getResources().getString(R.string.tab_title_activity));
-        adapter.addFragment(UserActivityFragment.newInstance(user.getUserId()),
                 getResources().getString(R.string.tab_title_profile));
+        adapter.addFragment(UserActivityFragment.newInstance(user.getUserId()),
+                getResources().getString(R.string.tab_title_activity));
         viewPager.setAdapter(adapter);
     }
 

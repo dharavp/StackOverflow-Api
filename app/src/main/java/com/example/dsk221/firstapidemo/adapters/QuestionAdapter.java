@@ -70,11 +70,11 @@ public class QuestionAdapter extends BaseAdapter {
 
         if(mPostType.equalsIgnoreCase(Constants.POST_TYPE_ANSWER)){
             holder.textPostType.setText(R.string.post_type_answer_text);
-            holder.imagePostType.setImageResource(R.drawable.ic_ans_grey);
+            holder.imagePostType.setImageResource(R.drawable.ic_answer_grey);
         }
         else if(mPostType.equalsIgnoreCase(Constants.POST_TYPE_QUESTION)) {
             holder.textPostType.setText(R.string.post_type_question_text);
-            holder.imagePostType.setImageResource(R.drawable.ic_que_grey);
+            holder.imagePostType.setImageResource(R.drawable.ic_question_grey);
         }
 
         String postBody = questionItem.getBody();

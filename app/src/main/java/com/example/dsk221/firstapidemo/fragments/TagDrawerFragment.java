@@ -32,8 +32,6 @@ import com.example.dsk221.firstapidemo.utility.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-
 /**
  * Created by dsk-221 on 17/3/17.
  */
@@ -109,11 +107,7 @@ public class TagDrawerFragment extends Fragment {
                 mTagPageCount=1;
                 inname = null;
                 tagAdapter.removeItems();
-
-                InputMethodManager inputMethodManager = (InputMethodManager)
-                        v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
+                closeKeyBoard();
                 getJsonTagResponse();
             }
         });
@@ -125,15 +119,34 @@ public class TagDrawerFragment extends Fragment {
                     mTagPageCount = 1;
                     inname=editTagSearch.getText().toString().toLowerCase();
                     tagAdapter.removeItems();
-
-                    InputMethodManager inputMethodManager = (InputMethodManager)
-                            v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
+                    closeKeyBoard();
                     getJsonTagResponse();
                     return true;
                 }
                 return false;
+            }
+        });
+        editTagSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count!=0){
+                    imageCancel.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    imageCancel.setVisibility(View.GONE);
+                        closeKeyBoard();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -197,5 +210,11 @@ public class TagDrawerFragment extends Fragment {
         } else {
             footerView.setVisibility(View.VISIBLE);
         }
+    }
+    private void closeKeyBoard(){
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                editTagSearch.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(editTagSearch.getWindowToken(), 0);
+
     }
 }

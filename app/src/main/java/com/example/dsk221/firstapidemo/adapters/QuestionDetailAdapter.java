@@ -90,12 +90,12 @@ public class QuestionDetailAdapter extends BaseAdapter {
         int conditionColor;
         if(questionDetailItem.isAnswered()){
             conditionColor=Color.parseColor("#E5F9ED");
-            holder.imageAnswer.setImageResource(R.drawable.ic_ans_green);
+            holder.imageAnswer.setImageResource(R.drawable.ic_answer_green);
             holder.textTotalAnswer.setTextColor(Color.parseColor("#498E69"));
         }
         else{
             conditionColor=Color.parseColor("#F2F4F7");
-            holder.imageAnswer.setImageResource(R.drawable.ic_ans_grey);
+            holder.imageAnswer.setImageResource(R.drawable.ic_answer_grey);
             holder.textTotalAnswer.setTextColor(Color.parseColor("#767F8E"));
         }
         holder.linearLayoutScore.setBackgroundColor(conditionColor);
