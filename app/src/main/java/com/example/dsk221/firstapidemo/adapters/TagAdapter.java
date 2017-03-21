@@ -2,14 +2,18 @@ package com.example.dsk221.firstapidemo.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.TagItem;
+import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.utility.Utils;
 
 import java.util.ArrayList;
@@ -23,11 +27,12 @@ public class TagAdapter extends BaseAdapter {
     Context context;
     private List<TagItem> tagItems;
 
+
     public TagAdapter(Context context) {
         this.context = context;
         this.tagItems = new ArrayList<>();
-    }
 
+    }
     public void addItems(List<TagItem> item) {
         tagItems.addAll(item);
         notifyDataSetChanged();

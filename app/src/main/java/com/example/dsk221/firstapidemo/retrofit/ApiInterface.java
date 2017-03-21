@@ -32,8 +32,9 @@ public interface ApiInterface {
                                                @Query("site") String site);
 
     @GET("tags")
-    Call<ListResponse<TagItem>> getTagDetail(@Query("page") int page,
-                                             @Query("order") String order,
-                                             @Query("sort") String sort,
-                                             @Query("site") String site);
+    Call<ListResponse<TagItem>> getTagList(@Query("page") int page,
+                                           @Query("order") String order,
+                                           @Query("sort") String sort,
+                                           @Query("inname") String inname,
+                                           @Query("site") String site);
 }

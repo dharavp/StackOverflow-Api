@@ -103,7 +103,6 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         });
         return view;
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search,menu);
