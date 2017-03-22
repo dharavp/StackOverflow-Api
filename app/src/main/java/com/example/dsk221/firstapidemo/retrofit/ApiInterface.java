@@ -37,4 +37,12 @@ public interface ApiInterface {
                                            @Query("sort") String sort,
                                            @Query("inname") String inname,
                                            @Query("site") String site);
+    @GET("search")
+    Call<ListResponse<QuestionDetailItem>> getSearchQuestionList(@Query("page") int page,
+                                                      @Query("fromdate") String fromdate,
+                                                      @Query("todate") String todate,
+                                                      @Query("order") String order,
+                                                      @Query("sort") String sort,
+                                                      @Query("intitle") String intitle,
+                                                      @Query("site") String site);
 }

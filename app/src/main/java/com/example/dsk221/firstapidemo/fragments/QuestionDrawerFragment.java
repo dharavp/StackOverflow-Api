@@ -50,8 +50,10 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
     private boolean hasMore=true;
+    private boolean isQuestionSearch=false;
     public static final String ARG_TAG = "tagName";
     private String tagName = null;
+    private String titleName = null;
 
     public static QuestionDrawerFragment newInstance(String tag) {
         QuestionDrawerFragment questionDrawerFragment=new QuestionDrawerFragment();
@@ -86,7 +88,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
         listQuestionDetail.setAdapter(questionDetailAdapter);
 
-        getJsonQuestionListResponse();
+        getJsonQuestionListResponse("no_search");
         listQuestionDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -96,12 +98,16 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount,
                                  int totalItemCount) {
+                mQuestionPageCount = mQuestionPageCount + 1;
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
                         && !isQuestionLoading
-                        && hasMore) {
-                    mQuestionPageCount = mQuestionPageCount + 1;
-                    getJsonQuestionListResponse();
+                        && hasMore
+                        && !isQuestionSearch) {
+                    getJsonQuestionListResponse("search");
+                }
+                else{
+                    getJsonQuestionListResponse("no_search");
                 }
             }
         });
@@ -132,7 +138,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                isQuestionSearch = !newText.isEmpty();
                 return false;
             }
         });
@@ -156,15 +162,17 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         filterQuestionFromdate=fromdateData;
         filterQuestionTodate=todateData;
 
-        getJsonQuestionListResponse();
+        getJsonQuestionListResponse("no_search");
     }
 
-    private void getJsonQuestionListResponse(){
+    private void getJsonQuestionListResponse(String type){
         isQuestionLoading=true;
         showProgressBar();
+        Call<ListResponse<QuestionDetailItem>> call = null;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-            Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionList(
+        if(type.equalsIgnoreCase("no_search")) {
+           call = apiService.getQuestionList(
                     mQuestionPageCount,
                     filterQuestionFromdate,
                     filterQuestionTodate,
@@ -172,6 +180,17 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                     filterQuestionSort,
                     tagName,
                     Constants.VALUE_STACKOVER_FLOW);
+        }
+        else{
+            call = apiService.getSearchQuestionList(mQuestionPageCount,
+                    filterQuestionFromdate,
+                    filterQuestionTodate,
+                    filterQuestionOrder,
+                    filterQuestionSort,
+                    titleName,
+                    Constants.VALUE_STACKOVER_FLOW);
+
+        }
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
