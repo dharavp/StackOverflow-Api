@@ -28,7 +28,7 @@
     <color name="colorScore">#767F8E</color>
     <color name="colorNotAnswerTotal">#767F8E</color>
     <color name="colorIsAnswerTotal">#498E69</color>
-    <color name="colorLatAcitivityDate">#9EA5AC</color>
+    <color name="colorLastActivityDate">#9EA5AC</color>
     <color name="colorQuestionTitle">#0176CB</color>
     <color name="colorQuestionUserName">#0176D4</color>
 

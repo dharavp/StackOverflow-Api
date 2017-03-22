@@ -31,6 +31,7 @@ import com.example.dsk221.firstapidemo.models.TagItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.Utils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +49,7 @@ public class TagDrawerFragment extends Fragment {
     private ImageButton imageCancel;
     private ProgressBar progressBar;
     private View footerView;
-    TagAdapter tagAdapter;
+    private TagAdapter tagAdapter;
     private int mTagPageCount = 1;
     private static final String TAG = "Tag Detail";
     private boolean isTagLoading = false;
@@ -117,7 +118,7 @@ public class TagDrawerFragment extends Fragment {
                 mTagPageCount = 1;
                 inname = null;
                 tagAdapter.removeItems();
-                closeKeyBoard();
+                Utils.closeKeyBoard(editTagSearch);
                 getJsonTagResponse();
             }
         });
@@ -129,7 +130,7 @@ public class TagDrawerFragment extends Fragment {
                     mTagPageCount = 1;
                     inname = editTagSearch.getText().toString().toLowerCase();
                     tagAdapter.removeItems();
-                    closeKeyBoard();
+                    Utils.closeKeyBoard(editTagSearch);
                     getJsonTagResponse();
                     return true;
                 }
@@ -149,7 +150,7 @@ public class TagDrawerFragment extends Fragment {
 
                 } else {
                     imageCancel.setVisibility(View.GONE);
-                    closeKeyBoard();
+                    Utils.closeKeyBoard(editTagSearch);
                 }
             }
 
@@ -235,10 +236,6 @@ public class TagDrawerFragment extends Fragment {
         }
     }
 
-    private void closeKeyBoard() {
-        InputMethodManager inputMethodManager = (InputMethodManager)
-                editTagSearch.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(editTagSearch.getWindowToken(), 0);
 
-    }
+
 }

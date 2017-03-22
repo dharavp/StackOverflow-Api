@@ -236,7 +236,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<ListResponse<UserItem>> call = apiService.getUserDetail(mPageCount,
+        Call<ListResponse<UserItem>> call = apiService.getUserList(mPageCount,
                 filterFromdate,filterTodate,filterOrder,
                 filterSort,Constants.VALUE_STACKOVER_FLOW);
 
@@ -276,7 +276,9 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     }
     public void showCustomDialog() {
 
-        FilterDialog filterDialog = FilterDialog.newInstance("userDrawer",filterOrder, filterSort,
+        FilterDialog filterDialog = FilterDialog.newInstance(
+                getResources().getString(R.string.open_dialog_from_user_drawer),
+                filterOrder, filterSort,
                 filterTodate, filterFromdate);
         filterDialog.setCallbackOnResult(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),

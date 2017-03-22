@@ -128,7 +128,8 @@ public class UserActivityFragment extends Fragment {
                 Uri.Builder builder = Uri.parse(Constants.URL_USER_LIST).buildUpon();
                 builder.appendPath(String.valueOf(userId));
                 builder.appendPath(Constants.URL_PATH_POSTS);
-                builder.appendQueryParameter(Constants.PARAMS_PAGE, String.valueOf(mQuestionPageCount));
+                builder.appendQueryParameter(Constants.PARAMS_PAGE,
+                        String.valueOf(mQuestionPageCount));
                 builder.appendQueryParameter(Constants.PARAMS_ORDER, Constants.VALUE_DESC);
                 builder.appendQueryParameter(Constants.PARAMS_SORT, Constants.VALUE_ACTIVITY);
                 builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVER_FLOW);

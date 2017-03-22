@@ -2,8 +2,7 @@ package com.example.dsk221.firstapidemo.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.text.TextUtils;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.OwnerItem;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.utility.Constants;
 import com.example.dsk221.firstapidemo.utility.Utils;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -35,13 +34,16 @@ public class QuestionDetailAdapter extends BaseAdapter {
         this.context = context;
         this.questionDetailItems = new ArrayList<>();
     }
+
     public void addItems(List<QuestionDetailItem> items) {
         questionDetailItems.addAll(items);
         notifyDataSetChanged();
     }
-    public void removeItems(){
+
+    public void removeItems() {
         questionDetailItems.clear();
     }
+
     @Override
     public int getCount() {
         return questionDetailItems.size();
@@ -67,55 +69,55 @@ public class QuestionDetailAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.item_question_detail, null);
 
             holder = new ViewHolder();
-            holder.imageScore = (ImageView)convertView.findViewById(R.id.image_score);
-            holder.imageAnswer = (ImageView)convertView.findViewById(R.id.image_answer);
-            holder.textQuestionTitle=(TextView)convertView.findViewById(R.id.text_question_title);
-            holder.textLastActivityDate=(TextView)convertView.findViewById(R.id.text_last_activity_date);
-            holder.textTotalAnswer=(TextView)convertView.findViewById(R.id.text_total_answer);
-            holder.textUserName=(TextView)convertView.findViewById(R.id.text_user_name);
-            holder.textScore=(TextView)convertView.findViewById(R.id.text_score);
-            holder.linearLayoutScore=(LinearLayout)convertView.findViewById(R.id.linearlayout_score);
-            holder.textTag=(TextView)convertView.findViewById(R.id.text_tag);
+            holder.imageScore = (ImageView) convertView.findViewById(R.id.image_score);
+            holder.imageAnswer = (ImageView) convertView.findViewById(R.id.image_answer);
+            holder.textQuestionTitle = (TextView) convertView.findViewById(R.id.text_question_title);
+            holder.textLastActivityDate = (TextView) convertView.findViewById(R.id.text_last_activity_date);
+            holder.textTotalAnswer = (TextView) convertView.findViewById(R.id.text_total_answer);
+            holder.textUserName = (TextView) convertView.findViewById(R.id.text_user_name);
+            holder.textScore = (TextView) convertView.findViewById(R.id.text_score);
+            holder.linearLayoutScore = (LinearLayout) convertView.findViewById(R.id.linearlayout_score);
+            holder.textTag = (TextView) convertView.findViewById(R.id.text_tag);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         QuestionDetailItem questionDetailItem = getItem(position);
-        OwnerItem ownerItem=questionDetailItem.getOwnerItem();
+        OwnerItem ownerItem = questionDetailItem.getOwnerItem();
 
-        ArrayList<String> listTag=questionDetailItem.getTags();
+        ArrayList<String> listTag = questionDetailItem.getTags();
         holder.textTag.setText(Utils.arrayToString(listTag));
 
         int conditionColor;
-        if(questionDetailItem.isAnswered()){
-            conditionColor=Color.parseColor("#E5F9ED");
+        if (questionDetailItem.isAnswered()) {
+            conditionColor = R.color.colorLinearLayoutIsAnswered;
             holder.imageAnswer.setImageResource(R.drawable.ic_answer_green);
-            holder.textTotalAnswer.setTextColor(Color.parseColor("#498E69"));
-        }
-        else{
-            conditionColor=Color.parseColor("#F2F4F7");
+            holder.textTotalAnswer.setTextColor(ContextCompat.getColor(context, R.color.colorScore));
+        } else {
+            conditionColor = R.color.colorLinearLayoutNotAnswered;
             holder.imageAnswer.setImageResource(R.drawable.ic_answer_grey);
-            holder.textTotalAnswer.setTextColor(Color.parseColor("#767F8E"));
+            holder.textTotalAnswer.setTextColor(ContextCompat.getColor(context, R.color.colorIsAnswerTotal));
         }
-        holder.linearLayoutScore.setBackgroundColor(conditionColor);
+        holder.linearLayoutScore.setBackgroundColor(ContextCompat.getColor(context, conditionColor));
         holder.textQuestionTitle.setText(Utils.convertHtmlInTxt(questionDetailItem.getTitle()));
         holder.textUserName.setText(ownerItem.getDisplayName());
 
-        long lastActiveDate=(long)(questionDetailItem.getLastActivityDate());
-        String lastActivity=Utils.getDate(lastActiveDate, Constants.DATE_FORMAT_LAST_ACTIVITY);
+        long lastActiveDate = (long) (questionDetailItem.getLastActivityDate());
+        String lastActivity = Utils.getDate(lastActiveDate, Constants.DATE_FORMAT_LAST_ACTIVITY);
         holder.textLastActivityDate.setText(lastActivity);
 
         holder.textTotalAnswer.setText(String.valueOf(questionDetailItem.getAnswerCount()));
 
-        String score=Utils.getScoreString(questionDetailItem.getScore());
+        String score = Utils.getScoreString(questionDetailItem.getScore());
         holder.textScore.setText(score);
         return convertView;
     }
+
     private class ViewHolder {
-        ImageView imageScore,imageAnswer;
+        ImageView imageScore, imageAnswer;
         TextView textScore, textTotalAnswer, textQuestionTitle, textTag,
-                textLastActivityDate,textUserName;
+                textLastActivityDate, textUserName;
         LinearLayout linearLayoutScore;
     }
 

@@ -32,7 +32,7 @@ public class UserProfileFragment extends Fragment {
             textViewCounts, textLocation, textWebsiteUrl;
     private TextView textLoading;
     private ProgressBar progressBar;
-    public static final String ARG_USERID = "user id";
+    public static final String ARG_USER_ID = "user_id";
     private int userId;
     private LinearLayout linearLayout;
 
@@ -43,7 +43,7 @@ public class UserProfileFragment extends Fragment {
     public static UserProfileFragment newInstance(int userId) {
         UserProfileFragment userProfileFragment = new UserProfileFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_USERID, userId);
+        bundle.putInt(ARG_USER_ID, userId);
         userProfileFragment.setArguments(bundle);
         return userProfileFragment;
     }
@@ -67,7 +67,7 @@ public class UserProfileFragment extends Fragment {
         textLoading = (TextView) view.findViewById(R.id.text_loading);
 
         Bundle bundle = getArguments();
-        userId = bundle.getInt(ARG_USERID);
+        userId = bundle.getInt(ARG_USER_ID);
         new GetUserDetailFromJson().execute();
 
         return view;

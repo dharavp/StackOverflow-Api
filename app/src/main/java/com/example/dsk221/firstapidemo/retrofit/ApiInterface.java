@@ -24,12 +24,12 @@ public interface ApiInterface {
                                                            @Query("site") String site);
 
     @GET("users")
-    Call<ListResponse<UserItem>> getUserDetail(@Query("page") int page,
-                                               @Query("fromdate") String fromdate,
-                                               @Query("todate") String todate,
-                                               @Query("order") String order,
-                                               @Query("sort") String sort,
-                                               @Query("site") String site);
+    Call<ListResponse<UserItem>> getUserList(@Query("page") int page,
+                                             @Query("fromdate") String fromdate,
+                                             @Query("todate") String todate,
+                                             @Query("order") String order,
+                                             @Query("sort") String sort,
+                                             @Query("site") String site);
 
     @GET("tags")
     Call<ListResponse<TagItem>> getTagList(@Query("page") int page,

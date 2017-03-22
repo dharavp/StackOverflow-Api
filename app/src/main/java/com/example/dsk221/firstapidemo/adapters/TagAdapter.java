@@ -79,7 +79,6 @@ public class TagAdapter extends BaseAdapter {
         holder.textTagCount.setText(Utils.getRepString(tagCount));
         return convertView;
     }
-
     private class ViewHolder {
         TextView textTagName, textTagCount;
     }

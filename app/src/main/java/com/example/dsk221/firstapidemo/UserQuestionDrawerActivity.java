@@ -18,12 +18,13 @@ import android.view.inputmethod.InputMethodManager;
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
+import com.example.dsk221.firstapidemo.utility.Utils;
 
 public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    DrawerLayout drawer;
-    Toolbar toolbar;
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +40,13 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                closeKeyBoard();
+                Utils.closeKeyBoard(getCurrentFocus());
 
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                closeKeyBoard();
+               Utils.closeKeyBoard(getCurrentFocus());
             }
         };
 
@@ -118,9 +118,5 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
-    public void closeKeyBoard(){
-        InputMethodManager inputMethodManager = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
+
 }

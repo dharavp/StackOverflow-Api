@@ -40,7 +40,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     private TextView textLoading;
     private ProgressBar progressBar;
     private ListView listQuestionDetail;
-    QuestionDetailAdapter questionDetailAdapter;
+    private QuestionDetailAdapter questionDetailAdapter;
     private View footerView;
     private int mQuestionPageCount = 1;
     private boolean isQuestionLoading = false;
@@ -209,9 +209,12 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         }
     }
     public void showFilterDialog() {
-        FilterDialog filterDialog = FilterDialog.newInstance("questionDrawer",filterQuestionOrder,
+        FilterDialog filterDialog = FilterDialog.newInstance(
+                getResources().getString(R.string.open_dialog_from_question_drawer),
+                filterQuestionOrder,
                 filterQuestionSort,
-                filterQuestionTodate, filterQuestionFromdate);
+                filterQuestionTodate,
+                filterQuestionFromdate);
         filterDialog.setCallbackOnResult(this);
         filterDialog.show(getActivity().getSupportFragmentManager(),
                 getResources().getString(R.string.dialog_tag));

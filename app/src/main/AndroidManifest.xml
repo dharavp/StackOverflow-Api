@@ -13,7 +13,6 @@
         <activity
             android:name=".UserTabActivity"
             android:configChanges="screenSize|orientation"
-            android:label="@string/title_activity_user_tab"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserQuestionDrawerActivity"
@@ -25,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionListActivity"></activity>
+        <activity android:name=".QuestionListActivity"/>
     </application>
 
 </manifest>

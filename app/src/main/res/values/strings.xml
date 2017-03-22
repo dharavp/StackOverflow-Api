@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">FirstApiDemo</string>
     <string name="title_name">user</string>
-    <string name="progress_title">loading…</string>
-    <string name="error_toast">try again........</string>
+    <string name="progress_title">Loading…</string>
+    <string name="error_toast">Try again…</string>
 
     <string name="back_dialog_text">Are you sure you want to do exit..?</string>
     <string name="back_dialog_positive_btn">YES</string>
@@ -77,8 +77,9 @@
 
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
-    <string name="title_activity_user_tab">UserTabActivity</string>
-    <string name="title_activity_navigation_drawer">Main2Activity</string>
     <string name="search_tag_edit_text_hint">Search Tags</string>
+
+    <string name="open_dialog_from_question_drawer">Question drawer</string>
+    <string name="open_dialog_from_user_drawer">User drawer</string>
 
 </resources>

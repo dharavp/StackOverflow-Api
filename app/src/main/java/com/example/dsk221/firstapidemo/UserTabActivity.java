@@ -19,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dsk221.firstapidemo.fragments.UserActivityFragment;
 import com.example.dsk221.firstapidemo.fragments.UserProfileFragment;
@@ -27,13 +26,14 @@ import com.example.dsk221.firstapidemo.models.BuzzItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserTabActivity extends AppCompatActivity {
 
     public static final String EXTRA_USER = "user";
-    public static final String EXTRA_LINK="link";
+    public static final String EXTRA_LINK = "link";
     private static final String TAG = "bronze detail";
     private String link;
     private TabLayout tabLayout;
@@ -47,7 +47,6 @@ public class UserTabActivity extends AppCompatActivity {
         i.putExtra(EXTRA_USER, user);
         return i;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,7 @@ public class UserTabActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
 
-        link=user.getLink();
+        link = user.getLink();
         BuzzItem buzzDetail = user.getBadgeCounts();
 
         textName.setTextColor(ContextCompat.getColor(UserTabActivity.this, R.color.colorTabTitle));
@@ -100,6 +99,7 @@ public class UserTabActivity extends AppCompatActivity {
                 .into(imageUser);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -108,7 +108,7 @@ public class UserTabActivity extends AppCompatActivity {
         return true;
     }
 
-        @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -123,14 +123,15 @@ public class UserTabActivity extends AppCompatActivity {
                 break;
 
             case R.id.copy_to_clipboard:
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager clipboard = (ClipboardManager)
+                        getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText(EXTRA_LINK, link);
                 clipboard.setPrimaryClip(clip);
                 ClipData abc = clipboard.getPrimaryClip();
                 ClipData.Item item1 = abc.getItemAt(0);
                 String text = item1.getText().toString();
 
-                Utils.showToast(getApplicationContext(),text);
+                Utils.showToast(getApplicationContext(), text);
                 break;
 
             case R.id.share:

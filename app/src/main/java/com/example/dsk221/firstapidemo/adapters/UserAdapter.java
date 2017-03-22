@@ -121,7 +121,8 @@ public class UserAdapter extends BaseAdapter implements Filterable {
 
                 for (int i = 0; i < tempUserItems.size(); i++) {
                     UserItem userDetail = tempUserItems.get(i);
-                    if ((userDetail.getDisplayName().toLowerCase()).contains(constraint.toString())) {
+                    if ((userDetail.getDisplayName().toLowerCase())
+                            .contains(constraint.toString())) {
                         filterList.add(userDetail);
                     }
                 }
@@ -142,7 +143,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
     }
-
     private class ViewHolder {
         ImageView imageUser;
         TextView textName, textReputation, textBronze, textSilver, textGold;
