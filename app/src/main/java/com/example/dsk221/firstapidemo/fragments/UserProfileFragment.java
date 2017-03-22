@@ -178,18 +178,33 @@ public class UserProfileFragment extends Fragment {
 
                 String userDetail = aboutUser.getAboutMe();
 
-                textAboutUser.setText(Utils.convertHtmlInTxt(userDetail));
+                if ((userDetail==null) || (userDetail.isEmpty())) {
+                    textAboutUser.setVisibility(View.GONE);
+                } else {
+                    textAboutUser.setText(Utils.convertHtmlInTxt(userDetail));
+                }
+
                 textAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
                 textAnswerCounts.setText((aboutUser.getAnswerCount()) + "");
                 textQuestionCounts.setText((aboutUser.getQuestionCount()) + "");
                 textViewCounts.setText((aboutUser.getViewCount()) + "");
-                textLocation.setText(aboutUser.getLocation());
-                textWebsiteUrl.setText(aboutUser.getWebsiteUrl());
+
+                String location = aboutUser.getLocation();
+                if ((location==null) || (location.isEmpty())) {
+                    textLocation.setVisibility(View.GONE);
+                } else {
+                    textLocation.setText(location);
+                }
+                String url = aboutUser.getWebsiteUrl();
+                if ((url==null) || (url.isEmpty())) {
+                    textWebsiteUrl.setVisibility(View.GONE);
+                } else {
+                    textWebsiteUrl.setText(url);
+                }
 
             } else {
                 hideProgressBar();
                 Utils.showToast(getActivity(), R.string.error_toast);
-
             }
         }
     }

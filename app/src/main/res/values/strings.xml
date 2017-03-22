@@ -79,7 +79,8 @@
     <string name="navigation_drawer_close">close</string>
     <string name="search_tag_edit_text_hint">Search Tags</string>
 
-    <string name="open_dialog_from_question_drawer">Question drawer</string>
-    <string name="open_dialog_from_user_drawer">User drawer</string>
+    <string name="open_dialog_from_question_drawer">questionDrawer</string>
+    <string name="open_dialog_from_user_drawer">userDrawer</string>
 
+    <string name="text_no_detail_found">No Detail Found</string>
 </resources>

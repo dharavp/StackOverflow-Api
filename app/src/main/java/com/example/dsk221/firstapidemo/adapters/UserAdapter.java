@@ -89,7 +89,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                 .load(userDetail.getProfileImage())
                 .placeholder(R.drawable.image_background)
                 .into(holder.imageUser);
-        holder.textName.setText(userDetail.getDisplayName());
+        holder.textName.setText(Utils.convertHtmlInTxt(userDetail.getDisplayName()));
         holder.textReputation.setText(Utils.getRepString(userDetail.getReputation()));
         holder.textBronze.setText(String.valueOf(buzzDetail.getBronze()));
         holder.textSilver.setText(String.valueOf(buzzDetail.getSilver()));

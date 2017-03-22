@@ -33,7 +33,7 @@ import java.net.URLConnection;
 public class UserActivityFragment extends Fragment {
     private ListView listQuestion;
     private ProgressBar progressBar;
-    private TextView textLoading;
+    private TextView textLoading,textNoDetail;
     private QuestionAdapter mQuestionAdapter;
     private View footerView;
     private int userId;
@@ -64,7 +64,7 @@ public class UserActivityFragment extends Fragment {
         listQuestion = (ListView) view.findViewById(R.id.list_question);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         textLoading = (TextView) view.findViewById(R.id.text_loading);
-
+        textNoDetail = (TextView) view.findViewById(R.id.text_no_detail);
         footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.footer_layout, null, false);
         footerView.setVisibility(View.GONE);
@@ -173,11 +173,13 @@ public class UserActivityFragment extends Fragment {
                 Gson gson = new Gson();
                 TypeToken<ListResponse<QuestionItem>> collectionType1 = new TypeToken<ListResponse<QuestionItem>>() {
                 };
-
                 ListResponse<QuestionItem> questionResponse = gson.fromJson(s, collectionType1.getType());
                 hasMoreUserActivity=questionResponse.isHasMore();
                 mQuestionAdapter.addItems(questionResponse.getItems());
-
+                if(mQuestionAdapter.getCount()==0){
+                    textNoDetail.setVisibility(View.VISIBLE);
+                    listQuestion.setVisibility(View.GONE);
+                }
                 hideProgressBar();
             } else {
                 Utils.showToast(getActivity(),R.string.error_toast);
