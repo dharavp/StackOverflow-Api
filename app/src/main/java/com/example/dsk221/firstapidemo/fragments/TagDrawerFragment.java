@@ -1,6 +1,7 @@
 package com.example.dsk221.firstapidemo.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -17,11 +18,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.dsk221.firstapidemo.QuestionListActivity;
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.adapters.TagAdapter;
 import com.example.dsk221.firstapidemo.models.ListResponse;
@@ -29,9 +31,11 @@ import com.example.dsk221.firstapidemo.models.TagItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 /**
  * Created by dsk-221 on 17/3/17.
  */
@@ -105,7 +109,7 @@ public class TagDrawerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editTagSearch.getText().clear();
-                mTagPageCount=1;
+                mTagPageCount = 1;
                 inname = null;
                 tagAdapter.removeItems();
                 closeKeyBoard();
@@ -118,7 +122,7 @@ public class TagDrawerFragment extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                     mTagPageCount = 1;
-                    inname=editTagSearch.getText().toString().toLowerCase();
+                    inname = editTagSearch.getText().toString().toLowerCase();
                     tagAdapter.removeItems();
                     closeKeyBoard();
                     getJsonTagResponse();
@@ -135,13 +139,12 @@ public class TagDrawerFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count!=0){
+                if (count != 0) {
                     imageCancel.setVisibility(View.VISIBLE);
 
-                }
-                else{
+                } else {
                     imageCancel.setVisibility(View.GONE);
-                        closeKeyBoard();
+                    closeKeyBoard();
                 }
             }
 
@@ -156,6 +159,7 @@ public class TagDrawerFragment extends Fragment {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount,
@@ -169,8 +173,17 @@ public class TagDrawerFragment extends Fragment {
                 }
             }
         });
+        listTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String tagname=tagAdapter.getItem(position).getName();
+                Intent intentQuestionListActivity = QuestionListActivity.getStartIntent(getActivity(),tagname);
+                startActivity(intentQuestionListActivity);
+            }
+        });
         return view;
     }
+
     private void getJsonTagResponse() {
         isTagLoading = true;
         showProgressBar();
@@ -190,6 +203,7 @@ public class TagDrawerFragment extends Fragment {
                     tagAdapter.addItems(response.body().getItems());
                 }
             }
+
             @Override
             public void onFailure(Call<ListResponse<TagItem>> call, Throwable t) {
                 // Log error here since request failed
@@ -197,6 +211,7 @@ public class TagDrawerFragment extends Fragment {
             }
         });
     }
+
     private void hideProgressBar() {
         if (mTagPageCount == 1) {
             textLoading.setVisibility(View.GONE);
@@ -214,7 +229,8 @@ public class TagDrawerFragment extends Fragment {
             footerView.setVisibility(View.VISIBLE);
         }
     }
-    private void closeKeyBoard(){
+
+    private void closeKeyBoard() {
         InputMethodManager inputMethodManager = (InputMethodManager)
                 editTagSearch.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(editTagSearch.getWindowToken(), 0);

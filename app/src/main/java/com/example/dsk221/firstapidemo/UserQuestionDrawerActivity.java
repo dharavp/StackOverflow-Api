@@ -83,7 +83,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
                 getSupportActionBar().setTitle(R.string.nav_user_detail_title);
                 break;
             case R.id.nav_question:
-                fragment = new QuestionDrawerFragment();
+                fragment = QuestionDrawerFragment.newInstance(null);
                 getSupportActionBar().setTitle(R.string.nav_question_detail_title);
                 break;
             case R.id.nav_tag:

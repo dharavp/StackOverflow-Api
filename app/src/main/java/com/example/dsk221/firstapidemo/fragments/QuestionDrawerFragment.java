@@ -50,6 +50,16 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
     private boolean hasMore=true;
+    public static final String ARG_TAG = "tagName";
+    private String tagName = null;
+
+    public static QuestionDrawerFragment newInstance(String tag) {
+        QuestionDrawerFragment questionDrawerFragment=new QuestionDrawerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARG_TAG, tag);
+        questionDrawerFragment.setArguments(bundle);
+        return questionDrawerFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,9 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                 .inflate(R.layout.footer_layout, null, false);
         footerView.setVisibility(View.GONE);
         listQuestionDetail.addFooterView(footerView);
+
+        Bundle bundle = getArguments();
+        tagName = bundle.getString(ARG_TAG);
 
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
         listQuestionDetail.setAdapter(questionDetailAdapter);
@@ -151,11 +164,14 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-            Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionDetail(mQuestionPageCount,
-                    filterQuestionFromdate,filterQuestionTodate,filterQuestionOrder,
-                    filterQuestionSort,Constants.VALUE_STACKOVER_FLOW);
-
-
+            Call<ListResponse<QuestionDetailItem>> call = apiService.getQuestionList(
+                    mQuestionPageCount,
+                    filterQuestionFromdate,
+                    filterQuestionTodate,
+                    filterQuestionOrder,
+                    filterQuestionSort,
+                    tagName,
+                    Constants.VALUE_STACKOVER_FLOW);
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {
             @Override
             public void onResponse(Call<ListResponse<QuestionDetailItem>> call,
