@@ -39,7 +39,7 @@ public class FilterDialog extends DialogFragment {
     public static final String ARG_SORT = "sort";
     public static final String ARG_TODATE = "todate";
     public static final String ARG_FROMDATE = "fromdate";
-    public static final String ARG_DRAWERNAME = "drawername";
+    public static final String ARG_DRAWER_NAME = "drawerName";
 
     private OnResult callbackOnResult;
 
@@ -51,7 +51,7 @@ public class FilterDialog extends DialogFragment {
                                            String fromdate) {
         FilterDialog filterDialogFragment = new FilterDialog();
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_DRAWERNAME, drawerName);
+        bundle.putString(ARG_DRAWER_NAME, drawerName);
         bundle.putString(ARG_ORDER, order);
         bundle.putString(ARG_SORT, sort);
         bundle.putString(ARG_TODATE, todate);
@@ -88,7 +88,7 @@ public class FilterDialog extends DialogFragment {
         selectedSortData = bundle.getString(ARG_SORT);
         selectedFromDate = bundle.getString(ARG_FROMDATE);
         selectedToDate = bundle.getString(ARG_TODATE);
-        selectedDrawerName = bundle.getString(ARG_DRAWERNAME);
+        selectedDrawerName = bundle.getString(ARG_DRAWER_NAME);
 
         calFromDate = convertToCalender(selectedFromDate);
         calToDate = convertToCalender(selectedToDate);

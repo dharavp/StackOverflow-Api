@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.dsk221.firstapidemo.MainActivity">
+    android:layout_height="match_parent">
     <ListView
         android:id="@+id/list_user"
         android:layout_width="match_parent"

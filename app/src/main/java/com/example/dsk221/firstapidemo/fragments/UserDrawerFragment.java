@@ -49,6 +49,11 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     private String filterFromdate = null;
     private boolean hasMoreUsers = true;
 
+
+    public static UserDrawerFragment newInstance() {
+        UserDrawerFragment userDrawerFragment=new UserDrawerFragment();
+        return userDrawerFragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
 

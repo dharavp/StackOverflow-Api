@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public class TagAdapter extends BaseAdapter {
-    Context context;
+    private Context context;
     private List<TagItem> tagItems;
 
 

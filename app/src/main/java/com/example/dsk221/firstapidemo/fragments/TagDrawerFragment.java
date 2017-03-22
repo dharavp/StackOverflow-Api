@@ -57,6 +57,11 @@ public class TagDrawerFragment extends Fragment {
     private String inname = null;
     private boolean hasMoreTag = true;
 
+
+    public static TagDrawerFragment newInstance() {
+        TagDrawerFragment tagDrawerFragment=new TagDrawerFragment();
+        return tagDrawerFragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
 

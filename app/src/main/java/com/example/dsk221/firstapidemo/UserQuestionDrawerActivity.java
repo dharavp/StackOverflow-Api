@@ -33,10 +33,6 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         getSupportActionBar().setTitle(R.string.nav_home_title);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar,
-//                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
@@ -79,7 +75,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_user:
-                fragment = new UserDrawerFragment();
+                fragment = UserDrawerFragment.newInstance();
                 getSupportActionBar().setTitle(R.string.nav_user_detail_title);
                 break;
             case R.id.nav_question:
@@ -87,7 +83,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
                 getSupportActionBar().setTitle(R.string.nav_question_detail_title);
                 break;
             case R.id.nav_tag:
-                fragment = new TagDrawerFragment();
+                fragment = TagDrawerFragment.newInstance();
                 getSupportActionBar().setTitle(R.string.nav_tag_title);
                 break;
         }
