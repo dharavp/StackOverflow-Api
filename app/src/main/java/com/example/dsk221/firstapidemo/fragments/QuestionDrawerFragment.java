@@ -105,7 +105,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         });
         return view;
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search,menu);

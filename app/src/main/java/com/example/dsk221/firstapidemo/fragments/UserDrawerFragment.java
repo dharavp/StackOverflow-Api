@@ -47,6 +47,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     private String filterSort = Constants.VALUE_REPUTATION;
     private String filterTodate = null;
     private String filterFromdate = null;
+    private boolean hasMoreUsers = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,8 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
                         && !isLoading
-                        && !isSearch) {
+                        && !isSearch
+                        && hasMoreUsers) {
                     mPageCount = mPageCount + 1;
                     getUserDetail();
                    // new GetDataFromJson().execute();
@@ -239,7 +241,8 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                                    Response<ListResponse<UserItem>> response) {
                 hideProgressBar();
                 isLoading = false;
-                if (response != null) {
+                if (response.body() != null) {
+                    hasMoreUsers = response.body().isHasMore();
                     mUserAdapter.addItems(response.body().getItems());
                 }
             }

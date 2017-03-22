@@ -38,8 +38,9 @@ public class UserActivityFragment extends Fragment {
     private View footerView;
     private int userId;
     private int mQuestionPageCount = 1;
-    public boolean isLoading = false;
+    private boolean isLoading = false;
     public static final String  ARG_USER_ID="userId";
+    private boolean hasMoreUserActivity = true;
 
     public UserActivityFragment() {
     }
@@ -100,7 +101,8 @@ public class UserActivityFragment extends Fragment {
                                  int totalItemCount) {
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
-                        && !isLoading) {
+                        && !isLoading
+                        && hasMoreUserActivity) {
                     mQuestionPageCount = mQuestionPageCount + 1;
                     new GetQuestionDetailFromJson().execute();
                 }
@@ -172,6 +174,7 @@ public class UserActivityFragment extends Fragment {
                 };
 
                 ListResponse<QuestionItem> questionResponse = gson.fromJson(s, collectionType1.getType());
+                hasMoreUserActivity=questionResponse.isHasMore();
                 mQuestionAdapter.addItems(questionResponse.getItems());
 
                 hideProgressBar();

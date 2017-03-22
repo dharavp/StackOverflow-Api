@@ -51,6 +51,7 @@ public class TagDrawerFragment extends Fragment {
     private String[] tagArray;
     private String tagSortBy = "popular";
     private String inname = null;
+    private boolean hasMoreTag = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,7 +162,8 @@ public class TagDrawerFragment extends Fragment {
                                  int totalItemCount) {
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
-                        && !isTagLoading) {
+                        && !isTagLoading
+                        && hasMoreTag) {
                     mTagPageCount = mTagPageCount + 1;
                     getJsonTagResponse();
                 }
@@ -183,7 +185,8 @@ public class TagDrawerFragment extends Fragment {
                                    Response<ListResponse<TagItem>> response) {
                 hideProgressBar();
                 isTagLoading = false;
-                if (response != null) {
+                if (response.body() != null) {
+                    hasMoreTag = response.body().isHasMore();
                     tagAdapter.addItems(response.body().getItems());
                 }
             }
