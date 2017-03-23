@@ -165,17 +165,11 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lastTime = System.currentTimeMillis();
-                Log.d(TAG, "onClick: " + lastTime);
-            }
-        });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
                 titleName = null;
+                lastTime = 0;
                 return false;
             }
         });
@@ -187,6 +181,10 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
 
             @Override
             public boolean onQueryTextChange(final String newText) {
+                if (lastTime == 0) {
+                    lastTime = System.currentTimeMillis();
+                    return false;
+                }
                 if (newText.length() == 0) {
                     if (timer != null) {
                         timer.cancel();
