@@ -16,12 +16,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utils {
+
     public static Spanned convertHtmlInTxt(String body) {
+        return convertHtmlInTxt(body, null);
+    }
+
+    public static Spanned convertHtmlInTxt(String body, HtmlImageGetter imageGetter) {
         Spanned spanned;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY);
+            spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, imageGetter, null);
         } else {
-            spanned = Html.fromHtml(body, null, null);
+            spanned = Html.fromHtml(body, imageGetter, null);
         }
         return spanned;
     }
