@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +32,6 @@ import com.example.dsk221.firstapidemo.utility.Constants;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,31 +61,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     private Timer timer;
     private Handler mHandler;
     private Runnable runnable;
-
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (timer != null) {
-                timer.cancel();
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    // do your actual work here
-                }
-            }, 600);
-        }
-    };
 
     public static QuestionDrawerFragment newInstance(String tag) {
         QuestionDrawerFragment questionDrawerFragment = new QuestionDrawerFragment();
@@ -154,10 +127,14 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                 startActivity(intent);
             }
         });
+        mHandler=new Handler();
 
         return view;
     }
 
+    /**
+     * last search time in milliseconds
+     */
     private long lastTime;
 
     @Override
@@ -168,8 +145,9 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
+                // reset searched text and last time when search is completed
                 titleName = null;
-                lastTime = 0;
+//                lastTime = 0;
                 return false;
             }
         });
@@ -181,39 +159,55 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                if (lastTime == 0) {
-                    lastTime = System.currentTimeMillis();
-                    return false;
-                }
-                if (newText.length() == 0) {
-                    if (timer != null) {
-                        timer.cancel();
-                    }
-                    searchList(newText);
-                    return false;
-                }
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastTime < 2000) {
-                    if (timer != null) {
-                        timer.cancel();
-                    }
-                }
-                timer = new Timer();
-                timer.schedule(new TimerTask() {
+
+                mHandler.removeCallbacksAndMessages(null);
+
+                mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getActivity().runOnUiThread(new TimerTask() {
-                            @Override
-                            public void run() {
-                                searchList(newText);
-                            }
-                        });
+                        searchList(newText);
+                        //Put your call to the server here (with mQueryString)
                     }
-                }, 600);
-                lastTime = System.currentTimeMillis();
+                }, 300);
+                // if it is for first time search, dont need to call for empty text
+//                if (lastTime == 0) {
+//                    lastTime = System.currentTimeMillis();
+//                    return false;
+//                }
+//                // when user reset text field in search view
+//                if (newText.length() == 0) {
+//                    // cancel timer for last typed char
+//                    if (timer != null) {
+//                        timer.cancel();
+//                    }
+//                    searchList(newText);
+//                    return false;
+//                }
+//
+//                long currentTime = System.currentTimeMillis();
+//                if (currentTime - lastTime < 2000) {
+//                    // cancel timer for last typed char
+//                    if (timer != null) {
+//                        timer.cancel();
+//                    }
+//                }
+//                // create timer for new char
+//                timer = new Timer();
+//                timer.schedule(new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        getActivity().runOnUiThread(new TimerTask() {
+//                            @Override
+//                            public void run() {
+//                                searchList(newText);
+//                            }
+//                        });
+//                    }
+//                }, 600);
+//                lastTime = System.currentTimeMillis()
                 return false;
-            }
-        });
+        }
+    });
         super.onCreateOptionsMenu(menu, inflater);
     }
 

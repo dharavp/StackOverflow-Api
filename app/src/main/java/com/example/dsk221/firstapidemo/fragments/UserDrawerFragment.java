@@ -3,6 +3,7 @@ package com.example.dsk221.firstapidemo.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -48,6 +49,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     private String filterTodate = null;
     private String filterFromdate = null;
     private boolean hasMoreUsers = true;
+    private Handler handler;
 
     public static UserDrawerFragment newInstance() {
         UserDrawerFragment userDrawerFragment=new UserDrawerFragment();
@@ -107,6 +109,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                 }
             }
         });
+        handler = new Handler();
         return view;
     }
     @Override
@@ -122,9 +125,17 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                 return false;
             }
             @Override
-            public boolean onQueryTextChange(String newText) {
-                isSearch = !newText.isEmpty();
-                mUserAdapter.getFilter().filter(newText);
+            public boolean onQueryTextChange(final String newText) {
+                handler.removeCallbacksAndMessages(null);
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isSearch = !newText.isEmpty();
+                        mUserAdapter.getFilter().filter(newText);
+                    }
+                }, 300);
+
                 return false;
             }
         });
