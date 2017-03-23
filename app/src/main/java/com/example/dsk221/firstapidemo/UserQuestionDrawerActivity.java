@@ -27,7 +27,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private NavigationView navigationView;
-    private LinearLayout headerRootView,siteListLayout;
+    private LinearLayout headerRootView, siteListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,9 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
 
         actionBarDrawerToggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        headerRootView = (LinearLayout)  findViewById(R.id.headerRootView);
-        siteListLayout = (LinearLayout)  findViewById(R.id.siteListLayout);
+        View headerView = navigationView.getHeaderView(0);
+        headerRootView = (LinearLayout) headerView.findViewById(R.id.headerRootView);
+        siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -70,7 +71,10 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         headerRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                siteListLayout.setVisibility(View.VISIBLE);
+                if(siteListLayout.getVisibility() == View.VISIBLE)
+                siteListLayout.setVisibility(View.GONE);
+                else
+                    siteListLayout.setVisibility(View.VISIBLE);
             }
         });
     }
