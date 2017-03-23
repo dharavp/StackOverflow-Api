@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FirstApiDemo</string>
+    <string name="app_name">StackExchange API</string>
     <string name="title_name">user</string>
     <string name="progress_title">Loading…</string>
     <string name="error_toast">Try again…</string>
