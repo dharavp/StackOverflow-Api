@@ -27,6 +27,7 @@ import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.Utils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,16 +99,25 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount,
                                  int totalItemCount) {
-                mQuestionPageCount = mQuestionPageCount + 1;
+
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
                         && !isQuestionLoading
                         && hasMore
-                        && !isQuestionSearch) {
+                        && isQuestionSearch) {
+                    mQuestionPageCount = mQuestionPageCount + 1;
                     getJsonQuestionListResponse("search");
                 }
-                else{
+                else if(firstVisibleItem + visibleItemCount == totalItemCount
+                        && (totalItemCount - 1) != 0
+                        && !isQuestionLoading
+                        && hasMore
+                        && !isQuestionSearch){
+                    mQuestionPageCount = mQuestionPageCount + 1;
                     getJsonQuestionListResponse("no_search");
+                }
+                else{
+
                 }
             }
         });
@@ -128,7 +138,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search,menu);
         MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -138,7 +148,17 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                isQuestionSearch = !newText.isEmpty();
+                mQuestionPageCount = 1;
+                questionDetailAdapter.removeItems();
+                if(newText.isEmpty()){
+                    getJsonQuestionListResponse("no_search");
+                }
+                else {
+                    Utils.closeKeyBoard(searchView);
+                    isQuestionSearch = !newText.isEmpty();
+                    titleName = newText;
+                    getJsonQuestionListResponse("search");
+                }
                 return false;
             }
         });
@@ -197,12 +217,12 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                                    Response<ListResponse<QuestionDetailItem>> response) {
 
                 isQuestionLoading=false;
-
+                hideProgressBar();
                 if(response.body()!=null){
                     hasMore=response.body().isHasMore();
                     questionDetailAdapter.addItems(response.body().getItems());
                 }
-                hideProgressBar();
+
             }
             @Override
             public void onFailure(Call<ListResponse<QuestionDetailItem>>call, Throwable t) {
