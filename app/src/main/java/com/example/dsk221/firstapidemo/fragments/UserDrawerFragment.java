@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.UserTabActivity;
 import com.example.dsk221.firstapidemo.adapters.UserAdapter;
@@ -48,43 +49,46 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
     private String filterSort = Constants.VALUE_REPUTATION;
     private String filterTodate = null;
     private String filterFromdate = null;
+    private String userName = null;
     private boolean hasMoreUsers = true;
     private Handler handler;
 
     public static UserDrawerFragment newInstance() {
-        UserDrawerFragment userDrawerFragment=new UserDrawerFragment();
+        UserDrawerFragment userDrawerFragment = new UserDrawerFragment();
         return userDrawerFragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_drawer, container, false);
-        userListView = (ListView)view.findViewById(R.id.list_user);
-        progressBar = (ProgressBar)view.findViewById(R.id.progressbar);
+        userListView = (ListView) view.findViewById(R.id.list_user);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        textLoading = (TextView)view.findViewById(R.id.text_loading);
+        textLoading = (TextView) view.findViewById(R.id.text_loading);
 
-        footerView = ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        footerView = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.footer_layout, null, false);
         footerView.setVisibility(View.GONE);
         userListView.addFooterView(footerView);
 
         mUserAdapter = new UserAdapter(getActivity());
         userListView.setAdapter(mUserAdapter);
-       // new GetDataFromJson().execute();
+        // new GetDataFromJson().execute();
         getUserDetail();
         userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserItem userItem=mUserAdapter.getItem(position);
+                UserItem userItem = mUserAdapter.getItem(position);
 
-                Intent i = UserTabActivity.getStartIntent(getActivity(),userItem);
+                Intent i = UserTabActivity.getStartIntent(getActivity(), userItem);
                 startActivity(i);
             }
         });
@@ -94,6 +98,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount,
@@ -105,16 +110,17 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                         && hasMoreUsers) {
                     mPageCount = mPageCount + 1;
                     getUserDetail();
-                   // new GetDataFromJson().execute();
+                    // new GetDataFromJson().execute();
                 }
             }
         });
         handler = new Handler();
         return view;
     }
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
+    public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
@@ -124,6 +130,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(final String newText) {
                 handler.removeCallbacksAndMessages(null);
@@ -131,8 +138,20 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        isSearch = !newText.isEmpty();
-                        mUserAdapter.getFilter().filter(newText);
+//                        isSearch = !newText.isEmpty();
+//                        mUserAdapter.getFilter().filter(newText);
+                        mPageCount = 1;
+
+                        mUserAdapter.removeItems();
+                        if(!newText.isEmpty()) {
+                            userName = newText;
+                        }
+                        else{
+                            filterOrder = Constants.VALUE_DESC;
+                            filterSort = Constants.VALUE_REPUTATION;
+                            userName = null;
+                        }
+                        getUserDetail();
                     }
                 }, 300);
 
@@ -141,6 +160,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -149,6 +169,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void sendData(String orderData, String sortData, String todateData, String fromdateData) {
 
@@ -164,10 +185,11 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
         filterFromdate = fromdateData;
         filterTodate = todateData;
 
-       // new GetDataFromJson().execute();
+        // new GetDataFromJson().execute();
         getUserDetail();
     }
-//    private class GetDataFromJson extends AsyncTask<Void, Void, String> {
+
+    //    private class GetDataFromJson extends AsyncTask<Void, Void, String> {
 //        @Override
 //        protected void onPreExecute() {
 //            super.onPreExecute();
@@ -241,14 +263,18 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
 //            }
 //        }
 //    }
-    private void getUserDetail(){
-        isLoading=true;
+    private void getUserDetail() {
+        isLoading = true;
         showProgressBar();
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<UserItem>> call = apiService.getUserList(mPageCount,
-                filterFromdate,filterTodate,filterOrder,
-                filterSort,Constants.VALUE_STACKOVER_FLOW);
+                filterFromdate,
+                filterTodate,
+                filterOrder,
+                filterSort,
+                userName,
+                Constants.VALUE_STACKOVER_FLOW);
 
         call.enqueue(new Callback<ListResponse<UserItem>>() {
             @Override
@@ -261,13 +287,15 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                     mUserAdapter.addItems(response.body().getItems());
                 }
             }
+
             @Override
-            public void onFailure(Call<ListResponse<UserItem>>call, Throwable t) {
+            public void onFailure(Call<ListResponse<UserItem>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
             }
         });
     }
+
     private void hideProgressBar() {
         if (mPageCount == 1) {
             textLoading.setVisibility(View.GONE);
@@ -276,6 +304,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             footerView.setVisibility(View.GONE);
         }
     }
+
     private void showProgressBar() {
         if (mPageCount == 1) {
             textLoading.setVisibility(View.VISIBLE);
@@ -284,6 +313,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
             footerView.setVisibility(View.VISIBLE);
         }
     }
+
     public void showCustomDialog() {
 
         FilterDialog filterDialog = FilterDialog.newInstance(

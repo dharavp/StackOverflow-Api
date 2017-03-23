@@ -29,6 +29,7 @@ public interface ApiInterface {
                                              @Query("todate") String todate,
                                              @Query("order") String order,
                                              @Query("sort") String sort,
+                                             @Query("inname") String inname,
                                              @Query("site") String site);
 
     @GET("tags")
