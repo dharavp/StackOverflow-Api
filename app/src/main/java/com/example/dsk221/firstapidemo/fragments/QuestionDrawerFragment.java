@@ -57,7 +57,6 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     private String filterQuestionTodate = null;
     private String filterQuestionFromdate = null;
     private boolean hasMore = true;
-    private boolean isQuestionSearch = false;
     public static final String ARG_TAG = "tagName";
     private String tagName = null;
     private String titleName = null;
@@ -123,7 +122,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         questionDetailAdapter = new QuestionDetailAdapter(getActivity());
         listQuestionDetail.setAdapter(questionDetailAdapter);
 
-        getJsonQuestionListResponse("no_search");
+        getJsonQuestionListResponse(null);
         listQuestionDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -138,19 +137,9 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                 if (firstVisibleItem + visibleItemCount == totalItemCount
                         && (totalItemCount - 1) != 0
                         && !isQuestionLoading
-                        && hasMore
-                        && isQuestionSearch) {
+                        && hasMore) {
                     mQuestionPageCount = mQuestionPageCount + 1;
-                    getJsonQuestionListResponse("search");
-                } else if (firstVisibleItem + visibleItemCount == totalItemCount
-                        && (totalItemCount - 1) != 0
-                        && !isQuestionLoading
-                        && hasMore
-                        && !isQuestionSearch) {
-                    mQuestionPageCount = mQuestionPageCount + 1;
-                    getJsonQuestionListResponse("no_search");
-                } else {
-
+                    getJsonQuestionListResponse(titleName);
                 }
             }
         });
@@ -181,6 +170,13 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
             public void onClick(View v) {
                 lastTime = System.currentTimeMillis();
                 Log.d(TAG, "onClick: " + lastTime);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                titleName = null;
+                return false;
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -228,12 +224,12 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         mQuestionPageCount = 1;
         questionDetailAdapter.removeItems();
         if (newText.isEmpty()) {
-            getJsonQuestionListResponse("no_search");
+            getJsonQuestionListResponse(null);
 //            Utils.closeKeyBoard(searchView);
         } else {
-            isQuestionSearch = !newText.isEmpty();
+//            isQuestionSearch = !newText.isEmpty();
             titleName = newText;
-            getJsonQuestionListResponse("search");
+            getJsonQuestionListResponse(titleName);
         }
     }
 
@@ -256,16 +252,16 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         filterQuestionFromdate = fromdateData;
         filterQuestionTodate = todateData;
 
-        getJsonQuestionListResponse("no_search");
+        getJsonQuestionListResponse(null);
     }
 
-    private void getJsonQuestionListResponse(String type) {
+    private void getJsonQuestionListResponse(String titleName) {
         isQuestionLoading = true;
         showProgressBar();
         Call<ListResponse<QuestionDetailItem>> call = null;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        if (type.equalsIgnoreCase("no_search")) {
+        if (titleName == null) {
             call = apiService.getQuestionList(
                     mQuestionPageCount,
                     filterQuestionFromdate,
