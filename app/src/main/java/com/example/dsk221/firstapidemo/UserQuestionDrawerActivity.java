@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
@@ -26,6 +27,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private LinearLayout headerRootView,siteListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,21 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
 
         actionBarDrawerToggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        headerRootView = (LinearLayout)  findViewById(R.id.headerRootView);
+        siteListLayout = (LinearLayout)  findViewById(R.id.siteListLayout);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_user);
         Fragment fragment = UserDrawerFragment.newInstance();
         showFragment(R.string.nav_user_detail_title, fragment);
+
+        headerRootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                siteListLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 
