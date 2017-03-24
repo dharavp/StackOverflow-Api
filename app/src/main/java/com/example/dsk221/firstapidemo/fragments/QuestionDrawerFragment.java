@@ -20,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.adapters.QuestionDetailAdapter;
 import com.example.dsk221.firstapidemo.dialogs.FilterDialog;
@@ -29,10 +28,7 @@ import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
-
 import java.util.Timer;
-import java.util.TimerTask;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,9 +54,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     public static final String ARG_TAG = "tagName";
     private String tagName = null;
     private String titleName = null;
-    private Timer timer;
     private Handler mHandler;
-    private Runnable runnable;
 
     public static QuestionDrawerFragment newInstance(String tag) {
         QuestionDrawerFragment questionDrawerFragment = new QuestionDrawerFragment();

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,8 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
@@ -28,6 +29,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
     private LinearLayout headerRootView, siteListLayout;
+    private ImageView imageArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
@@ -60,6 +63,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         headerRootView = (LinearLayout) headerView.findViewById(R.id.headerRootView);
+        imageArrow = (ImageView) headerView.findViewById(R.id.image_arrow);
         siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -71,10 +75,16 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         headerRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(siteListLayout.getVisibility() == View.VISIBLE)
-                siteListLayout.setVisibility(View.GONE);
-                else
+
+                if (siteListLayout.getVisibility() == View.VISIBLE)
+                {
+                    siteListLayout.setVisibility(View.GONE);
+                    imageArrow.setImageResource(R.drawable.ic_arrow_drop_down_black);
+                }
+                else {
                     siteListLayout.setVisibility(View.VISIBLE);
+                    imageArrow.setImageResource(R.drawable.ic_arrow_drop_up_black);
+                }
             }
         });
     }
