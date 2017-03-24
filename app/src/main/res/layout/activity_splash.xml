@@ -3,23 +3,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/image_splash"
+    <RelativeLayout
+        android:id="@+id/relative_layout_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/image_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_app_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_splash"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:textColor="#454545"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="20dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relative_layout_splash"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/button_try_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="@string/text_error"
+        android:background="@color/colorIsAnswerTotal"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        android:visibility="gone"/>
 
     <TextView
-        android:layout_width="fill_parent"
+        android:id="@+id/text_error"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12dp"
-        android:textColor="#454545"
-        android:gravity="center_horizontal"
-        android:text="@string/app_name"
-        android:id="@+id/textView2"
-        android:layout_alignTop="@+id/image_splash"
-        android:layout_marginTop="50dp" />
-
+        android:layout_above="@+id/button_try_again"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:text="error"
+        android:visibility="gone"
+        android:textSize="12sp"/>
 </RelativeLayout>

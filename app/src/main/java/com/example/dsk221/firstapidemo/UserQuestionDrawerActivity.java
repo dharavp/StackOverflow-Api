@@ -17,10 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.dsk221.firstapidemo.adapters.SiteAdapter;
+import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
+import com.example.dsk221.firstapidemo.models.SiteItem;
 import com.example.dsk221.firstapidemo.utility.Utils;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+import static com.example.dsk221.firstapidemo.SplashActivity.imgSite;
 
 public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +40,10 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
     private LinearLayout headerRootView, siteListLayout;
-    private ImageView imageArrow;
+    private ImageView imageArrow,imageNavigationIcon;
+    private ListView listSite;
+    private SiteAdapter siteAdapter;
+    private TextView textNavigationDescription,textNavigationSiteName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +61,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 Utils.closeKeyBoard(getCurrentFocus());
-
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -64,7 +76,11 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         headerRootView = (LinearLayout) headerView.findViewById(R.id.headerRootView);
         imageArrow = (ImageView) headerView.findViewById(R.id.image_arrow);
+        imageNavigationIcon = (ImageView) headerView.findViewById(R.id.image_navigation_icon);
+        textNavigationDescription = (TextView) headerView.findViewById(R.id.text_navigation_description);
+        textNavigationSiteName = (TextView) headerView.findViewById(R.id.text_navigation_site_name);
         siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
+        listSite = (ListView) findViewById(R.id.list_site);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -72,6 +88,11 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         Fragment fragment = UserDrawerFragment.newInstance();
         showFragment(R.string.nav_user_detail_title, fragment);
 
+
+        textNavigationSiteName.setText(SplashActivity.txtSite);
+        Picasso.with(getApplicationContext())
+                .load(imgSite)
+                .into(imageNavigationIcon);
         headerRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +103,17 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
                     imageArrow.setImageResource(R.drawable.ic_arrow_drop_down_black);
                 }
                 else {
+                    showCustomListView();
                     siteListLayout.setVisibility(View.VISIBLE);
                     imageArrow.setImageResource(R.drawable.ic_arrow_drop_up_black);
                 }
             }
         });
+    }
+    public void showCustomListView(){
+
+        siteAdapter = new SiteAdapter(UserQuestionDrawerActivity.this,SplashActivity.listSiteDetail);
+        listSite.setAdapter(siteAdapter);
     }
 
 
@@ -158,5 +185,4 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             ft.commit();
         }
     }
-
 }

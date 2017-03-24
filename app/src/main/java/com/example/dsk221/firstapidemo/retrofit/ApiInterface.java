@@ -2,6 +2,7 @@ package com.example.dsk221.firstapidemo.retrofit;
 
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
+import com.example.dsk221.firstapidemo.models.SiteItem;
 import com.example.dsk221.firstapidemo.models.TagItem;
 import com.example.dsk221.firstapidemo.models.UserItem;
 
@@ -46,4 +47,8 @@ public interface ApiInterface {
                                                       @Query("sort") String sort,
                                                       @Query("intitle") String intitle,
                                                       @Query("site") String site);
+
+    @GET("sites")
+    Call<ListResponse<SiteItem>> getSiteList(@Query("page") int page,
+                                             @Query("filter") String filter);
 }

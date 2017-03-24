@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/image_background"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/image_site"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="stackoverflow"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="16dp"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:id="@+id/text_site_name"/>
+</RelativeLayout>
