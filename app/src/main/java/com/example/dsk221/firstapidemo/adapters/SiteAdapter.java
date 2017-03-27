@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dsk221.firstapidemo.R;
+import com.example.dsk221.firstapidemo.models.QuestionItem;
 import com.example.dsk221.firstapidemo.models.SiteItem;
 import com.squareup.picasso.Picasso;
 
@@ -24,9 +25,14 @@ public class SiteAdapter extends BaseAdapter {
     private Context context;
     private List<SiteItem> siteItems;
 
-    public SiteAdapter(Context context,List<SiteItem> siteItems) {
-        this.siteItems = siteItems;
+    public SiteAdapter(Context context) {
+        this.siteItems = new ArrayList<>();
         this.context = context;
+    }
+
+    public void addItems(List<SiteItem> items) {
+        siteItems.addAll(items);
+        notifyDataSetChanged();
     }
 
     @Override

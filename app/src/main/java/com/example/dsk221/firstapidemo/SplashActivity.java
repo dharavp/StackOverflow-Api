@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private ProgressBar progressbarLoading;
     private static final String TAG = "SplashActivity";
-    public static final String KEY_CASE = "caseKey";
+    public static final String KEY_CACHE = "caseKey";
     private TextView textError;
     private Button buttonTryAgain;
     private int pageNo = 1;
@@ -60,8 +60,9 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d(TAG, "onResponse: " + response.body());
                 listSiteDetail = response.body().getItems();
 
-                saveDataInCase();
+
                 saveDataInSharedPreference();
+                saveDataInCache();
                 openActivity();
 
                 Utils.showToast(SplashActivity.this, "get list Successfully..");
@@ -86,6 +87,7 @@ public class SplashActivity extends AppCompatActivity {
             if (item.getApiSiteParameter() != null &&
                     item.getApiSiteParameter()
                             .equalsIgnoreCase("stackoverflow")) {
+
                 siteItem = item;
                 break;
 
@@ -96,14 +98,13 @@ public class SplashActivity extends AppCompatActivity {
         }
         session.addSiteDetail(siteItem);
     }
-
     private void openActivity() {
         Intent i = new Intent(SplashActivity.this, UserQuestionDrawerActivity.class);
         startActivity(i);
         finish();
     }
-    private void saveDataInCase(){
+    private void saveDataInCache(){
         ACache mCache = ACache.get(this);
-        mCache.put(KEY_CASE, listSiteDetail);
+        mCache.put(KEY_CACHE, listSiteDetail);
     }
 }
