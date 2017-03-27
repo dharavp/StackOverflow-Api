@@ -18,7 +18,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:paddingTop="16dp"
-        app:srcCompat="@drawable/image_background" />
+        android:src="@drawable/image_background" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

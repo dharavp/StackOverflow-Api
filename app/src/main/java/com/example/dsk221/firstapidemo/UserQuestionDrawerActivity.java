@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,12 +25,11 @@ import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
 import com.example.dsk221.firstapidemo.models.SiteItem;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-
-import static com.example.dsk221.firstapidemo.SplashActivity.imgSite;
+import java.util.HashMap;
 
 public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,14 +42,15 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private ListView listSite;
     private SiteAdapter siteAdapter;
     private TextView textNavigationDescription,textNavigationSiteName;
-
+    SessionManager session;
+    ArrayList<SiteItem> siteItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_question_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
         setSupportActionBar(toolbar);
-
+        session = new SessionManager(getApplicationContext());
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -88,11 +87,16 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         Fragment fragment = UserDrawerFragment.newInstance();
         showFragment(R.string.nav_user_detail_title, fragment);
 
-
-        textNavigationSiteName.setText(SplashActivity.txtSite);
+        HashMap<String, String> siteDetail = session.getSiteDetail();
+        String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
+        String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
+        String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
+        textNavigationSiteName.setText(name);
+        textNavigationDescription.setText(audience);
         Picasso.with(getApplicationContext())
-                .load(imgSite)
+                .load(image)
                 .into(imageNavigationIcon);
+
         headerRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
