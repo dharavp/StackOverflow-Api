@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.SiteItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
@@ -16,9 +15,9 @@ import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
 import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
-
+import org.afinal.simplecache.ACache;
 import java.util.ArrayList;
-
+import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,10 +26,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private ProgressBar progressbarLoading;
     private static final String TAG = "SplashActivity";
+    public static final String KEY_CASE = "caseKey";
     private TextView textError;
     private Button buttonTryAgain;
     private int pageNo = 1;
-    public static ArrayList<SiteItem> listSiteDetail = new ArrayList<>();
+    private List<SiteItem> listSiteDetail = new ArrayList<>();
     SessionManager session;
 
     @Override
@@ -60,8 +60,10 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d(TAG, "onResponse: " + response.body());
                 listSiteDetail = response.body().getItems();
 
-                saveData();
+                saveDataInCase();
+                saveDataInSharedPreference();
                 openActivity();
+
                 Utils.showToast(SplashActivity.this, "get list Successfully..");
 
             }
@@ -77,7 +79,7 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
-    private void saveData() {
+    private void saveDataInSharedPreference() {
         SiteItem siteItem = null;
         for (SiteItem item : listSiteDetail) {
 
@@ -99,5 +101,9 @@ public class SplashActivity extends AppCompatActivity {
         Intent i = new Intent(SplashActivity.this, UserQuestionDrawerActivity.class);
         startActivity(i);
         finish();
+    }
+    private void saveDataInCase(){
+        ACache mCache = ACache.get(this);
+        mCache.put(KEY_CASE, listSiteDetail);
     }
 }

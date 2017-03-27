@@ -2,14 +2,8 @@ package com.example.dsk221.firstapidemo.utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.example.dsk221.firstapidemo.models.SiteItem;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by dsk-221 on 27/3/17.

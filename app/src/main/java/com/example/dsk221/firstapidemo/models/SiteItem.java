@@ -4,12 +4,14 @@ import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * Created by dsk-221 on 24/3/17.
  */
 
 @DatabaseTable(tableName = "sites")
-public class SiteItem {
+public class SiteItem implements Serializable {
     public SiteItem() {
     }
 
@@ -70,4 +72,5 @@ public class SiteItem {
     public void setName(String name) {
         this.name = name;
     }
+
 }

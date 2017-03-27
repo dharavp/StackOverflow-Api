@@ -18,9 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.dsk221.firstapidemo.adapters.SiteAdapter;
-import com.example.dsk221.firstapidemo.adapters.UserAdapter;
 import com.example.dsk221.firstapidemo.fragments.QuestionDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.TagDrawerFragment;
 import com.example.dsk221.firstapidemo.fragments.UserDrawerFragment;
@@ -28,8 +26,11 @@ import com.example.dsk221.firstapidemo.models.SiteItem;
 import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import com.squareup.picasso.Picasso;
+import org.afinal.simplecache.ACache;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +44,6 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private SiteAdapter siteAdapter;
     private TextView textNavigationDescription,textNavigationSiteName;
     SessionManager session;
-    ArrayList<SiteItem> siteItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +116,10 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     }
     public void showCustomListView(){
 
-        siteAdapter = new SiteAdapter(UserQuestionDrawerActivity.this,SplashActivity.listSiteDetail);
+        ACache mCache = ACache.get(this);
+
+        List<SiteItem> siteItems = mCache.getAsObjectList(SplashActivity.KEY_CASE, SiteItem.class);
+        siteAdapter = new SiteAdapter(UserQuestionDrawerActivity.this,siteItems);
         listSite.setAdapter(siteAdapter);
     }
 
