@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.dsk221.firstapidemo.R;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.HtmlImageGetter;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -128,45 +130,7 @@ public class UserProfileFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s != null) {
-//                ObjectMapper mapper =new ObjectMapper();
-//                try {
-//                    UserItem userItem=mapper.readValue(s,UserItem.class);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
-//                try {
-//                    JSONObject responseObj = new JSONObject(s);
-//                    JSONArray items = responseObj.getJSONArray("items");
-//
-//
-//                    for (int i = 0; i < items.length(); i++) {
-////                               UserItem userItem = new UserItem();
-////                               BuzzItem buzzItem = new BuzzItem();
-//
-//
-//                        JSONObject userJsonObj = items.getJSONObject(i);
-//
-////                               userItem.setDisplayName(c.getString("display_name"));
-////                               userItem.setReputation(c.getInt("reputation"));
-////                               userItem.setProfileImage(c.getString("profile_image"));
-////
-////                               JSONObject badge_count = c.getJSONObject("badge_counts");
-////                               buzzItem.setSilver(badge_count.getInt("silver"));
-////                               buzzItem.setGold(badge_count.getInt("gold"));
-////                               buzzItem.setBronze(badge_count.getInt("bronze"));
-////
-////                               userItem.setBadgeCounts(buzzItem);
-//                        Gson gson = new Gson();
-//                        UserItem userItem = gson.fromJson(userJsonObj.toString(), UserItem.class);
-//                        userArrayList.add(userItem);
-//
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-                //    Log.d(TAG, "onPostExecute: "+userItem.getDisplayName());
-                Gson gson = new Gson();
+             Gson gson = new Gson();
                 TypeToken<ListResponse<UserItem>> collectionType = new TypeToken<ListResponse<UserItem>>() {
                 };
                 ListResponse<UserItem> listResponse = gson.fromJson(s, collectionType.getType());
@@ -176,31 +140,7 @@ public class UserProfileFragment extends Fragment {
                 hideProgressBar();
                 linearLayout.setVisibility(View.VISIBLE);
 
-                String userDetail = aboutUser.getAboutMe();
-
-                if ((userDetail==null) || (userDetail.isEmpty())) {
-                    textAboutUser.setVisibility(View.GONE);
-                } else {
-                    textAboutUser.setText(Utils.convertHtmlInTxt(userDetail));
-                }
-
-                textAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
-                textAnswerCounts.setText((aboutUser.getAnswerCount()) + "");
-                textQuestionCounts.setText((aboutUser.getQuestionCount()) + "");
-                textViewCounts.setText((aboutUser.getViewCount()) + "");
-
-                String location = aboutUser.getLocation();
-                if ((location==null) || (location.isEmpty())) {
-                    textLocation.setVisibility(View.GONE);
-                } else {
-                    textLocation.setText(location);
-                }
-                String url = aboutUser.getWebsiteUrl();
-                if ((url==null) || (url.isEmpty())) {
-                    textWebsiteUrl.setVisibility(View.GONE);
-                } else {
-                    textWebsiteUrl.setText(url);
-                }
+                showUserDetail(aboutUser);
 
             } else {
                 hideProgressBar();
@@ -217,5 +157,41 @@ public class UserProfileFragment extends Fragment {
     private void hideProgressBar() {
         textLoading.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+    }
+    private void showUserDetail(UserItem aboutUser){
+        String userDetail = aboutUser.getAboutMe();
+
+        if ((userDetail==null) || (userDetail.isEmpty())) {
+            textAboutUser.setVisibility(View.GONE);
+        } else {
+            HtmlImageGetter imageGetter = new HtmlImageGetter(getActivity(),
+                    R.drawable.image_html_response_background) {
+                @Override
+                public void onTextUpdate() {
+                    CharSequence sequence = textAboutUser.getText();
+                    textAboutUser.setText(sequence);
+                }
+            };
+            Spanned spannedBody = Utils.convertHtmlInTxt(userDetail, imageGetter);
+            textAboutUser.setText(spannedBody);
+
+        }
+        textAboutUser.setMovementMethod(LinkMovementMethod.getInstance());
+        textAnswerCounts.setText((aboutUser.getAnswerCount()) + "");
+        textQuestionCounts.setText((aboutUser.getQuestionCount()) + "");
+        textViewCounts.setText((aboutUser.getViewCount()) + "");
+
+        String location = aboutUser.getLocation();
+        if ((location==null) || (location.isEmpty())) {
+            textLocation.setVisibility(View.GONE);
+        } else {
+            textLocation.setText(location);
+        }
+        String url = aboutUser.getWebsiteUrl();
+        if ((url==null) || (url.isEmpty())) {
+            textWebsiteUrl.setVisibility(View.GONE);
+        } else {
+            textWebsiteUrl.setText(url);
+        }
     }
 }
