@@ -42,12 +42,12 @@
     <string name="orderPrompt">Choose an order</string>
     <string name="sortPrompt">Sort by</string>
 
+    <string name="siteTitle">All Sites</string>
 
     <string-array name="spinnerUserOrder">
         <item>desc</item>
         <item>asc</item>
     </string-array>
-
 
     <string-array name="spinnerUserSort">
         <item>reputation</item>
@@ -74,6 +74,12 @@
         <item>Popular</item>
         <item>Name</item>
         <item>Activity</item>
+    </string-array>
+
+    <string-array name="site_spinner_array">
+        <item>Main Sites</item>
+        <item>Meta Sites</item>
+        <item>All Sites</item>
     </string-array>
 
     <string name="navigation_drawer_open">open</string>

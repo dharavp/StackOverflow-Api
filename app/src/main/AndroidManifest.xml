@@ -17,16 +17,18 @@
         <activity
             android:name=".UserQuestionDrawerActivity"
             android:configChanges="screenSize|orientation"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".QuestionListActivity" />
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SiteListActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

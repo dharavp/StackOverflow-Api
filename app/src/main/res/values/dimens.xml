@@ -16,5 +16,7 @@
 
     <dimen name="filter_dialog_height">40dp</dimen>
 
-
+    <dimen name="divider">0.5dp</dimen>
+    <dimen name="leftdividermargin">0dp</dimen>
+    <dimen name="rightdividermargin">0dp</dimen>
 </resources>

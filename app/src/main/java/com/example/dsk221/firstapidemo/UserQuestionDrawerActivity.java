@@ -2,6 +2,7 @@ package com.example.dsk221.firstapidemo;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -131,6 +133,14 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
                     footerView.setVisibility(View.VISIBLE);
                     imageArrow.setImageResource(R.drawable.ic_arrow_drop_up_black);
                 }
+            }
+        });
+
+        listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = SiteListActivity.startIntent(getApplicationContext());
+                startActivity(intent);
             }
         });
     }

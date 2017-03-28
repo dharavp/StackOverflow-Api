@@ -43,4 +43,6 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'org.afinal.simplecache:a-simple-cache:1.0'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
 }

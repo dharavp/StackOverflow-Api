@@ -31,8 +31,12 @@
     <color name="colorLastActivityDate">#9EA5AC</color>
     <color name="colorQuestionTitle">#0176CB</color>
     <color name="colorQuestionUserName">#0176D4</color>
+    <color name="dividerColor">#DFDFDF</color>
 
     <color name="colorTagSearchEditTextHint">#7F7F7F</color>
     <color name="colorTagTextBackground">#F5FBFD</color>
     <color name="colorTagText">#5C727A</color>
+
+    <color name="colorTextSiteName">#326EB5</color>
+    <color name="colorTextSiteDetail">#362B27</color>
 </resources>
