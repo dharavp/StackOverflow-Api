@@ -30,10 +30,7 @@ import retrofit2.Response;
 
 public class SiteListActivity extends AppCompatActivity {
 
-    private Spinner spinnerSiteSearch;
-    private EditText editSiteSearch;
     private TextView textLoading;
-    private ImageButton imageEditSiteCancel;
     private ProgressBar progressBar;
     private String[] siteArray;
     private RecyclerView recyclerViewSite;
@@ -56,11 +53,9 @@ public class SiteListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.siteTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerViewSite = (RecyclerView) findViewById(R.id.recyclerview_site);
-        spinnerSiteSearch = (Spinner) findViewById(R.id.spinner_site_search);
-        editSiteSearch = (EditText) findViewById(R.id.edit_site_search);
+
         textLoading = (TextView) findViewById(R.id.text_loading);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        imageEditSiteCancel = (ImageButton) findViewById(R.id.image_edit_site_cancel);
 
         recylerViewLayoutManager = new LinearLayoutManager(this);
 
@@ -74,13 +69,6 @@ public class SiteListActivity extends AppCompatActivity {
 
         recyclerViewSite.setAdapter(recyclerViewAdapter);
 
-        ArrayAdapter<String> siteSpinnerAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item);
-        siteArray = getResources().getStringArray((R.array.site_spinner_array));
-        siteSpinnerAdapter.addAll(siteArray);
-        siteSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSiteSearch.setAdapter(siteSpinnerAdapter);
-
         recyclerViewAdapter.setOnLoadMoreListener(new RecyclerViewSiteDetailAdapter.OnLoadMoreListener() {
             @Override
             public void loadItems() {
@@ -88,9 +76,7 @@ public class SiteListActivity extends AppCompatActivity {
                 getJsonSiteResponse();
             }
         });
-
         getJsonSiteResponse();
-
     }
 
     @Override
@@ -127,7 +113,7 @@ public class SiteListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ListResponse<SiteItem>> call, Throwable t) {
-                // Log error here since request failed
+
                 Log.e(TAG, t.toString());
                 recyclerViewAdapter.setLoaded();
                 hideProgressBar();
@@ -152,5 +138,4 @@ public class SiteListActivity extends AppCompatActivity {
             recyclerViewAdapter.showProcessItem();
         }
     }
-
 }

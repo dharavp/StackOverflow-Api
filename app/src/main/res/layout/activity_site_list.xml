@@ -5,55 +5,6 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#E4EAED"
-        android:orientation="horizontal"
-        android:padding="6dp">
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/edittext_border">
-
-            <EditText
-                android:id="@+id/edit_site_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_toLeftOf="@+id/image_cancel"
-                android:background="@null"
-                android:hint="@string/search_tag_edit_text_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textCursorDrawable="@null" />
-
-            <ImageButton
-                android:id="@+id/image_edit_site_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/ic_cancel_black"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-
-        <Spinner
-            android:id="@+id/spinner_site_search"
-            style="@style/Widget.AppCompat.Spinner.DropDown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
-
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
