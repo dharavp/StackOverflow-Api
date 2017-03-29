@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,7 +49,6 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private ListView listSite;
     private SiteAdapter siteAdapter;
     private TextView textNavigationDescription, textNavigationSiteName, textSite;
-    SessionManager session;
     private View footerView;
     ACache mCache;
     private List<SiteItem> siteItems;
@@ -64,7 +64,6 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_user_question_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar_navigation_drawer);
         setSupportActionBar(toolbar);
-        session = new SessionManager(getApplicationContext());
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         listSite = (ListView) findViewById(R.id.list_site);
 
@@ -87,6 +86,10 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 Utils.closeKeyBoard(getCurrentFocus());
+                if (siteListLayout.getVisibility() == View.VISIBLE) {
+                    siteListLayout.setVisibility(View.GONE);
+                    imageArrow.setImageResource(R.drawable.ic_arrow_drop_down_black);
+                }
             }
 
             @Override
@@ -143,17 +146,18 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                session.addSiteDetail(siteAdapter.getItem(position));
+                SessionManager.getInstance(UserQuestionDrawerActivity.this)
+                        .addSiteDetail(siteAdapter.getItem(position));
                 showSharedPreferenceDetail();
+                changeSite();
             }
         });
     }
 
     public void showCustomListView(String selectedSite) {
 
-        siteAdapter.addItems(siteItems,selectedSite);
-
+        siteAdapter.addItems(siteItems, selectedSite);
+        //   changeSite();
     }
 
     @Override
@@ -162,8 +166,8 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
 
         if (requestCode == 222 && resultCode == 333) {
             showSharedPreferenceDetail();
+            changeSite();
         }
-
     }
 
     @Override
@@ -179,25 +183,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        navigationView.setCheckedItem(id);
-        Fragment fragment;
-        switch (id) {
-            case R.id.nav_user:
-                fragment = UserDrawerFragment.newInstance();
-                showFragment(R.string.nav_user_detail_title, fragment);
-                break;
-            case R.id.nav_question:
-                fragment = QuestionDrawerFragment.newInstance(null);
-                showFragment(R.string.nav_question_detail_title, fragment);
-                break;
-            case R.id.nav_tag:
-                fragment = TagDrawerFragment.newInstance();
-                showFragment(R.string.nav_tag_title, fragment);
-                break;
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        openSelectedFragment(item);
         return true;
     }
 
@@ -237,7 +223,7 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
 
     public void showSharedPreferenceDetail() {
 
-        HashMap<String, String> siteDetail = session.getSiteDetail();
+        HashMap<String, String> siteDetail = SessionManager.getInstance(this).getSiteDetail();
         String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
         String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
         final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
@@ -247,5 +233,42 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
                 .load(image)
                 .into(imageNavigationIcon);
         showCustomListView(siteDetail.get(SessionManager.KEY_SITE_PARAMETER));
+    }
+
+    public void changeSite() {
+        Menu menu = navigationView.getMenu();
+        MenuItem selectedMenu = null;
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            if (menuItem.isChecked()) {
+                selectedMenu = menuItem;
+                break;
+            }
+        }
+        if (selectedMenu != null) {
+            openSelectedFragment(selectedMenu);
+        }
+    }
+
+    public void openSelectedFragment(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        navigationView.setCheckedItem(id);
+        Fragment fragment;
+        switch (id) {
+            case R.id.nav_user:
+                fragment = UserDrawerFragment.newInstance();
+                showFragment(R.string.nav_user_detail_title, fragment);
+                break;
+            case R.id.nav_question:
+                fragment = QuestionDrawerFragment.newInstance(null);
+                showFragment(R.string.nav_question_detail_title, fragment);
+                break;
+            case R.id.nav_tag:
+                fragment = TagDrawerFragment.newInstance();
+                showFragment(R.string.nav_tag_title, fragment);
+                break;
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }

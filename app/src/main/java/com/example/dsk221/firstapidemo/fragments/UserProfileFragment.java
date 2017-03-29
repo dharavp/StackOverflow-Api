@@ -18,6 +18,7 @@ import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.utility.Constants;
 import com.example.dsk221.firstapidemo.utility.HtmlImageGetter;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -93,7 +94,8 @@ public class UserProfileFragment extends Fragment {
                 builder.appendPath(String.valueOf(userId));
                 builder.appendQueryParameter(Constants.PARAMS_ORDER, Constants.VALUE_DESC);
                 builder.appendQueryParameter(Constants.PARAMS_SORT, Constants.VALUE_REPUTATION);
-                builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVER_FLOW);
+                builder.appendQueryParameter(Constants.PARAMS_SITE,
+                        SessionManager.getInstance(getActivity()).getApiSiteParameter());
                 builder.appendQueryParameter(Constants.PARAMS_FILTER,
                         Constants.VALUE_USER_PROFILE_FILTER);
 

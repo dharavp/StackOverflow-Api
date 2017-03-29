@@ -41,7 +41,6 @@ public class SiteListActivity extends AppCompatActivity {
     private RecyclerViewSiteDetailAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager recylerViewLayoutManager;
     private int sitePageNumber = 1;
-    SessionManager session;
     private static final String TAG = "Site Detail";
 
     public static Intent startIntent(Context context) {
@@ -61,7 +60,6 @@ public class SiteListActivity extends AppCompatActivity {
         textLoading = (TextView) findViewById(R.id.text_loading);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
-        session = new SessionManager(getApplicationContext());
         recylerViewLayoutManager = new LinearLayoutManager(this);
 
         recyclerViewSite.setLayoutManager(recylerViewLayoutManager);
@@ -85,8 +83,7 @@ public class SiteListActivity extends AppCompatActivity {
     recyclerViewAdapter.setOnItemClickListner(new RecyclerViewSiteDetailAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(List<SiteItem> items, View view, int position) {
-            session.addSiteDetail(items.get(position));
-            Intent data = new Intent();
+            SessionManager.getInstance(SiteListActivity.this).addSiteDetail(items.get(position));
             setResult(333);
             finish();
         }

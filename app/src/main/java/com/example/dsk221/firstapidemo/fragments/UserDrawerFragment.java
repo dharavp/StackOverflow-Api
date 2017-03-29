@@ -30,6 +30,7 @@ import com.example.dsk221.firstapidemo.models.UserItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -274,7 +275,7 @@ public class UserDrawerFragment extends Fragment implements FilterDialog.OnResul
                 filterOrder,
                 filterSort,
                 userName,
-                Constants.VALUE_STACKOVER_FLOW);
+                SessionManager.getInstance(getActivity()).getApiSiteParameter());
 
         call.enqueue(new Callback<ListResponse<UserItem>>() {
             @Override

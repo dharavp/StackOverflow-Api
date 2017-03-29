@@ -20,6 +20,7 @@ import com.example.dsk221.firstapidemo.adapters.QuestionAdapter;
 import com.example.dsk221.firstapidemo.models.ListResponse;
 import com.example.dsk221.firstapidemo.models.QuestionItem;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -134,7 +135,7 @@ public class UserActivityFragment extends Fragment {
                 builder.appendQueryParameter(Constants.PARAMS_SORT, Constants.VALUE_ACTIVITY);
                 builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVER_FLOW);
                 builder.appendQueryParameter(Constants.PARAMS_FILTER,
-                        Constants.VALUE_USER_ACTIVITY_FILTER);
+                        SessionManager.getInstance(getActivity()).getApiSiteParameter());
 
                 String questionListUrl = builder.build().toString();
 

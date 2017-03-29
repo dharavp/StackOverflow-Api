@@ -28,6 +28,8 @@ import com.example.dsk221.firstapidemo.models.QuestionDetailItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
+
 import java.util.Timer;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -129,7 +131,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
     /**
      * last search time in milliseconds
      */
-    private long lastTime;
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -247,6 +249,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
         Call<ListResponse<QuestionDetailItem>> call = null;
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
+        String siteName = SessionManager.getInstance(getActivity()).getApiSiteParameter();
         if (titleName == null) {
             call = apiService.getQuestionList(
                     mQuestionPageCount,
@@ -255,7 +258,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                     filterQuestionOrder,
                     filterQuestionSort,
                     tagName,
-                    Constants.VALUE_STACKOVER_FLOW);
+                    siteName);
         } else {
             call = apiService.getSearchQuestionList(mQuestionPageCount,
                     filterQuestionFromdate,
@@ -263,7 +266,7 @@ public class QuestionDrawerFragment extends Fragment implements FilterDialog.OnR
                     filterQuestionOrder,
                     filterQuestionSort,
                     titleName,
-                    Constants.VALUE_STACKOVER_FLOW);
+                    siteName);
 
         }
         call.enqueue(new Callback<ListResponse<QuestionDetailItem>>() {

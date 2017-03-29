@@ -32,7 +32,6 @@ public class SplashActivity extends AppCompatActivity {
     private Button buttonTryAgain;
     private int pageNo = 1;
     private List<SiteItem> listSiteDetail = new ArrayList<>();
-    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class SplashActivity extends AppCompatActivity {
         textError = (TextView) findViewById(R.id.text_error);
         buttonTryAgain = (Button) findViewById(R.id.button_try_again);
         progressbarLoading.setVisibility(View.VISIBLE);
-        session = new SessionManager(getApplicationContext());
         getAppList();
     }
 
@@ -63,7 +61,6 @@ public class SplashActivity extends AppCompatActivity {
                 saveDataInSharedPreference();
                 saveDataInCache();
                 openActivity();
-
                 Utils.showToast(SplashActivity.this, "get list Successfully..");
 
             }
@@ -79,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void saveDataInSharedPreference() {
-        HashMap<String, String> siteDetail = session.getSiteDetail();
+        HashMap<String, String> siteDetail = SessionManager.getInstance(this).getSiteDetail();
         final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
         if(audience == null){
             SiteItem siteItem = null;
@@ -96,7 +93,7 @@ public class SplashActivity extends AppCompatActivity {
             if (siteItem == null) {
                 listSiteDetail.get(0);
             }
-            session.addSiteDetail(siteItem);
+            SessionManager.getInstance(this).addSiteDetail(siteItem);
         }
     }
     private void openActivity() {

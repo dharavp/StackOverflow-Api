@@ -31,13 +31,6 @@ public class SiteAdapter extends BaseAdapter {
     }
     public void addItems(List<SiteItem> items,String selectedSite) {
         siteItems.clear();
-
-        // A
-        // B
-        // C
-        // D
-        // E
-
         if(selectedSite!=null) {
             for (int i = 0; i < items.size(); i++) {
                 String audience = items.get(i).getApiSiteParameter();

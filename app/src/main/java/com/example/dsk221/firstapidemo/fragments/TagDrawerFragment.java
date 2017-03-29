@@ -31,6 +31,7 @@ import com.example.dsk221.firstapidemo.models.TagItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
 
 import retrofit2.Call;
@@ -57,7 +58,6 @@ public class TagDrawerFragment extends Fragment {
     private String tagSortBy = "popular";
     private String inname = null;
     private boolean hasMoreTag = true;
-
 
     public static TagDrawerFragment newInstance() {
         TagDrawerFragment tagDrawerFragment=new TagDrawerFragment();
@@ -145,7 +145,9 @@ public class TagDrawerFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count != 0) {
+                Log.d(TAG, "onTextChanged() called with: s = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
+
+                if (s.length()!=0) {
                     imageCancel.setVisibility(View.VISIBLE);
 
                 } else {
@@ -153,7 +155,6 @@ public class TagDrawerFragment extends Fragment {
                     Utils.closeKeyBoard(editTagSearch);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -197,7 +198,7 @@ public class TagDrawerFragment extends Fragment {
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ListResponse<TagItem>> call = apiService.getTagList(mTagPageCount,
                 Constants.VALUE_ASC, tagSortBy,
-                inname, Constants.VALUE_STACKOVER_FLOW);
+                inname, SessionManager.getInstance(getActivity()).getApiSiteParameter());
         call.enqueue(new Callback<ListResponse<TagItem>>() {
             @Override
             public void onResponse(Call<ListResponse<TagItem>> call,
@@ -235,7 +236,5 @@ public class TagDrawerFragment extends Fragment {
             footerView.setVisibility(View.VISIBLE);
         }
     }
-
-
 
 }
