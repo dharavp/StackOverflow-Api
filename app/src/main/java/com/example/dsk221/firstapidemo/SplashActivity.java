@@ -17,6 +17,7 @@ import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.example.dsk221.firstapidemo.utility.Utils;
 import org.afinal.simplecache.ACache;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +70,6 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ListResponse<SiteItem>> call, Throwable t) {
-                // Log error here since request failed
                 textError.setVisibility(View.VISIBLE);
                 buttonTryAgain.setVisibility(View.VISIBLE);
                 getAppList();
@@ -79,26 +79,29 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void saveDataInSharedPreference() {
-        SiteItem siteItem = null;
-        for (SiteItem item : listSiteDetail) {
+        HashMap<String, String> siteDetail = session.getSiteDetail();
+        final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
+        if(audience == null){
+            SiteItem siteItem = null;
+            for (SiteItem item : listSiteDetail) {
 
-            if (item.getApiSiteParameter() != null &&
-                    item.getApiSiteParameter()
-                            .equalsIgnoreCase("stackoverflow")) {
+                if (item.getApiSiteParameter() != null &&
+                        item.getApiSiteParameter()
+                                .equalsIgnoreCase("stackoverflow")) {
+                    siteItem = item;
+                    break;
 
-                siteItem = item;
-                break;
-
+                }
             }
+            if (siteItem == null) {
+                listSiteDetail.get(0);
+            }
+            session.addSiteDetail(siteItem);
         }
-        if (siteItem == null) {
-            listSiteDetail.get(0);
-        }
-        session.addSiteDetail(siteItem);
     }
     private void openActivity() {
-        Intent i = new Intent(SplashActivity.this, UserQuestionDrawerActivity.class);
-        startActivity(i);
+        Intent intent=UserQuestionDrawerActivity.getStartIntent(SplashActivity.this);
+        startActivity(intent);
         finish();
     }
     private void saveDataInCache(){

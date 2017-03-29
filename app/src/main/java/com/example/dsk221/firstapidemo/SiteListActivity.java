@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -22,7 +23,10 @@ import com.example.dsk221.firstapidemo.models.SiteItem;
 import com.example.dsk221.firstapidemo.retrofit.ApiClient;
 import com.example.dsk221.firstapidemo.retrofit.ApiInterface;
 import com.example.dsk221.firstapidemo.utility.Constants;
+import com.example.dsk221.firstapidemo.utility.SessionManager;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +41,7 @@ public class SiteListActivity extends AppCompatActivity {
     private RecyclerViewSiteDetailAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager recylerViewLayoutManager;
     private int sitePageNumber = 1;
-
+    SessionManager session;
     private static final String TAG = "Site Detail";
 
     public static Intent startIntent(Context context) {
@@ -57,6 +61,7 @@ public class SiteListActivity extends AppCompatActivity {
         textLoading = (TextView) findViewById(R.id.text_loading);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
+        session = new SessionManager(getApplicationContext());
         recylerViewLayoutManager = new LinearLayoutManager(this);
 
         recyclerViewSite.setLayoutManager(recylerViewLayoutManager);
@@ -76,6 +81,17 @@ public class SiteListActivity extends AppCompatActivity {
                 getJsonSiteResponse();
             }
         });
+
+    recyclerViewAdapter.setOnItemClickListner(new RecyclerViewSiteDetailAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(List<SiteItem> items, View view, int position) {
+            session.addSiteDetail(items.get(position));
+            Intent data = new Intent();
+            setResult(333);
+            finish();
+        }
+    });
+
         getJsonSiteResponse();
     }
 

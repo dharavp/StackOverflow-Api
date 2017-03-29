@@ -17,8 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,8 +37,6 @@ import org.afinal.simplecache.ACache;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.dsk221.firstapidemo.R.drawable.ic_question_green;
-
 public class UserQuestionDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -48,12 +44,19 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
     private LinearLayout headerRootView, siteListLayout;
-    private ImageView imageArrow, imageNavigationIcon,imageSite;
+    private ImageView imageArrow, imageNavigationIcon, imageSite;
     private ListView listSite;
     private SiteAdapter siteAdapter;
-    private TextView textNavigationDescription, textNavigationSiteName,textSite;
+    private TextView textNavigationDescription, textNavigationSiteName, textSite;
     SessionManager session;
     private View footerView;
+    ACache mCache;
+    private List<SiteItem> siteItems;
+
+    public static Intent getStartIntent(Context context) {
+        Intent i = new Intent(context, UserQuestionDrawerActivity.class);
+        return i;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +68,12 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         listSite = (ListView) findViewById(R.id.list_site);
 
-        footerView = ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.item_site, listSite,false);
+        footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.item_site, listSite, false);
         imageSite = (ImageView) footerView.findViewById(R.id.image_site);
         textSite = (TextView) footerView.findViewById(R.id.text_site_name);
         imageSite.setImageResource(R.drawable.ic_more_horiz_black);
-        textSite.setText("All Sites");
+        textSite.setText(R.string.siteTitle);
         listSite.addFooterView(footerView);
 
         siteAdapter = new SiteAdapter(UserQuestionDrawerActivity.this);
@@ -105,23 +108,16 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
         textNavigationSiteName = (TextView) headerView.findViewById(R.id.text_navigation_site_name);
         siteListLayout = (LinearLayout) findViewById(R.id.siteListLayout);
 
-
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_user);
         Fragment fragment = UserDrawerFragment.newInstance();
         showFragment(R.string.nav_user_detail_title, fragment);
 
-        HashMap<String, String> siteDetail = session.getSiteDetail();
-        String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
-        String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
-        final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
-        textNavigationSiteName.setText(name);
-        textNavigationDescription.setText(audience);
-        Picasso.with(getApplicationContext())
-                .load(image)
-                .into(imageNavigationIcon);
-        showCustomListView(audience);
+        mCache = ACache.get(this);
+        siteItems = mCache.getAsObjectList(SplashActivity.KEY_CACHE, SiteItem.class);
+
+        showSharedPreferenceDetail();
         headerRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,28 +136,35 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = SiteListActivity.startIntent(getApplicationContext());
-                startActivity(intent);
+                startActivityForResult(intent, 222);
+            }
+        });
+
+        listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                session.addSiteDetail(siteAdapter.getItem(position));
+                showSharedPreferenceDetail();
             }
         });
     }
 
     public void showCustomListView(String selectedSite) {
 
-        ACache mCache = ACache.get(this);
-
-        List<SiteItem> siteItems = mCache.getAsObjectList(SplashActivity.KEY_CACHE, SiteItem.class);
-
-        for (int i = 0; i < siteItems.size(); i++) {
-            String audience = siteItems.get(i).getAudience();
-            if (audience != null && audience.equalsIgnoreCase(selectedSite)) {
-                siteItems.remove(i);
-                break;
-            }
-        }
-        siteAdapter.addItems(siteItems);
+        siteAdapter.addItems(siteItems,selectedSite);
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 222 && resultCode == 333) {
+            showSharedPreferenceDetail();
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -230,5 +233,19 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             ft.replace(R.id.content_frame, fragment);
             ft.commit();
         }
+    }
+
+    public void showSharedPreferenceDetail() {
+
+        HashMap<String, String> siteDetail = session.getSiteDetail();
+        String name = siteDetail.get(SessionManager.KEY_SITE_NAME);
+        String image = siteDetail.get(SessionManager.KEY_SITE_IMAGE);
+        final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
+        textNavigationSiteName.setText(name);
+        textNavigationDescription.setText(audience);
+        Picasso.with(getApplicationContext())
+                .load(image)
+                .into(imageNavigationIcon);
+        showCustomListView(siteDetail.get(SessionManager.KEY_SITE_PARAMETER));
     }
 }

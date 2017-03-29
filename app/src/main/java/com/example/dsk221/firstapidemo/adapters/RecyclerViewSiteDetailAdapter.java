@@ -27,16 +27,25 @@ public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     private OnLoadMoreListener mOnLoadMoreListener;
+    private OnItemClickListener mOnItemClickListner;
     private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
+    private View view;
 
     public interface OnLoadMoreListener {
         void loadItems();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(List<SiteItem> items,View view,int position);
+
+    }
+
+
     public RecyclerViewSiteDetailAdapter(RecyclerView recyclerView, Context context) {
         this.context = context;
+        view=recyclerView;
         siteItems = new ArrayList<>();
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
@@ -67,6 +76,9 @@ public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
 
     public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener;
+    }
+    public void setOnItemClickListner(OnItemClickListener mOnItemClickListner) {
+        this.mOnItemClickListner = mOnItemClickListner;
     }
 
     @Override
@@ -117,15 +129,23 @@ public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof SiteViewHolder) {
-            SiteItem siteItem = siteItems.get(position);
+            final SiteItem siteItem = siteItems.get(position);
             ((SiteViewHolder) holder).textNameSite.setText(siteItem.getName());
             ((SiteViewHolder) holder).textAudience.setText(siteItem.getAudience());
             Picasso.with(context)
                     .load(siteItem.getIconUrl())
                     .placeholder(R.drawable.image_background)
                     .into(((SiteViewHolder) holder).imageSiteList);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListner.onItemClick(siteItems,v,position);
+                }
+            });
+
+
         } else {
             ((LoadingViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
             ((LoadingViewHolder) holder).textLoading.setVisibility(View.VISIBLE);
