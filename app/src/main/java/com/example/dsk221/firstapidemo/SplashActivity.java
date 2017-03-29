@@ -59,8 +59,6 @@ public class SplashActivity extends AppCompatActivity {
                 progressbarLoading.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.body());
                 listSiteDetail = response.body().getItems();
-
-
                 saveDataInSharedPreference();
                 saveDataInCache();
                 openActivity();

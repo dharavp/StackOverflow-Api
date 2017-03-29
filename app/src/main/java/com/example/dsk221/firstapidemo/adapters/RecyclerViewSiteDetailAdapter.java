@@ -23,13 +23,10 @@ import java.util.List;
 
 public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
     private Context context;
-    private View view;
-    private RecyclerView.ViewHolder viewHolder;
     private List<SiteItem> siteItems;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private boolean isLoading;
     private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
@@ -58,8 +55,6 @@ public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
                                     .findLastVisibleItemPosition();
                             if (!loading
                                     && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                                // End has been reached
-                                // Do something
                                 if (mOnLoadMoreListener != null) {
                                     mOnLoadMoreListener.loadItems();
                                 }
@@ -110,10 +105,6 @@ public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        view = LayoutInflater.from(context).inflate(R.layout.item_site_detail,parent,false);
-//        viewHolder = new ViewHolder(view);
-//        return viewHolder;
-
         if (viewType == VIEW_ITEM) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_site_detail, parent, false);
             return new SiteViewHolder(view);
@@ -157,7 +148,7 @@ public class RecyclerViewSiteDetailAdapter extends RecyclerView.Adapter {
     }
 
     public void removeProcessItem() {
-        //Remove loading item
+
         siteItems.remove(siteItems.size() - 1);
         notifyItemRemoved(siteItems.size());
     }

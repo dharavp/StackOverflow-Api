@@ -136,9 +136,9 @@ public class UserQuestionDrawerActivity extends AppCompatActivity
             }
         });
 
-        listSite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        footerView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
                 Intent intent = SiteListActivity.startIntent(getApplicationContext());
                 startActivity(intent);
             }
