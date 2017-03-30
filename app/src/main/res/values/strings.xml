@@ -43,6 +43,7 @@
     <string name="sortPrompt">Sort by</string>
 
     <string name="siteTitle">All Sites</string>
+    <string name="siteCompare">stackoverflow</string>
 
     <string-array name="spinnerUserOrder">
         <item>desc</item>

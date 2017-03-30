@@ -42,6 +42,16 @@ public class SplashActivity extends AppCompatActivity {
         buttonTryAgain = (Button) findViewById(R.id.button_try_again);
         progressbarLoading.setVisibility(View.VISIBLE);
         getAppList();
+
+        buttonTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonTryAgain.setVisibility(View.GONE);
+                textError.setVisibility(View.GONE);
+                progressbarLoading.setVisibility(View.VISIBLE);
+                getAppList();
+            }
+        });
     }
 
     public void getAppList() {
@@ -57,37 +67,39 @@ public class SplashActivity extends AppCompatActivity {
                                    Response<ListResponse<SiteItem>> response) {
                 progressbarLoading.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.body());
-                listSiteDetail = response.body().getItems();
-                saveDataInSharedPreference();
-                saveDataInCache();
-                openActivity();
-                Utils.showToast(SplashActivity.this, "get list Successfully..");
-
+                if(response.body()!=null){
+                    listSiteDetail = response.body().getItems();
+                    saveDataInSharedPreference();
+                    saveDataInCache();
+                    openActivity();
+                    Utils.showToast(SplashActivity.this, "get list Successfully..");
+                }
+                else{
+                    textError.setVisibility(View.VISIBLE);
+                    buttonTryAgain.setVisibility(View.VISIBLE);
+                }
             }
-
             @Override
             public void onFailure(Call<ListResponse<SiteItem>> call, Throwable t) {
                 textError.setVisibility(View.VISIBLE);
                 buttonTryAgain.setVisibility(View.VISIBLE);
-                getAppList();
+                progressbarLoading.setVisibility(View.GONE);
                 Log.e(TAG, t.toString());
             }
         });
     }
-
     private void saveDataInSharedPreference() {
         HashMap<String, String> siteDetail = SessionManager.getInstance(this).getSiteDetail();
-        final String audience = siteDetail.get(SessionManager.KEY_SITE_AUDIENCE);
+        final String audience = siteDetail.get(SessionManager.KEY_SITE_PARAMETER);
         if(audience == null){
             SiteItem siteItem = null;
             for (SiteItem item : listSiteDetail) {
 
                 if (item.getApiSiteParameter() != null &&
                         item.getApiSiteParameter()
-                                .equalsIgnoreCase("stackoverflow")) {
+                                .equalsIgnoreCase(getResources().getString(R.string.siteCompare))) {
                     siteItem = item;
                     break;
-
                 }
             }
             if (siteItem == null) {

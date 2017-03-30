@@ -43,7 +43,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:text="@string/text_error"
-        android:background="@color/colorIsAnswerTotal"
+        android:background="@drawable/buttton_background"
         android:textColor="@color/colorWhite"
         android:textSize="15sp"
         android:visibility="gone"/>
