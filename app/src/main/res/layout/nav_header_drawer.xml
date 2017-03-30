@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="Android Studio"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:id="@+id/text_navigation_site_name"/>
@@ -34,6 +34,8 @@
             android:id="@+id/text_navigation_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:maxLines="2"
             android:text="android.studio@android.com"/>
         <ImageView
             android:id="@+id/image_arrow"

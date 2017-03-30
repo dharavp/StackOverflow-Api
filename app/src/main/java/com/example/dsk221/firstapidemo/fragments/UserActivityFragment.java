@@ -133,9 +133,10 @@ public class UserActivityFragment extends Fragment {
                         String.valueOf(mQuestionPageCount));
                 builder.appendQueryParameter(Constants.PARAMS_ORDER, Constants.VALUE_DESC);
                 builder.appendQueryParameter(Constants.PARAMS_SORT, Constants.VALUE_ACTIVITY);
-                builder.appendQueryParameter(Constants.PARAMS_SITE, Constants.VALUE_STACKOVER_FLOW);
-                builder.appendQueryParameter(Constants.PARAMS_FILTER,
+                builder.appendQueryParameter(Constants.PARAMS_SITE,
                         SessionManager.getInstance(getActivity()).getApiSiteParameter());
+                builder.appendQueryParameter(Constants.PARAMS_FILTER,
+                        Constants.VALUE_USER_ACTIVITY_FILTER);
 
                 String questionListUrl = builder.build().toString();
 
@@ -158,7 +159,6 @@ public class UserActivityFragment extends Fragment {
                     try {
                         bufferedReader.close();
                     } catch (IOException e) {
-
                         e.printStackTrace();
                     }
                 }
@@ -183,7 +183,7 @@ public class UserActivityFragment extends Fragment {
                 }
                 hideProgressBar();
             } else {
-                Utils.showToast(getActivity(),R.string.error_toast);
+               // Utils.showToast(getActivity(),R.string.error_toast);
                 hideProgressBar();
             }
         }

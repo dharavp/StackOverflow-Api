@@ -1,7 +1,4 @@
 package com.example.dsk221.firstapidemo.utility;
-
-
-
 public class Constants {
     public static final String BASE_URL = "https://api.stackexchange.com/2.2";
     public static final String URL_USER_LIST = BASE_URL + "/users";
